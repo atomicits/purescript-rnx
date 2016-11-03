@@ -1,28 +1,28 @@
 {
-    "name": "rnx",
-    "description": "RNX - React Native apps with Purescript",
-    "keywords": [
-        "purescript"
-    ],
-    "version": "0.0.1",
-    "moduleType": [
-        "node"
-    ],
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "output"
-    ],
-    "dependencies": {
-        "purescript-aff": "^2.0.1",
-        "purescript-eff": "^2.0.0",
-        "purescript-functions": "^2.0.0",
-        "purescript-lists": "^3.1.0",
-        "purescript-signal": "^8.0.0"
-    },
-    "authors": [
-        "Sudhir Kumar <s@atomicits.com>"
-    ],
-    "license": "MIT"
+  "name": "rnx",
+  "description": "RNX - React Native apps with Purescript",
+  "keywords": [
+    "purescript"
+  ],
+  "version": "0.1.1-alpha",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-aff": "^2.0.1",
+    "purescript-eff": "^2.0.0",
+    "purescript-functions": "^2.0.0",
+    "purescript-lists": "^3.1.0",
+    "purescript-signal": "^8.0.0"
+  },
+  "authors": [
+    "Sudhir Kumar <s@atomicits.com>"
+  ],
+  "license": "MIT"
 }
