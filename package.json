@@ -11,7 +11,7 @@
     },
     "name": "purescript-rnx",
     "description": "RNX is a PureScript interface to React Native, similar to the Elm app architecture.",
-    "version": "0.0.1",
+    "version": "0.1.1-alpha",
     "main": "src/RNX.js",
     "directories": {
         "example": "examples"
