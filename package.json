@@ -1,0 +1,43 @@
+{
+    "scripts": {
+        "postinstall": "bower install",
+        "build:clean": "rm -rf dist output",
+        "build": "pulp build"
+    },
+    "devDependencies": {
+        "bower": "^1.7.9",
+        "pulp": "^9.0.1",
+        "purescript": "^0.10.1"
+    },
+    "name": "purescript-rnx",
+    "description": "RNX is a PureScript interface to React Native, similar to the Elm app architecture.",
+    "version": "0.0.1",
+    "main": "src/RNX.js",
+    "directories": {
+        "example": "examples"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/atomicits/purescript-rnx.git"
+    },
+    "keywords": [
+        "purescript",
+        "rnx",
+        "react native",
+        "mobile",
+        "android",
+        "ios",
+        "pux",
+        "react",
+        "elm",
+        "flux",
+        "redux",
+        "frp",
+        "virtual-dom"
+    ],
+    "author": "Sudhir Kumar <s@atomicits.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/atomicits/purescript-rnx/issues"
+    }
+}
