@@ -1,5 +1,21 @@
 'use strict';
 
+
+exports._getCurrentPosition = function(successCallback){
+    return function(errorCallback){
+        return function(options){
+            return function(){
+                navigator.geolocation.getCurrentPosition(function(success){
+                    successCallback(JSON.stringify(success))();
+                }, function(error){
+                    errorCallback(error)();
+                }, options);
+            };
+        };
+    };
+};
+
+
 var actionSheetIOS = require('react-native').ActionSheetIOS;
 
 var actionSheetIOS_showActionSheetWithOptions = actionSheetIOS.showActionSheetWithOptions;
@@ -626,40 +642,40 @@ exports.easing_inOut = function(easing){
 };
 
 
-var geolocation = require('react-native').Geolocation;
-var geolocation_getCurrentPosition = geolocation.getCurrentPosition;
+//var geolocation = require('react-native').Geolocation;
+//var geolocation_getCurrentPosition = geolocation.getCurrentPosition;
 exports.geolocation_getCurrentPosition = function(geo_success){
     return function(geo_error){
         return function(geo_options){
             return function(){
-                return geolocation_getCurrentPosition(geo_success, geo_error, geo_options);
+                return navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
             };
         };
     };
 };
 
-var geolocation_watchPosition = geolocation.watchPosition;
+//var geolocation_watchPosition = geolocation.watchPosition;
 exports.geolocation_watchPosition = function(success){
     return function(error){
         return function(options){
             return function(){
-                return geolocation_watchPosition(success, error, options);
+                return navigator.geolocation.watchPosition(success, error, options);
             };
         };
     };
 };
 
-var geolocation_clearWatch = geolocation.clearWatch;
+//var geolocation_clearWatch = geolocation.clearWatch;
 exports.geolocation_clearWatch = function(watchID){
     return function(){
-        return geolocation_clearWatch(watchID);
+        return navigator.geolocation.clearWatch(watchID);
     };
 };
 
-var geolocation_stopObserving = geolocation.stopObserving;
+//var geolocation_stopObserving = geolocation.stopObserving;
 exports.geolocation_stopObserving = function(o){
     return function(){
-        return geolocation_stopObserving();
+        return navigator.geolocation.stopObserving();
     };
 };
 
@@ -907,47 +923,47 @@ exports.linking_getInitialURL = function(o){
     };
 };
 
-var nativeMethodsMixin = require('react-native'). NativeMethodsMixin;
-var nativeMethodsMixin_measure = nativeMethodsMixin.measure;
+var nativeMethodsMixin = require('react-native').NativeMethodsMixin;
+//var nativeMethodsMixin_measure = nativeMethodsMixin.measure;
 exports.nativeMethodsMixin_measure = function(callback){
     return function(){
-        return nativeMethodsMixin_measure(callback);
+        return nativeMethodsMixin.measure(callback);
     };
 };
 
 
-var nativeMethodsMixin_measureInWindow = nativeMethodsMixin.measureInWindow;
+//var nativeMethodsMixin_measureInWindow = nativeMethodsMixin.measureInWindow;
 exports.nativeMethodsMixin_measureInWindow = function(callback){
     return function(){
-        return nativeMethodsMixin_measureInWindow(callback);
+        return nativeMethodsMixin.measureInWindow(callback);
     };
 };
 
 
-var nativeMethodsMixin_measureLayout = nativeMethodsMixin.measureLayout;
+//var nativeMethodsMixin_measureLayout = nativeMethodsMixin.measureLayout;
 exports.nativeMethodsMixin_measureLayout = function(relativeToNativeNode){
     return function(onSuccess){
         return function(onFail){
             return function(){
-                return nativeMethodsMixin_measureLayout(relativeToNativeNode, onSuccess, onFail);
+                return nativeMethodsMixin.measureLayout(relativeToNativeNode, onSuccess, onFail);
             };
         };
     };
 };
 
 
-var nativeMethodsMixin_focus = nativeMethodsMixin.focus;
+//var nativeMethodsMixin_focus = nativeMethodsMixin.focus;
 exports.nativeMethodsMixin_focus = function(o){
     return function(){
-        return nativeMethodsMixin_focus();
+        return nativeMethodsMixin.focus();
     };
 };
 
 
-var nativeMethodsMixin_blur = nativeMethodsMixin.blur;
+//var nativeMethodsMixin_blur = nativeMethodsMixin.blur;
 exports.nativeMethodsMixin_blur = function(o){
     return function(){
-        return nativeMethodsMixin_blur();
+        return nativeMethodsMixin.blur();
     };
 };
 

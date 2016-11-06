@@ -8,6 +8,17 @@ foreign import data Element :: * -> *
 foreign import data Prop :: * -> *
 
 
+instance functorElement :: Functor Element where
+  map f x = forwardTo f x
+
+instance functorAttribute :: Functor Prop where
+  map f x = mapAttribute f x
+
+
+foreign import forwardTo :: forall a b. (a -> b) -> Element a -> Element b
+
+foreign import mapAttribute :: forall a b. (a -> b) -> Prop a -> Prop b
+
 -- createElement
 foreign import createElement :: forall props action. ReactClass props -> props -> Array (Element action)-> Element action
 foreign import createElementOneChild :: forall props action. ReactClass props -> props -> Element action -> Element action

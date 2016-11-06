@@ -89,3 +89,33 @@ function mkProps(props) {
     }
     return result;
 };
+
+
+// :: (a -> b) -> Html a -> Html b
+exports.forwardTo = function (parentAction) {
+    return function (html) {
+        if (!html.props) return html;
+        var childAction = html.props.puxParentAction;
+        var action = parentAction;
+        if (childAction) {
+            action = function (a) {
+                return parentAction(childAction(a));
+            };
+        }
+        return React.cloneElement(html, { puxParentAction: action });
+    };
+};
+
+// :: (a -> b) -> Attribute a -> Attribute b
+exports.mapAttribute = function (f) {
+    return function (attr) {
+        if (typeof attr[1] !== 'function') {
+            return attr;
+        }
+        return [attr[0], function(input, parentAction) {
+            return attr[1](input, function(e) {
+                return f(parentAction(e));
+            });
+        }];
+    };
+};
