@@ -73,6 +73,10 @@ data PtrEvents
 testID :: forall action. String -> Prop action
 testID = unsafeMkProps "testID"
 
+key :: forall action. String -> Prop action
+key = unsafeMkProps "key"
+
+
 -- Animating
 
 animating :: forall action. Boolean -> Prop action

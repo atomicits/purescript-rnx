@@ -32,7 +32,6 @@ type Config state action eff =
   , view :: state -> Element action
   , initialState :: state
   , inputs :: Array (Signal action)
-  , appKey :: AppKey
   }
 
 type Update state action eff = action -> state -> EffModel state action eff
