@@ -1,38 +1,40 @@
-// module RNX
-
 'use strict';
 
 var React = require('react');
 
+
 exports.registerComponent = function(name){
     return function(component){
         return function(){
-            require('react-native').AppRegistry.registerComponent(name, function(){ return reactClass(component); });
+            require('react-native')
+                .AppRegistry
+                .registerComponent(name, function(){
+                    return reactClass(component);
+                });
         };
     };
 };
 
 
-function reactClass(htmlSignal) {
+function reactClass(signal) {
     return React.createClass({
         componentWillMount: function () {
             var ctx = this;
-            htmlSignal.subscribe(function () {
+            signal.subscribe(function () {
                 ctx.forceUpdate();
             });
         },
         render: function () {
-            return htmlSignal.get();
+            return signal.get();
         }
     });
 }
 
 
-// render function
+exports.render = function (input, parentAction, element) {
 
-exports.render = function (input, parentAction, html) {
-    function composeAction(parentAction, html) {
-        var childAction = html.props && html.props.puxParentAction;
+    function composeAction(parentAction, element) {
+        var childAction = element.props && element.props.puxParentAction;
         var action = parentAction;
         if (childAction) {
             action = function (a) {
@@ -42,33 +44,35 @@ exports.render = function (input, parentAction, html) {
         return action;
     }
 
-    function render(input, parentAction, html) {
-        var props = html.props;
+
+    function render(input, parentAction, element) {
+        var props = element.props;
         var newProps = {};
 
         for (var key in props) {
-            console.log(key);
             if (key !== 'puxParentAction' && key !== 'renderNavigationView'  && typeof props[key] === 'function') {
                 newProps[key] = props[key](input, parentAction);
             }
         }
 
-        var newChildren = React.Children.map(html.props.children, function (child) {
+        var newChildren = React.Children.map(element.props.children, function (child) {
             if (typeof child === 'string') {
                 return child;
             } else {
                 return render(input, composeAction(parentAction, child), child);
             }
         });
+
         function universalChildrenOnly(children) {
             return (Array.isArray (children) && children.length === 1)
                 ? children[0]
                 : children;
         }
-        var cloned = React.cloneElement(html, newProps, universalChildrenOnly(newChildren));
-        console.log(cloned);
-        return cloned;
+
+        return React.cloneElement(element, newProps, universalChildrenOnly(newChildren));
     }
 
-    return render(input, composeAction(parentAction, html), html);
+    var rendered = render(input, composeAction(parentAction, element), element);
+    console.log(rendered);
+    return rendered;
 };
