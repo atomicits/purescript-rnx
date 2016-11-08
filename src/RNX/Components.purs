@@ -1,11 +1,16 @@
 module RNX.Components where
 
-import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Prelude
+import Data.Function.Uncurried (Fn2)
+
 
 foreign import data ReactClass :: * -> *
 foreign import data Element :: * -> *
 foreign import data Prop :: * -> *
+
+
+foreign import forwardTo    :: forall a b. (a -> b) -> Element a -> Element b
+foreign import mapAttribute :: forall a b. (a -> b) -> Prop a -> Prop b
 
 
 instance functorElement :: Functor Element where
@@ -15,57 +20,48 @@ instance functorAttribute :: Functor Prop where
   map f x = mapAttribute f x
 
 
-foreign import forwardTo :: forall a b. (a -> b) -> Element a -> Element b
-
-foreign import mapAttribute :: forall a b. (a -> b) -> Prop a -> Prop b
-
 -- createElement
-foreign import createElement :: forall props action. ReactClass props -> props -> Array (Element action)-> Element action
+foreign import createElement         :: forall props action. ReactClass props -> props -> Array (Element action)-> Element action
 foreign import createElementOneChild :: forall props action. ReactClass props -> props -> Element action -> Element action
 
 -- classes
-foreign import activityIndicatorClass :: forall props. ReactClass props
-foreign import datePickerIOSClass :: forall props. ReactClass props
-foreign import drawerLayoutAndroidClass :: forall props. ReactClass props
-foreign import imageClass :: forall props. ReactClass props
-foreign import keyboardAvoidingViewClass :: forall props. ReactClass props
-foreign import listViewClass :: forall props. ReactClass props
-foreign import mapViewClass :: forall props. ReactClass props
-foreign import modalClass :: forall props. ReactClass props
-foreign import pickerClass :: forall props. ReactClass props
-foreign import pickerItemClass :: forall props. ReactClass props
-foreign import progressViewIOSClass :: forall props. ReactClass props
-foreign import refreshControlClass :: forall props. ReactClass props
-foreign import scrollViewClass :: forall props. ReactClass props
-foreign import segmentedControlIOSClass :: forall props. ReactClass props
-foreign import sliderClass :: forall props. ReactClass props
-foreign import statusBarClass :: forall props. ReactClass props
-foreign import snapshotViewIOSClass :: forall props. ReactClass props
-foreign import switchClass :: forall props. ReactClass props
-foreign import tabBarIOSClass :: forall props. ReactClass props
-foreign import tabBarIOSItemClass :: forall props. ReactClass props
-foreign import textClass :: forall props. ReactClass props
-foreign import textInputClass :: forall props. ReactClass props
-foreign import toolbarAndroidClass :: forall props. ReactClass props
-foreign import touchableHighlightClass :: forall props. ReactClass props
-foreign import touchableNativeFeedbackClass :: forall props. ReactClass props
-foreign import touchableOpacityClass :: forall props. ReactClass props
+foreign import activityIndicatorClass        :: forall props. ReactClass props
+foreign import datePickerIOSClass            :: forall props. ReactClass props
+foreign import drawerLayoutAndroidClass      :: forall props. ReactClass props
+foreign import imageClass                    :: forall props. ReactClass props
+foreign import keyboardAvoidingViewClass     :: forall props. ReactClass props
+foreign import listViewClass                 :: forall props. ReactClass props
+foreign import mapViewClass                  :: forall props. ReactClass props
+foreign import modalClass                    :: forall props. ReactClass props
+foreign import pickerClass                   :: forall props. ReactClass props
+foreign import pickerItemClass               :: forall props. ReactClass props
+foreign import progressViewIOSClass          :: forall props. ReactClass props
+foreign import refreshControlClass           :: forall props. ReactClass props
+foreign import scrollViewClass               :: forall props. ReactClass props
+foreign import segmentedControlIOSClass      :: forall props. ReactClass props
+foreign import sliderClass                   :: forall props. ReactClass props
+foreign import statusBarClass                :: forall props. ReactClass props
+foreign import snapshotViewIOSClass          :: forall props. ReactClass props
+foreign import switchClass                   :: forall props. ReactClass props
+foreign import tabBarIOSClass                :: forall props. ReactClass props
+foreign import tabBarIOSItemClass            :: forall props. ReactClass props
+foreign import textClass                     :: forall props. ReactClass props
+foreign import textInputClass                :: forall props. ReactClass props
+foreign import toolbarAndroidClass           :: forall props. ReactClass props
+foreign import touchableHighlightClass       :: forall props. ReactClass props
+foreign import touchableNativeFeedbackClass  :: forall props. ReactClass props
+foreign import touchableOpacityClass         :: forall props. ReactClass props
 foreign import touchableWithoutFeedbackClass :: forall props. ReactClass props
-foreign import viewClass :: forall props. ReactClass props
-foreign import viewPagerAndroidClass :: forall props. ReactClass props
-foreign import webViewClass :: forall props. ReactClass props
+foreign import viewClass                     :: forall props. ReactClass props
+foreign import viewPagerAndroidClass         :: forall props. ReactClass props
+foreign import webViewClass                  :: forall props. ReactClass props
+
 -- Elements
 foreign import textElem :: forall action. String -> Element action
 
 
-text' :: forall action. Array (Prop action) -> String -> Element action
-text' props str = createElement textClass props [textElem str]
-
-
 foreign import handler :: forall event action. Fn2 String (event -> action) (Prop action)
-
 foreign import handlerBool :: forall event action. Fn2 String (event -> Boolean) (Prop action)
-
 foreign import handlerUnit :: forall event action. Fn2 String (event -> Unit) (Prop action)
 
 
