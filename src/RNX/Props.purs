@@ -98,9 +98,9 @@ collapsable = unsafeMkProps "collapsable"
 
 
 importantForAccessibility :: forall action. ImportantForAccessibilityProp -> Prop action
-importantForAccessibility IAPAuto = unsafeMkProps "importantForAccessibility" "auto"
-importantForAccessibility Yes = unsafeMkProps "importantForAccessibility" "yes"
-importantForAccessibility No = unsafeMkProps "importantForAccessibility" "no"
+importantForAccessibility IAPAuto           = unsafeMkProps "importantForAccessibility" "auto"
+importantForAccessibility Yes               = unsafeMkProps "importantForAccessibility" "yes"
+importantForAccessibility No                = unsafeMkProps "importantForAccessibility" "no"
 importantForAccessibility NoHideDescenDants = unsafeMkProps "importantForAccessibility" "no-hide-descendents"
 
 
@@ -198,7 +198,7 @@ data DrawerPosition
   | DPRight
 
 drawerPosition :: forall action. DrawerPosition -> Prop action
-drawerPosition DPLeft = unsafeMkProps "drawerPosition" dPLeft
+drawerPosition DPLeft  = unsafeMkProps "drawerPosition" dPLeft
 drawerPosition DPRight = unsafeMkProps "drawerPosition" dPRight
 
 
@@ -473,7 +473,7 @@ data PM
 
 
 pickerMode :: forall action. PM -> Prop action
-pickerMode PMDialog = unsafeMkProps "mode" "dialog"
+pickerMode PMDialog   = unsafeMkProps "mode" "dialog"
 pickerMode PMDropDown = unsafeMkProps "mode" "dropdown"
 
 
