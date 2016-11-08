@@ -35,6 +35,7 @@ foreign import mapViewClass                  :: forall props. ReactClass props
 foreign import modalClass                    :: forall props. ReactClass props
 foreign import pickerClass                   :: forall props. ReactClass props
 foreign import pickerItemClass               :: forall props. ReactClass props
+foreign import progressBarAndroidClass       :: forall props. ReactClass props
 foreign import progressViewIOSClass          :: forall props. ReactClass props
 foreign import refreshControlClass           :: forall props. ReactClass props
 foreign import scrollViewClass               :: forall props. ReactClass props
@@ -75,20 +76,17 @@ datePickerIOS props = createElement datePickerIOSClass props []
 drawerLayoutAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 drawerLayoutAndroid = createElement drawerLayoutAndroidClass
 
-image :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-image = createElement imageClass
+image :: forall action. Array (Prop action) -> Element action
+image props = createElement imageClass props []
 
 keyboardAvoidingView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 keyboardAvoidingView = createElement keyboardAvoidingViewClass
 
-textView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-textView = createElement textClass
-
 listView :: forall action. Array (Prop action) -> Element action
 listView props = createElement listViewClass props []
 
-mapView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-mapView = createElement mapViewClass
+mapView :: forall action. Array (Prop action) ->  Element action
+mapView props = createElement mapViewClass props []
 
 modal :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 modal = createElement modalClass
@@ -96,9 +94,11 @@ modal = createElement modalClass
 picker :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 picker = createElement pickerClass
 
-pickerItem :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-pickerItem = createElement pickerItemClass
+pickerItem :: forall action. Array (Prop action) -> Element action
+pickerItem props = createElement pickerItemClass props []
 
+progressBarAndroid :: forall action. Array (Prop action) -> Element action
+progressBarAndroid props = createElement progressBarAndroidClass props []
 
 progressViewIOS :: forall action. Array (Prop action) -> Element action
 progressViewIOS props = createElement progressViewIOSClass props []
@@ -130,15 +130,14 @@ tabBarIOS = createElement tabBarIOSClass
 tabBarIOSItem :: forall action. Array (Prop action) -> Element action
 tabBarIOSItem props = createElement tabBarIOSItemClass props []
 
--- TODO: Text can have Text Component inside
-text :: forall action. Array (Prop action) -> String -> Element action
-text props str = createElement textClass props [textElem str]
+text :: forall action. Array (Prop action) -> Array (Element action) -> Element action
+text = createElement textClass
 
 textInput :: forall action. Array (Prop action) -> Element action
 textInput props = createElement textInputClass props []
 
-toolbarAndroid :: forall action. Array (Prop action) -> Element action
-toolbarAndroid props = createElement toolbarAndroidClass props []
+toolbarAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
+toolbarAndroid = createElement toolbarAndroidClass
 
 touchableHighlight :: forall action. Array (Prop action) -> Element action -> Element action
 touchableHighlight = createElementOneChild touchableHighlightClass
