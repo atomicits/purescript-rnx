@@ -56,6 +56,7 @@ exports.mapViewClass                  = ReactNative.MapView;
 exports.modalClass                    = ReactNative.Modal;
 exports.pickerClass                   = ReactNative.Picker;
 exports.pickerItemClass               = ReactNative.Picker.Item;
+exports.progressBarAndroidClass       = ReactNative.ProgressBarAndroid;
 exports.progressViewIOSClass          = ReactNative.ProgressViewIOS;
 exports.refreshControlClass           = ReactNative.RefreshControl;
 exports.scrollViewClass               = ReactNative.ScrollView;
