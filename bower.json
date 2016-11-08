@@ -28,5 +28,9 @@
     "authors": [
         "Sudhir Kumar <s@atomicits.com>"
     ],
-    "license": "MIT"
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/atomicits/purescript-rnx.git"
+    }
 }
