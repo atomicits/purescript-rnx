@@ -47,6 +47,7 @@ exports.textElem = function(text) {
 };
 
 exports.activityIndicatorClass        = ReactNative.ActivityIndicator;
+exports.buttonClass                   = ReactNative.Button;
 exports.datePickerIOSClass            = ReactNative.DatePickerIOS;
 exports.drawerLayoutAndroidClass      = ReactNative.DrawerLayoutAndroid;
 exports.imageClass                    = ReactNative.Image;
