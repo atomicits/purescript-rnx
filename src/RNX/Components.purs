@@ -26,6 +26,7 @@ foreign import createElementOneChild :: forall props action. ReactClass props ->
 
 -- classes
 foreign import activityIndicatorClass        :: forall props. ReactClass props
+foreign import buttonClass                   :: forall props. ReactClass props
 foreign import datePickerIOSClass            :: forall props. ReactClass props
 foreign import drawerLayoutAndroidClass      :: forall props. ReactClass props
 foreign import imageClass                    :: forall props. ReactClass props
@@ -69,6 +70,9 @@ foreign import handlerUnit :: forall event action. Fn2 String (event -> Unit) (P
 -- ActivityIndicator doesn't have any children
 activityIndicator :: forall action. Array (Prop action) -> Element action
 activityIndicator props = createElement activityIndicatorClass props []
+
+button :: forall action. Array (Prop action) -> Element action
+button props = createElement buttonClass props []
 
 datePickerIOS :: forall action. Array (Prop action) -> Element action
 datePickerIOS props = createElement datePickerIOSClass props []
