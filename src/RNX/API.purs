@@ -161,11 +161,6 @@ foreign import imageStore_addImageFromBase64 ::forall e base64ImageData success 
 foreign import imageStore_getBase64ForTag    :: forall e uri success failure. uri -> success -> failure -> Eff e Unit
 
 
-foreign import intentAndroid_openURL       :: forall e url. url -> Eff e Unit
-foreign import intentAndroid_canOpenURL    :: forall e url callback. url -> callback -> Eff e Unit
-foreign import intentAndroid_getInitialURL :: forall e callback. callback -> Eff e Unit
-
-
 foreign import interactionManager_runAfterInteractions    :: forall e task. task -> Eff e Unit
 foreign import interactionManager_createInteractionHandle :: forall e. Eff e Unit
 foreign import interactionManager_clearInteractionHandle  :: forall e handle. handle -> Eff e Unit

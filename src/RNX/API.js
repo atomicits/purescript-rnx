@@ -773,31 +773,6 @@ exports.imageStore_getBase64ForTag = function(uri){
 };
 
 
-var intentAndroid = require('react-native').IntentAndroid;
-var intentAndroid_openURL = intentAndroid.openURL;
-exports.intentAndroid_openURL = function(url){
-    return function(){
-        return intentAndroid_openURL(url);
-    };
-};
-
-var intentAndroid_canOpenURL = intentAndroid.canOpenURL;
-exports.intentAndroid_canOpenURL = function(url){
-    return function(callback){
-        return function(){
-            return intentAndroid_canOpenURL(url, callback);
-        };
-    };
-};
-
-var intentAndroid_getInitialURL = intentAndroid.getInitialURL;
-exports.intentAndroid_getInitialURL = function(callback){
-    return function(){
-        return intentAndroid_getInitialURL(callback);
-    };
-};
-
-
 var interactionManager = require('react-native').InteractionManager;
 var interactionManager_runAfterInteractions = interactionManager.runAfterInteractions;
 exports.interactionManager_runAfterInteractions = function(task){
