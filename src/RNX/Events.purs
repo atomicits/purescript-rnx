@@ -61,7 +61,7 @@ type ProgressEvent = { nativeEvent :: { loaded :: Boolean, total :: Number } }
 -- onShouldStartLoadWithRequest
 -- Boolean
 
-onPress :: forall event action. (event -> action) -> Prop action
+onPress :: forall action. (Unit -> action) -> Prop action
 onPress = runFn2 handler "onPress"
 
 onChangeText :: forall action. (String -> action) -> Prop action
@@ -112,15 +112,15 @@ onDateChange :: forall action. (Date -> action) -> Prop action
 onDateChange = runFn2 handler "onDateChange"
 
 
-onDrawerClose :: forall event action. (event -> action) -> Prop action
+onDrawerClose :: forall action. (Unit -> action) -> Prop action
 onDrawerClose = runFn2 handler "onDrawerClose"
 
 
-onDrawerOpen :: forall event action. (event -> action) -> Prop action
+onDrawerOpen :: forall action. (Unit -> action) -> Prop action
 onDrawerOpen = runFn2 handler "onDrawerOpen"
 
 
-onDrawerSlide :: forall event action. (event -> action) -> Prop action
+onDrawerSlide :: forall action. (Unit -> action) -> Prop action
 onDrawerSlide = runFn2 handler "onDrawerSlide"
 
 
@@ -128,15 +128,15 @@ onDrawerStateChanged :: forall event action. (event -> action) -> Prop action
 onDrawerStateChanged = runFn2 handler "onDrawerStateChanged"
 
 
-onLoad :: forall event action. (event -> action) -> Prop action
+onLoad :: forall action. (Unit -> action) -> Prop action
 onLoad = runFn2 handler "onLoad"
 
 
-onLoadEnd :: forall event action. (event -> action) -> Prop action
+onLoadEnd :: forall action. (Unit -> action) -> Prop action
 onLoadEnd = runFn2 handler "onLoadEnd"
 
 
-onLoadStart :: forall event action. (event -> action) -> Prop action
+onLoadStart :: forall action. (Unit -> action) -> Prop action
 onLoadStart = runFn2 handler "onLoadStart"
 
 
@@ -169,11 +169,11 @@ onRegionChangeComplete :: forall event action. (event -> action) -> Prop action
 onRegionChangeComplete = runFn2 handler "onRegionChangeComplete"
 
 
-onRequestClose :: forall event action. (event -> action) -> Prop action
+onRequestClose :: forall action. (Unit -> action) -> Prop action
 onRequestClose = runFn2 handler "onRequestClose"
 
 
-onShow :: forall event action. (event -> action) -> Prop action
+onShow :: forall action. (Unit -> action) -> Prop action
 onShow = runFn2 handler "onShow"
 
 
@@ -181,7 +181,7 @@ onValueChange :: forall event action. (event -> action) -> Prop action
 onValueChange = runFn2 handler "onValueChange"
 
 
-onRefresh :: forall event action. (event -> action) -> Prop action
+onRefresh :: forall action. (Unit -> action) -> Prop action
 onRefresh = runFn2 handler "onRefresh"
 
 
@@ -189,7 +189,7 @@ onContentSizeChange :: forall action. (SizeEvent -> action) -> Prop action
 onContentSizeChange = runFn2 handler "onContentSizeChange"
 
 
-onScroll :: forall event action. (event -> action) -> Prop action
+onScroll :: forall action. (Unit -> action) -> Prop action
 onScroll = runFn2 handler "onScroll"
 
 
@@ -197,7 +197,7 @@ onChange :: forall event action. (event -> action) -> Prop action
 onChange = runFn2 handler "onChange"
 
 
-onSlidingComplete :: forall event action. (event -> action) -> Prop action
+onSlidingComplete :: forall action. (Unit -> action) -> Prop action
 onSlidingComplete = runFn2 handler "onSlidingComplete"
 
 
@@ -205,14 +205,10 @@ onSnapshotReady :: forall event action. (event -> action) -> Prop action
 onSnapshotReady = runFn2 handler "onSnapshotReady"
 
 
-onTintColor :: forall event action. (event -> action) -> Prop action
-onTintColor = runFn2 handler "onTintColor"
-
-
-onLongPress :: forall event action. (event -> action) -> Prop action
+onLongPress :: forall action. (Unit -> action) -> Prop action
 onLongPress = runFn2 handler "onLongPress"
 
-onScrollAnimationEnd :: forall event action. (event -> action) -> Prop action
+onScrollAnimationEnd :: forall action. (Unit -> action) -> Prop action
 onScrollAnimationEnd = runFn2 handler "onScrollAnimationEnd"
 
 
@@ -220,7 +216,7 @@ onScrollAnimationEnd = runFn2 handler "onScrollAnimationEnd"
 --onPress = runFn2 handler "onPress"
 
 
-onBlur :: forall event action. (event -> action) -> Prop action
+onBlur :: forall action. (Unit -> action) -> Prop action
 onBlur = runFn2 handler "onBlur"
 
 
@@ -232,19 +228,22 @@ onBlur = runFn2 handler "onBlur"
 --onContentSizeChange = runFn2 handler "onContentSizeChange"
 
 
-onEndEditing :: forall event action. (event -> action) -> Prop action
+onEndEditing :: forall action. (Unit -> action) -> Prop action
 onEndEditing = runFn2 handler "onEndEditing"
 
 
-onFocus :: forall event action. (event -> action) -> Prop action
+onFocus :: forall action. (Unit -> action) -> Prop action
 onFocus = runFn2 handler "onFocus"
 
 
-onSelectionChange :: forall event action. (event -> action) -> Prop action
+type SelectionEvent = {nativeEvent::{selection::{start::Int, end:: Int}}}
+
+-- TODO: handle selectionevent
+onSelectionChange :: forall action. (SelectionEvent -> action) -> Prop action
 onSelectionChange = runFn2 handler "onSelectionChange"
 
 
-onSubmitEditing :: forall event action. (event -> action) -> Prop action
+onSubmitEditing :: forall action. (Unit -> action) -> Prop action
 onSubmitEditing = runFn2 handler "onSubmitEditing"
 
 
