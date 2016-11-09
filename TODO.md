@@ -1,5 +1,11 @@
 ## TODO
 
+* [x] restrict Number to Int where required
+* [ ] replace event with Unit where there is no input for the function
+* [ ] Navigation and Navigation signal
+* [ ] restrict to specific types rather than keeping them polymorphic
+
+
 ### Type System
 * [ ] Platform specific components
 * [ ] Platform specific properties
@@ -12,10 +18,11 @@
 
 ### Top Level Todos
 * [x] Components
-* [ ] Properties
+* [x] Properties
 * [ ] Style
-* [ ] Events
+* [x] Events
 * [ ] Api
+* [ ] Methods
 * [ ] Navigation Experimental
 
 #### Components
@@ -127,10 +134,12 @@
 
 * [x] onLayout
 * [ ] onError / type
+* [ ] onPartialLoad
 
 ##### ListView
 
 * [ ] onChangeVisibleRows
+* [ ] onEndReached
 
 ##### Picker
 * [ ] onValueChange
