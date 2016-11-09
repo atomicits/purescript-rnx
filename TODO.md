@@ -12,10 +12,11 @@
 
 ### Top Level Todos
 * [x] Components
-* [ ] Properties
+* [x] Properties
 * [ ] Style
-* [ ] Events
+* [x] Events
 * [ ] Api
+* [ ] Methods
 * [ ] Navigation Experimental
 
 #### Components
