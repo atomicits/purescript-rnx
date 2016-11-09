@@ -11,7 +11,7 @@
 * [ ] Component specific child components
 
 ### Top Level Todos
-* [ ] Components
+* [x] Components
 * [ ] Properties
 * [ ] Style
 * [ ] Events
@@ -20,7 +20,7 @@
 
 #### Components
 
-* [ ] DatePickerIOS
+* [x] DatePickerIOS
 
 
 #### Properties
@@ -37,7 +37,7 @@
 
 ##### Image
 
-* [ ] source
+* [x] source
 * [ ] defaultSource
 * [ ] contentContainerStyle
 

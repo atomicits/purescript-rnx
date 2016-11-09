@@ -657,7 +657,7 @@ allowsInlineMediaPlayback = unsafeMkProps "allowsInlineMediaPlayback"
 
 
 mediaPlaybackRequiresUserAction :: forall action. Boolean -> Prop action
-mediaPlaybackRequiresUserAction = unsafeMkProps "bouncesZoom"
+mediaPlaybackRequiresUserAction = unsafeMkProps "mediaPlaybackRequiresUserAction"
 
 
 canCancelContentTouches :: forall action. Boolean -> Prop action
