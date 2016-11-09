@@ -2,7 +2,23 @@
 
 // module ReactNative.Styles
 
-exports.createStyleSheet = function(styles){
+exports._createStyleSheet = function(styleSheet){
+    var stylesObj = {};
+    styleSheet.forEach(function(s){
+        var mergeStyle = {};
+        s.styles.forEach(function(style){
+            Object.keys(style).forEach(function(k){
+                mergeStyle[k] = style[k];
+            });
+        });
+        stylesObj[s.name] = mergeStyle;
+    });
+    return require('react-native').StyleSheet.create(stylesObj);
+};
+
+
+
+var _createStyleSheet1 = function(styles){
     var stylesObj = {};
     styles.forEach(function(s) {
         var elemStyles = s.value1;
@@ -21,6 +37,8 @@ exports.getStyleId = function(styleSheet){
 
 exports.unsafeMkStyleProp = function(key) {
     return function(value) {
-        return [key, value];
+        var obj = {};
+        obj[key] = value;
+        return obj;
     };
 };

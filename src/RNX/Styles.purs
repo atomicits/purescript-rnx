@@ -1,20 +1,32 @@
 module RNX.Styles where
 
-import Prelude hiding (bottom, top)
 import RNX
 import RNX.Components
 import RNX.Events
 import RNX.Props
 import RNX.Color
+import Prelude hiding (bottom,top)
 
 foreign import data StyleSheet :: *
 foreign import data StyleProp :: *
 
 type StyleId = Int
 data Style = Style String (Array StyleProp)
+type StyleSheet' = Array {name:: String, styles:: Array StyleProp}
 
-foreign import createStyleSheet :: Array Style -> StyleSheet
+foreign import _createStyleSheet :: StyleSheet' -> StyleSheet
+
+createStyleSheet :: Array Style -> StyleSheet
+createStyleSheet s =
+  _createStyleSheet $ map getStyle s
+  where
+    getStyle (Style name styleProps) = {name: name, styles: styleProps}
+
+
+
+-- TODO: make this type safe!
 foreign import getStyleId :: StyleSheet -> String -> StyleId
+
 foreign import unsafeMkStyleProp :: forall val. String -> val -> StyleProp
 
 style :: forall action. StyleId -> Prop action
@@ -35,11 +47,11 @@ data AlignItems
   | AlignItemsCenter
   | AlignItemsStretch
 
-alignItems :: forall action. AlignItems -> Prop action
-alignItems AlignItemsFlexStart = unsafeMkProps "alignItems" "flex-start"
-alignItems AlignItemsFlexEnd   = unsafeMkProps "alignItems" "flex-end"
-alignItems AlignItemsCenter    = unsafeMkProps "alignItems" "center"
-alignItems AlignItemsStretch   = unsafeMkProps "alignItems" "stretch"
+alignItems :: AlignItems -> StyleProp
+alignItems AlignItemsFlexStart = unsafeMkStyleProp "alignItems" "flex-start"
+alignItems AlignItemsFlexEnd   = unsafeMkStyleProp "alignItems" "flex-end"
+alignItems AlignItemsCenter    = unsafeMkStyleProp "alignItems" "center"
+alignItems AlignItemsStretch   = unsafeMkStyleProp "alignItems" "stretch"
 
 data AlignSelf
   = AlignSelfAuto
@@ -48,88 +60,88 @@ data AlignSelf
   | AlignSelfCenter
   | AlignSelfStretch
 
-alignSelf :: forall action. AlignSelf -> Prop action
-alignSelf AlignSelfAuto      = unsafeMkProps "alignSelf" "auto"
-alignSelf AlignSelfFlexStart = unsafeMkProps "alignSelf" "flex-start"
-alignSelf AlignSelfFlexEnd   = unsafeMkProps "alignSelf" "flex-end"
-alignSelf AlignSelfCenter    = unsafeMkProps "alignSelf" "center"
-alignSelf AlignSelfStretch   = unsafeMkProps "alignSelf" "stretch"
+alignSelf :: AlignSelf -> StyleProp
+alignSelf AlignSelfAuto      = unsafeMkStyleProp "alignSelf" "auto"
+alignSelf AlignSelfFlexStart = unsafeMkStyleProp "alignSelf" "flex-start"
+alignSelf AlignSelfFlexEnd   = unsafeMkStyleProp "alignSelf" "flex-end"
+alignSelf AlignSelfCenter    = unsafeMkStyleProp "alignSelf" "center"
+alignSelf AlignSelfStretch   = unsafeMkStyleProp "alignSelf" "stretch"
 
 -- B
 
-backfaceVisibility :: forall action. Visibility -> Prop action
-backfaceVisibility Visible = unsafeMkProps "backfaceVisibility" "visible"
-backfaceVisibility Hidden  = unsafeMkProps "backfaceVisibility" "hidden"
+backfaceVisibility :: Visibility -> StyleProp
+backfaceVisibility Visible = unsafeMkStyleProp "backfaceVisibility" "visible"
+backfaceVisibility Hidden  = unsafeMkStyleProp "backfaceVisibility" "hidden"
 
 
-backgroundVisibility :: forall action. Visibility -> Prop action
-backgroundVisibility Visible = unsafeMkProps "backgroundVisibility" "visible"
-backgroundVisibility Hidden  = unsafeMkProps "backgroundVisibility" "hidden"
+backgroundVisibility :: Visibility -> StyleProp
+backgroundVisibility Visible = unsafeMkStyleProp "backgroundVisibility" "visible"
+backgroundVisibility Hidden  = unsafeMkStyleProp "backgroundVisibility" "hidden"
 
-borderBottomColor :: forall action. Color -> Prop action
-borderBottomColor c = unsafeMkProps "borderBottomColor" (show c)
+borderBottomColor :: Color -> StyleProp
+borderBottomColor c = unsafeMkStyleProp "borderBottomColor" (show c)
 
-borderBottomRightRadius :: forall action. Number -> Prop action
-borderBottomRightRadius = unsafeMkProps "borderBottomRightRadius"
+borderBottomRightRadius :: Int -> StyleProp
+borderBottomRightRadius = unsafeMkStyleProp "borderBottomRightRadius"
 
-borderBottomWidth :: forall action. Number -> Prop action
-borderBottomWidth = unsafeMkProps "borderBottomWidth"
+borderBottomWidth :: Int -> StyleProp
+borderBottomWidth = unsafeMkStyleProp "borderBottomWidth"
 
-borderColor :: forall action. Color -> Prop action
-borderColor c = unsafeMkProps "borderColor" (show c)
+borderColor :: Color -> StyleProp
+borderColor c = unsafeMkStyleProp "borderColor" (show c)
 
-borderLeftColor :: forall action. Color -> Prop action
-borderLeftColor c = unsafeMkProps "borderLeftColor" (show c)
+borderLeftColor :: Color -> StyleProp
+borderLeftColor c = unsafeMkStyleProp "borderLeftColor" (show c)
 
-borderLeftWidth :: forall action. Number -> Prop action
-borderLeftWidth = unsafeMkProps "borderLeftWidth"
+borderLeftWidth :: Int -> StyleProp
+borderLeftWidth = unsafeMkStyleProp "borderLeftWidth"
 
-borderRadius :: forall action. Number -> Prop action
-borderRadius = unsafeMkProps "borderRadius"
+borderRadius :: Int -> StyleProp
+borderRadius = unsafeMkStyleProp "borderRadius"
 
-borderRightColor :: forall action. Color -> Prop action
-borderRightColor c = unsafeMkProps "borderRightColor" (show c)
+borderRightColor :: Color -> StyleProp
+borderRightColor c = unsafeMkStyleProp "borderRightColor" (show c)
 
-borderRightWidth :: forall action. Number -> Prop action
-borderRightWidth = unsafeMkProps "borderRightWidth"
+borderRightWidth :: Int -> StyleProp
+borderRightWidth = unsafeMkStyleProp "borderRightWidth"
 
 data BorderStyle
   = BorderSolid
   | BorderDotted
   | BorderDashed
 
-borderStyle :: forall action. BorderStyle -> Prop action
-borderStyle BorderSolid  = unsafeMkProps "borderStyle" "solid"
-borderStyle BorderDotted = unsafeMkProps "borderStyle" "dotted"
-borderStyle BorderDashed = unsafeMkProps "borderStyle" "dashed"
+borderStyle :: BorderStyle -> StyleProp
+borderStyle BorderSolid  = unsafeMkStyleProp "borderStyle" "solid"
+borderStyle BorderDotted = unsafeMkStyleProp "borderStyle" "dotted"
+borderStyle BorderDashed = unsafeMkStyleProp "borderStyle" "dashed"
 
-borderTopLeftRadius :: forall action. Number -> Prop action
-borderTopLeftRadius = unsafeMkProps "borderTopLeftRadius"
+borderTopLeftRadius :: Int -> StyleProp
+borderTopLeftRadius = unsafeMkStyleProp "borderTopLeftRadius"
 
-borderTopRightRadius :: forall action. Number -> Prop action
-borderTopRightRadius = unsafeMkProps "borderTopRightRadius"
+borderTopRightRadius :: Int -> StyleProp
+borderTopRightRadius = unsafeMkStyleProp "borderTopRightRadius"
 
-borderTopWidth :: forall action. Number -> Prop action
-borderTopWidth = unsafeMkProps "borderTopWidth"
+borderTopWidth :: Int -> StyleProp
+borderTopWidth = unsafeMkStyleProp "borderTopWidth"
 
-borderWidth :: forall action. Number -> Prop action
-borderWidth = unsafeMkProps "borderWidth"
+borderWidth :: Int -> StyleProp
+borderWidth = unsafeMkStyleProp "borderWidth"
 
-bottom :: forall action. Number -> Prop action
-bottom = unsafeMkProps "bottom"
+bottom :: Int -> StyleProp
+bottom = unsafeMkStyleProp "bottom"
 
 -- E
 
-elevation :: forall action. Number -> Prop action
-elevation = unsafeMkProps "elevation"
+elevation :: Int -> StyleProp
+elevation = unsafeMkStyleProp "elevation"
 
 -- F
 
-flex :: forall action. Number -> Prop action
-flex = unsafeMkProps "flex"
+flex :: Int -> StyleProp
+flex = unsafeMkStyleProp "flex"
 
-flexBasis :: forall action. Number -> Prop action
-flexBasis = unsafeMkProps "flexBasis"
+flexBasis :: Int -> StyleProp
+flexBasis = unsafeMkStyleProp "flexBasis"
 
 data FlexDirection
   = Row
@@ -137,35 +149,35 @@ data FlexDirection
   | RowReverse
   | ColumnReverse
 
-flexDirection :: forall action. FlexDirection -> Prop action
-flexDirection Row           = unsafeMkProps "flexDirection" "row"
-flexDirection Column        = unsafeMkProps "flexDirection" "column"
-flexDirection ColumnReverse = unsafeMkProps "flexDirection" "column-reverse"
-flexDirection RowReverse    = unsafeMkProps "flexDirection" "row-reverse"
+flexDirection :: FlexDirection -> StyleProp
+flexDirection Row           = unsafeMkStyleProp "flexDirection" "row"
+flexDirection Column        = unsafeMkStyleProp "flexDirection" "column"
+flexDirection ColumnReverse = unsafeMkStyleProp "flexDirection" "column-reverse"
+flexDirection RowReverse    = unsafeMkStyleProp "flexDirection" "row-reverse"
 
-flexGrow :: forall action. Number -> Prop action
-flexGrow = unsafeMkProps "flexGrow"
+flexGrow :: Int -> StyleProp
+flexGrow = unsafeMkStyleProp "flexGrow"
 
-flexShrink :: forall action. Number -> Prop action
-flexShrink = unsafeMkProps "flexShrink"
+flexShrink :: Int -> StyleProp
+flexShrink = unsafeMkStyleProp "flexShrink"
 
 data WrapProp = Wrap | NoWrap
 
-flexWrap :: forall action. WrapProp -> Prop action
-flexWrap Wrap   = unsafeMkProps "flexWrap" "wrap"
-flexWrap NoWrap = unsafeMkProps "flexWrap" "nowrap"
+flexWrap :: WrapProp -> StyleProp
+flexWrap Wrap   = unsafeMkStyleProp "flexWrap" "wrap"
+flexWrap NoWrap = unsafeMkStyleProp "flexWrap" "nowrap"
 
-fontFamily :: forall action. String -> Prop action
-fontFamily = unsafeMkProps "fontFamily"
+fontFamily :: String -> StyleProp
+fontFamily = unsafeMkStyleProp "fontFamily"
 
-fontSize :: forall action. Number -> Prop action
-fontSize = unsafeMkProps "fontSize"
+fontSize :: Int -> StyleProp
+fontSize = unsafeMkStyleProp "fontSize"
 
 data FontStyle = FontNormal | FontItalic
 
-fontStyle :: forall action. FontStyle -> Prop action
-fontStyle FontNormal = unsafeMkProps "fontStyle" "normal"
-fontStyle FontItalic = unsafeMkProps "fontStyle" "italic"
+fontStyle :: FontStyle -> StyleProp
+fontStyle FontNormal = unsafeMkStyleProp "fontStyle" "normal"
+fontStyle FontItalic = unsafeMkStyleProp "fontStyle" "italic"
 
 data FontVariant
   = SmallCap
@@ -174,8 +186,8 @@ data FontVariant
   | TabularNum
   | ProportionalNum
 
-fontVariant :: forall action. Array FontVariant -> Prop action
-fontVariant ary = unsafeMkProps "fontVariant" (map fontVariantNum ary)
+fontVariant :: Array FontVariant -> StyleProp
+fontVariant ary = unsafeMkStyleProp "fontVariant" (map fontVariantNum ary)
 
 fontVariantNum :: FontVariant -> String
 fontVariantNum SmallCap        = "small-caps"
@@ -197,23 +209,23 @@ data FontWeight
   | Weight800
   | Weight900
 
-fontWeight :: forall action. FontWeight -> Prop action
-fontWeight WeightNormal = unsafeMkProps "fontWeight" "normal"
-fontWeight WeightBold   = unsafeMkProps "fontWeight" "bold"
-fontWeight Weight100    = unsafeMkProps "fontWeight" "100"
-fontWeight Weight200    = unsafeMkProps "fontWeight" "200"
-fontWeight Weight300    = unsafeMkProps "fontWeight" "300"
-fontWeight Weight400    = unsafeMkProps "fontWeight" "400"
-fontWeight Weight500    = unsafeMkProps "fontWeight" "500"
-fontWeight Weight600    = unsafeMkProps "fontWeight" "600"
-fontWeight Weight700    = unsafeMkProps "fontWeight" "700"
-fontWeight Weight800    = unsafeMkProps "fontWeight" "800"
-fontWeight Weight900    = unsafeMkProps "fontWeight" "900"
+fontWeight :: FontWeight -> StyleProp
+fontWeight WeightNormal = unsafeMkStyleProp "fontWeight" "normal"
+fontWeight WeightBold   = unsafeMkStyleProp "fontWeight" "bold"
+fontWeight Weight100    = unsafeMkStyleProp "fontWeight" "100"
+fontWeight Weight200    = unsafeMkStyleProp "fontWeight" "200"
+fontWeight Weight300    = unsafeMkStyleProp "fontWeight" "300"
+fontWeight Weight400    = unsafeMkStyleProp "fontWeight" "400"
+fontWeight Weight500    = unsafeMkStyleProp "fontWeight" "500"
+fontWeight Weight600    = unsafeMkStyleProp "fontWeight" "600"
+fontWeight Weight700    = unsafeMkStyleProp "fontWeight" "700"
+fontWeight Weight800    = unsafeMkStyleProp "fontWeight" "800"
+fontWeight Weight900    = unsafeMkStyleProp "fontWeight" "900"
 
 -- H
 
-height :: forall action. Number -> Prop action
-height = unsafeMkProps "height"
+height :: Int -> StyleProp
+height = unsafeMkStyleProp "height"
 
 --J
 
@@ -224,118 +236,118 @@ data JustifyContent
   | JustifyContentSpaceBetween
   | JustifyContentSpaceAround
 
-justifyContent :: forall action. JustifyContent -> Prop action
-justifyContent JustifyContentFlexStart    = unsafeMkProps "justifyContent" "flex-start"
-justifyContent JustifyContentFlexEnd      = unsafeMkProps "justifyContent" "flex-end"
-justifyContent JustifyContentCenter       = unsafeMkProps "justifyContent" "center"
-justifyContent JustifyContentSpaceBetween = unsafeMkProps "justifyContent" "space-between"
-justifyContent JustifyContentSpaceAround  = unsafeMkProps "justifyContent" "space-around"
+justifyContent :: JustifyContent -> StyleProp
+justifyContent JustifyContentFlexStart    = unsafeMkStyleProp "justifyContent" "flex-start"
+justifyContent JustifyContentFlexEnd      = unsafeMkStyleProp "justifyContent" "flex-end"
+justifyContent JustifyContentCenter       = unsafeMkStyleProp "justifyContent" "center"
+justifyContent JustifyContentSpaceBetween = unsafeMkStyleProp "justifyContent" "space-between"
+justifyContent JustifyContentSpaceAround  = unsafeMkStyleProp "justifyContent" "space-around"
 
 -- L
 
-left :: forall action. Number -> Prop action
-left = unsafeMkProps "left"
+left :: Int -> StyleProp
+left = unsafeMkStyleProp "left"
 
-letterSpacing :: forall action. Number -> Prop action
-letterSpacing = unsafeMkProps "letterSpacing"
+letterSpacing :: Int -> StyleProp
+letterSpacing = unsafeMkStyleProp "letterSpacing"
 
-lineHeight :: forall action. Number -> Prop action
-lineHeight = unsafeMkProps "lineHeight"
+lineHeight :: Int -> StyleProp
+lineHeight = unsafeMkStyleProp "lineHeight"
 
 -- M
 
-margin :: forall action. Number -> Prop action
-margin = unsafeMkProps "margin"
+margin :: Int -> StyleProp
+margin = unsafeMkStyleProp "margin"
 
-marginBottom :: forall action. Number -> Prop action
-marginBottom = unsafeMkProps "marginBottom"
+marginBottom :: Int -> StyleProp
+marginBottom = unsafeMkStyleProp "marginBottom"
 
-marginHorizontal :: forall action. Number -> Prop action
-marginHorizontal = unsafeMkProps "marginHorizontal"
+marginHorizontal :: Int -> StyleProp
+marginHorizontal = unsafeMkStyleProp "marginHorizontal"
 
-marginLeft :: forall action. Number -> Prop action
-marginLeft = unsafeMkProps "marginLeft"
+marginLeft :: Int -> StyleProp
+marginLeft = unsafeMkStyleProp "marginLeft"
 
-marginRight :: forall action. Number -> Prop action
-marginRight = unsafeMkProps "marginRight"
+marginRight :: Int -> StyleProp
+marginRight = unsafeMkStyleProp "marginRight"
 
-marginTop :: forall action. Number -> Prop action
-marginTop = unsafeMkProps "marginTop"
+marginTop :: Int -> StyleProp
+marginTop = unsafeMkStyleProp "marginTop"
 
-marginVertical :: forall action. Number -> Prop action
-marginVertical = unsafeMkProps "marginVertical"
+marginVertical :: Int -> StyleProp
+marginVertical = unsafeMkStyleProp "marginVertical"
 
-maxHeight :: forall action. Number -> Prop action
-maxHeight = unsafeMkProps "maxHeight"
+maxHeight :: Int -> StyleProp
+maxHeight = unsafeMkStyleProp "maxHeight"
 
-maxWidth :: forall action. Number -> Prop action
-maxWidth = unsafeMkProps "maxWidth"
+maxWidth :: Int -> StyleProp
+maxWidth = unsafeMkStyleProp "maxWidth"
 
-minHeight :: forall action. Number -> Prop action
-minHeight = unsafeMkProps "minHeight"
+minHeight :: Int -> StyleProp
+minHeight = unsafeMkStyleProp "minHeight"
 
-minWidth :: forall action. Number -> Prop action
-minWidth = unsafeMkProps "minWidth"
+minWidth :: Int -> StyleProp
+minWidth = unsafeMkStyleProp "minWidth"
 
 -- O
 
-opacity :: forall action. Number -> Prop action
-opacity = unsafeMkProps "opacity"
+opacity :: Int -> StyleProp
+opacity = unsafeMkStyleProp "opacity"
 
-overflow :: forall action. Visibility -> Prop action
-overflow Visible = unsafeMkProps "overflow" "visible"
-overflow Hidden  = unsafeMkProps "overflow" "hidden"
+overflow :: Visibility -> StyleProp
+overflow Visible = unsafeMkStyleProp "overflow" "visible"
+overflow Hidden  = unsafeMkStyleProp "overflow" "hidden"
 
-overlayColor :: forall action. String -> Prop action
-overlayColor = unsafeMkProps "overlayColor"
+overlayColor :: String -> StyleProp
+overlayColor = unsafeMkStyleProp "overlayColor"
 
 -- P
 
-padding :: forall action. Number -> Prop action
-padding = unsafeMkProps "padding"
+padding :: Int -> StyleProp
+padding = unsafeMkStyleProp "padding"
 
-paddingBottom :: forall action. Number -> Prop action
-paddingBottom = unsafeMkProps "paddingBottom"
+paddingBottom :: Int -> StyleProp
+paddingBottom = unsafeMkStyleProp "paddingBottom"
 
-paddingHorizontal :: forall action. Number -> Prop action
-paddingHorizontal = unsafeMkProps "paddingHorizontal"
+paddingHorizontal :: Int -> StyleProp
+paddingHorizontal = unsafeMkStyleProp "paddingHorizontal"
 
-paddingLeft :: forall action. Number -> Prop action
-paddingLeft = unsafeMkProps "paddingLeft"
+paddingLeft :: Int -> StyleProp
+paddingLeft = unsafeMkStyleProp "paddingLeft"
 
-paddingRight :: forall action. Number -> Prop action
-paddingRight = unsafeMkProps "paddingRight"
+paddingRight :: Int -> StyleProp
+paddingRight = unsafeMkStyleProp "paddingRight"
 
-paddingTop :: forall action. Number -> Prop action
-paddingTop = unsafeMkProps "paddingTop"
+paddingTop :: Int -> StyleProp
+paddingTop = unsafeMkStyleProp "paddingTop"
 
-paddingVertical :: forall action. Number -> Prop action
-paddingVertical = unsafeMkProps "paddingVertical"
+paddingVertical :: Int -> StyleProp
+paddingVertical = unsafeMkStyleProp "paddingVertical"
 
 data Position = Absolute | Relative
 
-position :: forall action. Position -> Prop action
-position Absolute = unsafeMkProps "position" "absolute"
-position Relative = unsafeMkProps "position" "relative"
+position :: Position -> StyleProp
+position Absolute = unsafeMkStyleProp "position" "absolute"
+position Relative = unsafeMkStyleProp "position" "relative"
 
 -- R
 
-right :: forall action. Number -> Prop action
-right = unsafeMkProps "right"
+right :: Int -> StyleProp
+right = unsafeMkStyleProp "right"
 
 -- S
 
-shadowColor :: forall action. Color -> Prop action
-shadowColor c = unsafeMkProps "shadowColor" (show c)
+shadowColor :: Color -> StyleProp
+shadowColor c = unsafeMkStyleProp "shadowColor" (show c)
 
-shadowOffset :: forall action. {width :: Number, height :: Number} -> Prop action
-shadowOffset = unsafeMkProps "shadowOffset"
+shadowOffset :: {width :: Int, height :: Int} -> StyleProp
+shadowOffset = unsafeMkStyleProp "shadowOffset"
 
-shadowOpacity :: forall action. Number -> Prop action
-shadowOpacity = unsafeMkProps "shadowOpacity"
+shadowOpacity :: Int -> StyleProp
+shadowOpacity = unsafeMkStyleProp "shadowOpacity"
 
-shadowRadius :: forall action. Number -> Prop action
-shadowRadius = unsafeMkProps "shadowRadius"
+shadowRadius :: Int -> StyleProp
+shadowRadius = unsafeMkStyleProp "shadowRadius"
 
 -- T
 
@@ -346,12 +358,12 @@ data TextAlign
   | TextAlignCenter
   | TextAlignJustify
 
-textAlign :: forall action. TextAlign -> Prop action
-textAlign TextAlignAuto    = unsafeMkProps "textAlign" "auto"
-textAlign TextAlignLeft    = unsafeMkProps "textAlign" "left"
-textAlign TextAlignRight   = unsafeMkProps "textAlign" "right"
-textAlign TextAlignCenter  = unsafeMkProps "textAlign" "center"
-textAlign TextAlignJustify = unsafeMkProps "textAlign" "justify"
+textAlign :: TextAlign -> StyleProp
+textAlign TextAlignAuto    = unsafeMkStyleProp "textAlign" "auto"
+textAlign TextAlignLeft    = unsafeMkStyleProp "textAlign" "left"
+textAlign TextAlignRight   = unsafeMkStyleProp "textAlign" "right"
+textAlign TextAlignCenter  = unsafeMkStyleProp "textAlign" "center"
+textAlign TextAlignJustify = unsafeMkStyleProp "textAlign" "justify"
 
 data TextAlignVertical
   = TextAlignVerticalAuto
@@ -359,14 +371,14 @@ data TextAlignVertical
   | TextAlignVerticalBottom
   | TextAlignVerticalCenter
 
-textAlignVertical :: forall action. TextAlignVertical -> Prop action
-textAlignVertical TextAlignVerticalAuto   = unsafeMkProps "textAlignVertical" "auto"
-textAlignVertical TextAlignVerticalTop    = unsafeMkProps "textAlignVertical" "top"
-textAlignVertical TextAlignVerticalBottom = unsafeMkProps "textAlignVertical" "bottom"
-textAlignVertical TextAlignVerticalCenter = unsafeMkProps "textAlignVertical" "center"
+textAlignVertical :: TextAlignVertical -> StyleProp
+textAlignVertical TextAlignVerticalAuto   = unsafeMkStyleProp "textAlignVertical" "auto"
+textAlignVertical TextAlignVerticalTop    = unsafeMkStyleProp "textAlignVertical" "top"
+textAlignVertical TextAlignVerticalBottom = unsafeMkStyleProp "textAlignVertical" "bottom"
+textAlignVertical TextAlignVerticalCenter = unsafeMkStyleProp "textAlignVertical" "center"
 
-textDecorationColor :: forall action. Color -> Prop action
-textDecorationColor c = unsafeMkProps "textDecorationColor" (show c)
+textDecorationColor :: Color -> StyleProp
+textDecorationColor c = unsafeMkStyleProp "textDecorationColor" (show c)
 
 data TextDecorationLine
   = None
@@ -374,11 +386,11 @@ data TextDecorationLine
   | LineThrough
   | UnderlineLineThrough
 
-textDecorationLine :: forall action. TextDecorationLine -> Prop action
-textDecorationLine None                 = unsafeMkProps "textDecorationLine" "none"
-textDecorationLine Underline            = unsafeMkProps "textDecorationLine" "underline"
-textDecorationLine LineThrough          = unsafeMkProps "textDecorationLine" "line-through"
-textDecorationLine UnderlineLineThrough = unsafeMkProps "textDecorationLine" "underline line-through"
+textDecorationLine :: TextDecorationLine -> StyleProp
+textDecorationLine None                 = unsafeMkStyleProp "textDecorationLine" "none"
+textDecorationLine Underline            = unsafeMkStyleProp "textDecorationLine" "underline"
+textDecorationLine LineThrough          = unsafeMkStyleProp "textDecorationLine" "line-through"
+textDecorationLine UnderlineLineThrough = unsafeMkStyleProp "textDecorationLine" "underline line-through"
 
 data TextDecorationStyle
   = TextSolid
@@ -386,43 +398,43 @@ data TextDecorationStyle
   | TextDotted
   | TextDashed
 
-textDecorationStyle :: forall action. TextDecorationStyle -> Prop action
-textDecorationStyle TextSolid  = unsafeMkProps "textDecorationStyle" "solid"
-textDecorationStyle TextDouble = unsafeMkProps "textDecorationStyle" "double"
-textDecorationStyle TextDotted = unsafeMkProps "textDecorationStyle" "dotted"
-textDecorationStyle TextDashed = unsafeMkProps "textDecorationStyle" "dashed"
+textDecorationStyle :: TextDecorationStyle -> StyleProp
+textDecorationStyle TextSolid  = unsafeMkStyleProp "textDecorationStyle" "solid"
+textDecorationStyle TextDouble = unsafeMkStyleProp "textDecorationStyle" "double"
+textDecorationStyle TextDotted = unsafeMkStyleProp "textDecorationStyle" "dotted"
+textDecorationStyle TextDashed = unsafeMkStyleProp "textDecorationStyle" "dashed"
 
-textShadowColor :: forall action. Color -> Prop action
-textShadowColor c = unsafeMkProps "textShadowColor" (show c)
+textShadowColor :: Color -> StyleProp
+textShadowColor c = unsafeMkStyleProp "textShadowColor" (show c)
 
-textShadowOffset :: forall action. {width :: Number, height :: Number} -> Prop action
-textShadowOffset = unsafeMkProps "textShadowOffset"
+textShadowOffset :: {width :: Int, height :: Int} -> StyleProp
+textShadowOffset = unsafeMkStyleProp "textShadowOffset"
 
-textShadowRadius :: forall action. Number -> Prop action
-textShadowRadius = unsafeMkProps "textShadowRadius"
+textShadowRadius :: Int -> StyleProp
+textShadowRadius = unsafeMkStyleProp "textShadowRadius"
 
-top :: forall action. Number -> Prop action
-top = unsafeMkProps "top"
+top :: Int -> StyleProp
+top = unsafeMkStyleProp "top"
 
 -- W
 
-width :: forall action. Number -> Prop action
-width = unsafeMkProps "width"
+width :: Int -> StyleProp
+width = unsafeMkStyleProp "width"
 
 data WritingDirection
   = WritingDirectionAuto
   | WritingDirectionLtr
   | WritingDirectionRtl
 
-writingDirection :: forall action. WritingDirection -> Prop action
-writingDirection WritingDirectionAuto = unsafeMkProps "writingDirection" "auto"
-writingDirection WritingDirectionLtr  = unsafeMkProps "writingDirection" "ltr"
-writingDirection WritingDirectionRtl  = unsafeMkProps "writingDirection" "rtl"
+writingDirection :: WritingDirection -> StyleProp
+writingDirection WritingDirectionAuto = unsafeMkStyleProp "writingDirection" "auto"
+writingDirection WritingDirectionLtr  = unsafeMkStyleProp "writingDirection" "ltr"
+writingDirection WritingDirectionRtl  = unsafeMkStyleProp "writingDirection" "rtl"
 
 -- Z
 
-zIndex :: forall action. Number -> Prop action
-zIndex = unsafeMkProps "zIndex"
+zIndex :: Int -> StyleProp
+zIndex = unsafeMkStyleProp "zIndex"
 
 -- TODO: Transform Props
 -- TODO: resizeMode
