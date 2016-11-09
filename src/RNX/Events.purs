@@ -64,11 +64,11 @@ type ProgressEvent = { nativeEvent :: { loaded :: Boolean, total :: Number } }
 onPress :: forall event action. (event -> action) -> Prop action
 onPress = runFn2 handler "onPress"
 
-onChangeText :: forall event action. (event -> action) -> Prop action
+onChangeText :: forall action. (String -> action) -> Prop action
 onChangeText = runFn2 handler "onChangeText"
 
 onLayout :: forall action. (LayoutEvent -> action) -> Prop action
-onLayout  = runFn2 handler "onChangeText"
+onLayout  = runFn2 handler "onLayout"
 
 onMoveShouldSetResponder :: forall event action. (event -> action) -> Prop action
 onMoveShouldSetResponder = runFn2 handler "onMoveShouldSetResponder"
@@ -161,10 +161,6 @@ onEndReached :: forall event action. (event -> action) -> Prop action
 onEndReached = runFn2 handler "onEndReached"
 
 
-onEndReachedThreshold :: forall event action. (event -> action) -> Prop action
-onEndReachedThreshold = runFn2 handler "onEndReachedThreshold"
-
-
 onRegionChange  :: forall event action. (event -> action) -> Prop action
 onRegionChange  = runFn2 handler "onRegionChange"
 
@@ -179,10 +175,6 @@ onRequestClose = runFn2 handler "onRequestClose"
 
 onShow :: forall event action. (event -> action) -> Prop action
 onShow = runFn2 handler "onShow"
-
-
-onOrientationChange :: forall event action. (event -> action) -> Prop action
-onOrientationChange  = runFn2 handler "onOrientationChange"
 
 
 onValueChange :: forall event action. (event -> action) -> Prop action
@@ -219,6 +211,9 @@ onTintColor = runFn2 handler "onTintColor"
 
 onLongPress :: forall event action. (event -> action) -> Prop action
 onLongPress = runFn2 handler "onLongPress"
+
+onScrollAnimationEnd :: forall event action. (event -> action) -> Prop action
+onScrollAnimationEnd = runFn2 handler "onScrollAnimationEnd"
 
 
 --onPress :: forall event action. (event -> action) -> Prop action
@@ -257,7 +252,7 @@ onKeyPress :: forall event action. (event -> action) -> Prop action
 onKeyPress = runFn2 handler "onKeyPress"
 
 
-onActionSelected :: forall event action. (event -> action) -> Prop action
+onActionSelected :: forall action. (Int -> action) -> Prop action
 onActionSelected = runFn2 handler "onActionSelected"
 
 

@@ -50,6 +50,12 @@
 * [ ] renderScrollComponent
 * [ ] renderSectionHeader
 * [ ] renderSeparator
+* [ ] onEndReachedThreshold
+
+##### Modal
+
+* [ ] onRequestClose
+* [ ] onOrientationChange
 
 ##### MapView
 
@@ -112,15 +118,65 @@
 
 ##### DrawerLayoutAndroid
 
-* [ ] onDrawerClose
-* [ ] onDrawerOpen
-* [ ] onDrawerSlide
+* [x] onDrawerClose
+* [x] onDrawerOpen
+* [x] onDrawerSlide
 * [ ] onDrawerStateChanged
 
 ##### Image
 
-* [ ] onLayout
+* [x] onLayout
+* [ ] onError / type
 
+##### ListView
+
+* [ ] onChangeVisibleRows
+
+##### Picker
+* [ ] onValueChange
+
+##### ScrollView
+* [ ] onContentSizeChange
+* [x] onScrollAnimationEnd
+
+##### SegmentedControlIOS
+* [ ] onValueChange
+
+##### Slider
+* [ ] onValueChange
+
+##### SnapshotViewIOS
+* [ ] onSnapshotReady
+
+##### Switch
+* [ ] onValueChange
+
+##### TextInput
+* [ ] onKeyPress
+
+##### View
+
+* [ ] onAccessibilityTap
+* [ ] onMagicTap
+* [ ] onMoveShouldSetResponder
+* [ ] onMoveShouldSetResponderCapture
+* [ ] onResponderGrant
+* [ ] onResponderMove
+* [ ] onResponderReject
+* [ ] onResponderRelease
+* [ ] onResponderTerminate
+* [ ] onResponderTerminationRequest
+* [ ] onStartShouldSetResponder
+* [ ] onStartShouldSetResponderCapture
+
+##### ViewPagerAndroid
+* [ ] onPageScroll
+* [ ] onPageScrollStateChanged
+* [ ] onPageSelected
+
+##### WebView
+* [ ] onMessage
+* [ ] onShouldStartLoadWithRequest
 
 
 #### Api
