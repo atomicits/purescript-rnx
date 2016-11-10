@@ -84,8 +84,8 @@ animating :: forall action. Boolean -> Prop action
 animating = unsafeMkProps "animating"
 
 
-color :: forall action. Color -> Prop action
-color c = unsafeMkProps "color" (show c)
+pColor :: forall action. Color -> Prop action
+pColor c = unsafeMkProps "color" (show c)
 
 accessibilityLiveRegion :: forall action. AccessibilityLiveRegionProp -> Prop action
 accessibilityLiveRegion  ALRPNone  = unsafeMkProps "accessibilityLiveRegion" "none"
@@ -802,8 +802,8 @@ hidden :: forall action. Boolean -> Prop action
 hidden = unsafeMkProps "hidden"
 
 
-backgroundColor :: forall action. Color -> Prop action
-backgroundColor c = unsafeMkProps "backgroundColor" (show c)
+pBackgroundColor :: forall action. Color -> Prop action
+pBackgroundColor c = unsafeMkProps "backgroundColor" (show c)
 
 
 data BarStyle
