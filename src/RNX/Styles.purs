@@ -72,6 +72,9 @@ backfaceVisibility :: Visibility -> StyleProp
 backfaceVisibility Visible = unsafeMkStyleProp "backfaceVisibility" "visible"
 backfaceVisibility Hidden  = unsafeMkStyleProp "backfaceVisibility" "hidden"
 
+backgroundColor :: Color -> StyleProp
+backgroundColor c = unsafeMkStyleProp "backgroundColor" (show c)
+
 
 backgroundVisibility :: Visibility -> StyleProp
 backgroundVisibility Visible = unsafeMkStyleProp "backgroundVisibility" "visible"
@@ -128,6 +131,12 @@ borderWidth = unsafeMkStyleProp "borderWidth"
 
 bottom :: Int -> StyleProp
 bottom = unsafeMkStyleProp "bottom"
+
+-- C
+
+color :: Color -> StyleProp
+color c = unsafeMkStyleProp "color" (show c)
+
 
 -- E
 
