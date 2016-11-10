@@ -5,7 +5,7 @@ import RNX.Components
 import RNX.Events
 import RNX.Props
 import RNX.Color
-import Prelude hiding (bottom,top)
+import Prelude
 
 foreign import data StyleSheet :: *
 foreign import data StyleProp :: *
@@ -21,7 +21,6 @@ createStyleSheet s =
   _createStyleSheet $ map getStyle s
   where
     getStyle (Style name styleProps) = {name: name, styles: styleProps}
-
 
 
 -- TODO: make this type safe!
