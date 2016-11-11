@@ -116,9 +116,15 @@ foreign import datePickerAndroid_open            :: forall e options. options ->
 foreign import datePickerAndroid_dateSetAction   :: forall e. Eff e Unit
 foreign import datePickerAndroid_dismissedAction :: forall e. Eff e Unit
 
+type Dimensions =
+  { width :: Int
+  , height :: Int
+  , scale :: Int
+  , fontScale :: Int
+  }
 
 foreign import dimensions_set :: forall e dims. dims -> Eff e Unit
-foreign import dimensions_get :: forall e. Eff e Unit
+foreign import dimensions_get :: String -> Dimensions
 
 
 foreign import easing_step0   :: forall e a. a -> Eff e Unit
