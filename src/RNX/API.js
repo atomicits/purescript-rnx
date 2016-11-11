@@ -514,9 +514,11 @@ exports.dimensions_set = function(dims){
 
 var dimensions_get = dimensions.get;
 exports.dimensions_get = function(dim){
-    return function(){
-        return dimensions_get(dim);
-    };
+    //    return function(){
+    var result = dimensions_get(dim);
+    console.log(JSON.stringify(result));
+    return result;
+    //    };
 };
 
 var easing = require('react-native').Easing;
