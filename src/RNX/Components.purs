@@ -80,8 +80,8 @@ datePickerIOS props = createElement datePickerIOSClass props []
 drawerLayoutAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 drawerLayoutAndroid = createElement drawerLayoutAndroidClass
 
-image :: forall action. Array (Prop action) -> Element action
-image props = createElement imageClass props []
+image :: forall action. Array (Prop action) -> Array (Element action) -> Element action
+image = createElement imageClass
 
 keyboardAvoidingView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
 keyboardAvoidingView = createElement keyboardAvoidingViewClass
