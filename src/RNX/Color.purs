@@ -1,6 +1,7 @@
 module RNX.Color where
 
 import Prelude
+import Data.String
 
 data Color
   = RGBA Int Int Int Number
@@ -157,7 +158,7 @@ data Color
   | YellowGreen
 
 instance showColor :: Show Color where
-  show (RGBA r g b a)       = "#" <> show r <> show g <> show b <> show a
+  show (RGBA r g b a)       = "rgba(" <> show r <> ", " <> show g <> ", " <> show b <> ", "  <> show a <> ")"
   show (HSLA h s l a)       = "hsl(" <> show h <> "," <> show s  <> "% ," <> show l <> "%, " <> show a <> ")"
   show (Str str)            = str
   show Transparent          = "transparent"
