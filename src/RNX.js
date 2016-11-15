@@ -2,6 +2,16 @@
 
 var React = require('react');
 
+var ReactNative = require("react-native");
+
+if (ReactNative.Platform !== "ios") {
+    console.log('adding back button event listener');
+    ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
+        console.log('back button pressed');
+        return true;
+    });
+};
+
 
 exports.registerComponent = function(name){
     return function(component){
@@ -32,7 +42,6 @@ function reactClass(signal) {
 
 
 exports.render = function (input, parentAction, element) {
-
     function composeAction(parentAction, element) {
         var childAction = element.props && element.props.puxParentAction;
         var action = parentAction;
