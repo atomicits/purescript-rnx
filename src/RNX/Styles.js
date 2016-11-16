@@ -35,10 +35,13 @@ exports.getStyleId = function(styleSheet){
     };
 };
 
-exports.unsafeMkStyleProp = function(key) {
+
+function unsafeMkStyleProp (key) {
     return function(value) {
         var obj = {};
         obj[key] = value;
         return obj;
     };
 };
+exports.unsafeMkStyleProp = unsafeMkStyleProp;
+exports.unsafeMkStyleSheet = unsafeMkStyleProp;

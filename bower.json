@@ -26,7 +26,10 @@
         "purescript-signal": "^8.0.0",
         "purescript-profunctor": "^2.0.0",
         "purescript-maps": "^2.0.0",
-        "purescript-globals": "^2.0.0"
+        "purescript-globals": "^2.0.0",
+        "purescript-profunctor-lenses": "^2.0.0",
+        "purescript-react": "^2.0.0",
+        "purescript-coroutines": "^3.0.0"
     },
     "authors": [
         "Sudhir Kumar <s@atomicits.com>"

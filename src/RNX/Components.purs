@@ -2,27 +2,31 @@ module RNX.Components where
 
 import Prelude
 import Data.Function.Uncurried (Fn2)
+import React (ReactClass, createElement, ReactElement)
+import React.DOM.Props (unsafeFromPropsArray, Props)
+
+--foreign import data ReactClass :: * -> *
+--foreign import data Element :: * -> *
+--foreign import data Prop :: * -> *
 
 
-foreign import data ReactClass :: * -> *
-foreign import data Element :: * -> *
-foreign import data Prop :: * -> *
+--foreign import forwardTo    :: forall a b. (a -> b) -> Element a -> Element b
+--foreign import mapAttribute :: forall a b. (a -> b) -> Prop a -> Prop b
 
 
-foreign import forwardTo    :: forall a b. (a -> b) -> Element a -> Element b
-foreign import mapAttribute :: forall a b. (a -> b) -> Prop a -> Prop b
+-- instance functorElement :: Functor Element where
+--   map f x = forwardTo f x
 
-
-instance functorElement :: Functor Element where
-  map f x = forwardTo f x
-
-instance functorAttribute :: Functor Prop where
-  map f x = mapAttribute f x
+-- instance functorAttribute :: Functor Prop where
+--   map f x = mapAttribute f x
 
 
 -- createElement
-foreign import createElement         :: forall props action. ReactClass props -> props -> Array (Element action)-> Element action
-foreign import createElementOneChild :: forall props action. ReactClass props -> props -> Element action -> Element action
+--foreign import createElement         :: forall props. ReactClass props -> props -> Array (ReactElement)-> ReactElement
+
+foreign import createElementOneChild :: forall props. ReactClass props -> props -> ReactElement -> ReactElement
+
+
 
 -- classes
 foreign import activityIndicatorClass        :: forall props. ReactClass props
@@ -59,107 +63,107 @@ foreign import viewPagerAndroidClass         :: forall props. ReactClass props
 foreign import webViewClass                  :: forall props. ReactClass props
 
 -- Elements
-foreign import textElem :: forall action. String -> Element action
+foreign import textElem :: String -> ReactElement
 
 
-foreign import handler :: forall event action. Fn2 String (event -> action) (Prop action)
-foreign import handlerBool :: forall event action. Fn2 String (event -> Boolean) (Prop action)
-foreign import handlerUnit :: forall event action. Fn2 String (event -> Unit) (Prop action)
+foreign import handler     :: forall props event action. Fn2 String (event -> action) props
+foreign import handlerBool :: forall props event. Fn2 String (event -> Boolean) props
+foreign import handlerUnit :: forall props event. Fn2 String (event -> Unit) props
 
 
 -- ActivityIndicator doesn't have any children
-activityIndicator :: forall action. Array (Prop action) -> Element action
-activityIndicator props = createElement activityIndicatorClass props []
+activityIndicator :: Array Props -> ReactElement
+activityIndicator props = createElement activityIndicatorClass (unsafeFromPropsArray props) []
 
-button :: forall action. Array (Prop action) -> Element action
-button props = createElement buttonClass props []
+button :: Array Props -> ReactElement
+button props = createElement buttonClass (unsafeFromPropsArray props) []
 
-datePickerIOS :: forall action. Array (Prop action) -> Element action
-datePickerIOS props = createElement datePickerIOSClass props []
+datePickerIOS :: Array Props -> ReactElement
+datePickerIOS props = createElement datePickerIOSClass (unsafeFromPropsArray props) []
 
-drawerLayoutAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-drawerLayoutAndroid = createElement drawerLayoutAndroidClass
+drawerLayoutAndroid :: Array Props -> Array (ReactElement) -> ReactElement
+drawerLayoutAndroid props = createElement drawerLayoutAndroidClass (unsafeFromPropsArray props)
 
-image :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-image = createElement imageClass
+image :: Array Props -> Array (ReactElement) -> ReactElement
+image props = createElement imageClass (unsafeFromPropsArray props)
 
-keyboardAvoidingView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-keyboardAvoidingView = createElement keyboardAvoidingViewClass
+keyboardAvoidingView :: Array Props -> Array (ReactElement) -> ReactElement
+keyboardAvoidingView props = createElement keyboardAvoidingViewClass (unsafeFromPropsArray props)
 
-listView :: forall action. Array (Prop action) -> Element action
-listView props = createElement listViewClass props []
+listView :: Array Props -> ReactElement
+listView props = createElement listViewClass (unsafeFromPropsArray props) []
 
-mapView :: forall action. Array (Prop action) ->  Element action
-mapView props = createElement mapViewClass props []
+mapView :: Array Props ->  ReactElement
+mapView props = createElement mapViewClass (unsafeFromPropsArray props) []
 
-modal :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-modal = createElement modalClass
+modal :: Array Props -> Array (ReactElement) -> ReactElement
+modal props = createElement modalClass (unsafeFromPropsArray props)
 
-picker :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-picker = createElement pickerClass
+picker :: Array Props -> Array (ReactElement) -> ReactElement
+picker props = createElement pickerClass (unsafeFromPropsArray props)
 
-pickerItem :: forall action. Array (Prop action) -> Element action
-pickerItem props = createElement pickerItemClass props []
+pickerItem :: Array Props -> ReactElement
+pickerItem props = createElement pickerItemClass (unsafeFromPropsArray props) []
 
-progressBarAndroid :: forall action. Array (Prop action) -> Element action
-progressBarAndroid props = createElement progressBarAndroidClass props []
+progressBarAndroid :: Array Props -> ReactElement
+progressBarAndroid props = createElement progressBarAndroidClass (unsafeFromPropsArray props) []
 
-progressViewIOS :: forall action. Array (Prop action) -> Element action
-progressViewIOS props = createElement progressViewIOSClass props []
+progressViewIOS :: Array Props -> ReactElement
+progressViewIOS props = createElement progressViewIOSClass (unsafeFromPropsArray props) []
 
-refreshControl' :: forall action. Array (Prop action) -> Element action
-refreshControl' props = createElement refreshControlClass props []
+refreshControl' :: Array Props -> ReactElement
+refreshControl' props = createElement refreshControlClass (unsafeFromPropsArray props) []
 
-scrollView :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-scrollView = createElement scrollViewClass
+scrollView :: Array Props -> Array (ReactElement) -> ReactElement
+scrollView props = createElement scrollViewClass (unsafeFromPropsArray props)
 
-segmentedControlIOS :: forall action. Array (Prop action) -> Element action
-segmentedControlIOS props = createElement segmentedControlIOSClass props []
+segmentedControlIOS :: Array Props -> ReactElement
+segmentedControlIOS props = createElement segmentedControlIOSClass (unsafeFromPropsArray props) []
 
-slider :: forall action. Array (Prop action) -> Element action
-slider props = createElement sliderClass props []
+slider :: Array Props -> ReactElement
+slider props = createElement sliderClass (unsafeFromPropsArray props) []
 
-statusBar :: forall action. Array (Prop action) -> Element action
-statusBar props = createElement statusBarClass props []
+statusBar :: Array Props -> ReactElement
+statusBar props = createElement statusBarClass (unsafeFromPropsArray props) []
 
-snapshotViewIOS :: forall action. Array (Prop action) -> Element action
-snapshotViewIOS props = createElement snapshotViewIOSClass props []
+snapshotViewIOS :: Array Props -> ReactElement
+snapshotViewIOS props = createElement snapshotViewIOSClass (unsafeFromPropsArray props) []
 
-switch :: forall action. Array (Prop action) ->  Element action
-switch props = createElement switchClass props []
+switch :: Array Props ->  ReactElement
+switch props = createElement switchClass (unsafeFromPropsArray props) []
 
-tabBarIOS :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-tabBarIOS = createElement tabBarIOSClass
+tabBarIOS :: Array Props -> Array (ReactElement) -> ReactElement
+tabBarIOS props = createElement tabBarIOSClass (unsafeFromPropsArray props)
 
-tabBarIOSItem :: forall action. Array (Prop action) -> Element action
-tabBarIOSItem props = createElement tabBarIOSItemClass props []
+tabBarIOSItem :: Array Props -> ReactElement
+tabBarIOSItem props = createElement tabBarIOSItemClass (unsafeFromPropsArray props) []
 
-text :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-text = createElement textClass
+text :: Array Props -> Array (ReactElement) -> ReactElement
+text props = createElement textClass (unsafeFromPropsArray props)
 
-textInput :: forall action. Array (Prop action) -> Element action
-textInput props = createElement textInputClass props []
+textInput :: Array Props -> ReactElement
+textInput props = createElement textInputClass (unsafeFromPropsArray props) []
 
-toolbarAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-toolbarAndroid = createElement toolbarAndroidClass
+toolbarAndroid :: Array Props -> Array (ReactElement) -> ReactElement
+toolbarAndroid props = createElement toolbarAndroidClass (unsafeFromPropsArray props)
 
-touchableHighlight :: forall action. Array (Prop action) -> Element action -> Element action
-touchableHighlight = createElementOneChild touchableHighlightClass
+touchableHighlight :: Array Props -> ReactElement -> ReactElement
+touchableHighlight props = createElementOneChild touchableHighlightClass (unsafeFromPropsArray props)
 
-touchableNativeFeedback :: forall action. Array (Prop action) -> Element action -> Element action
-touchableNativeFeedback = createElementOneChild touchableNativeFeedbackClass
+touchableNativeFeedback :: Array Props -> ReactElement -> ReactElement
+touchableNativeFeedback props = createElementOneChild touchableNativeFeedbackClass (unsafeFromPropsArray props)
 
-touchableOpacity :: forall action. Array (Prop action) -> Element action -> Element action
-touchableOpacity = createElementOneChild touchableOpacityClass
+touchableOpacity :: Array Props -> ReactElement -> ReactElement
+touchableOpacity props = createElementOneChild touchableOpacityClass (unsafeFromPropsArray props)
 
-touchableWithoutFeedback :: forall action. Array (Prop action) -> Element action -> Element action
-touchableWithoutFeedback = createElementOneChild touchableWithoutFeedbackClass
+touchableWithoutFeedback :: Array Props -> ReactElement -> ReactElement
+touchableWithoutFeedback props = createElementOneChild touchableWithoutFeedbackClass (unsafeFromPropsArray props)
 
-view' :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-view' = createElement viewClass
+view' :: Array Props -> Array (ReactElement) -> ReactElement
+view' props = createElement viewClass (unsafeFromPropsArray props)
 
-viewPagerAndroid :: forall action. Array (Prop action) -> Array (Element action) -> Element action
-viewPagerAndroid = createElement viewPagerAndroidClass
+viewPagerAndroid :: Array Props -> Array (ReactElement) -> ReactElement
+viewPagerAndroid props = createElement viewPagerAndroidClass (unsafeFromPropsArray props)
 
-webView :: forall action. Array (Prop action) -> Element action
-webView props = createElement webViewClass props []
+webView :: Array Props -> ReactElement
+webView props = createElement webViewClass (unsafeFromPropsArray props) []

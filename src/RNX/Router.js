@@ -4,21 +4,21 @@ var ReactNative = require("react-native");
 
 var navSignal = {};
 
-var stateUtils = ReactNative.NavigationExperimental.StateUtils.push;
+var stateUtils = ReactNative.NavigationExperimental.StateUtils;
 
 exports.stateUtils_push = function (navState){
     return function(route){
-        return function(){
-            return stateUtils.push(navState, route);
-        };
+        //return function(){
+        return stateUtils.push(navState, route);
+        //};
     };
 };
 
 exports.stateUtils_pop = function (navState){
     return function(route){
-        return function(){
-            return stateUtils.pop(navState, route);
-        };
+        //return function(){
+        return stateUtils.pop(navState, route);
+        //};
     };
 };
 
