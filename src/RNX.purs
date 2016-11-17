@@ -36,15 +36,13 @@ module RNX
   ) where
 
 import Prelude
-
-import Control.Coroutine (Transformer, CoTransformer, Transform(..),
-                          transform, transformCoTransformR, transformCoTransformL,
-                          runProcess, fuseCoTransform, cotransform)
+import React as React
+import Control.Coroutine (Transformer, CoTransformer, Transform(..), transform, transformCoTransformR, transformCoTransformL, runProcess, fuseCoTransform, cotransform)
 import Control.Coroutine (CoTransformer, cotransform) as T
 import Control.Monad.Aff (Aff, launchAff, makeAff)
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Unsafe (unsafeCoerceEff)
 import Control.Monad.Eff.Class (liftEff)
+import Control.Monad.Eff.Unsafe (unsafeCoerceEff)
 import Control.Monad.Free.Trans (freeT)
 import Control.Monad.Rec.Class (forever)
 import Control.Monad.Trans.Class (lift)
@@ -55,10 +53,8 @@ import Data.List (List(..), (!!), modifyAt)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
-import React as React
---import React.DOM (div')
 import RNX.Components (view')
-
+import RNX.Styles (minHeight, height, StyleSheet, Style(..), flex, createStyleSheet, getStyleId, style)
 
 foreign import registerComponent :: forall eff component. String -> component -> Eff eff Unit
 
@@ -233,7 +229,7 @@ createReactSpec (Spec spec) state =
       unsafeCoerceEff (launchAff (runProcess process))
 
     render :: React.Render props state eff
-    render this = map (view' []) $
+    render this = map (view' [style $ getStyleId styleSheet "wrapper"]) $
       spec.render (dispatcher this)
         <$> React.getProps this
         <*> React.readState this
@@ -361,3 +357,12 @@ foreach f = Spec
       where
       go _ Nil         r = r
       go i (Cons x xs) r = go (i + 1) xs (f i x r)
+
+
+styleSheet :: StyleSheet
+styleSheet =
+  createStyleSheet
+  [ Style "wrapper"
+    [ flex 1
+    ]
+  ]

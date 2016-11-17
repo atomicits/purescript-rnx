@@ -87,6 +87,19 @@ exports.viewClass                     = ReactNative.View;
 exports.viewPagerAndroidClass         = ReactNative.ViewPagerAndroid;
 exports.webViewClass                  = ReactNative.WebView;
 
+//Navigation Experimental
+exports.cardStackClass = ReactNative.NavigationExperimental.CardStack;
+//exports.stateUtilsPush = ReactNative.NavigationExperimental.StateUtils.push;
+exports.stateUtilsPop  = ReactNative.NavigationExperimental.StateUtils.pop;
+exports.stateUtilsPush = function(state){
+    return function(route){
+        return ReactNative.NavigationExperimental.StateUtils.push(state, route);
+    };
+};
+// exports.stateUtilsPop = function(state){
+//     return ReactNative.NavigationExperimental.StateUtils.pop(state);
+// };
+
 // function mkProps(props) {
 //     var result = {};
 //     for (var i = 0, len = props.length; i < len; i++) {

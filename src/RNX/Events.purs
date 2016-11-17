@@ -411,3 +411,8 @@ onShouldStartLoadWithRequest :: forall eff props state result.
            (Event -> EventHandlerContext eff props state result)
            -> Props
 onShouldStartLoadWithRequest f = unsafeMkProps "onShouldStartLoadWithRequest" (handle f)
+
+onNavigateBack :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onNavigateBack f = unsafeMkProps "onNavigateBack" (handle f)

@@ -1364,3 +1364,9 @@ dataDetectorTypes d = unsafeMkProps "dataDetectorTypes" (show d)
 
 dataDetectorTypesAry :: Array DataDetectorType -> Props
 dataDetectorTypesAry d = unsafeMkProps "dataDetectorTypes" (map show d)
+
+navigationState :: forall ns. ns -> Props
+navigationState = unsafeMkProps "navigationState"
+
+renderScene :: forall ns. ns -> Props
+renderScene = unsafeMkProps "renderScene"
