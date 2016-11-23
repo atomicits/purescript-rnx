@@ -1,11 +1,10 @@
 module RNX.API where
 
-import Control.Monad.Eff
+import Control.Monad.Eff (Eff)
 import Prelude
-import Data.Either
-import Control.Monad.Aff
-import Control.Monad.Eff.Exception
-import Control.Monad.Eff.Class
+import Data.Either (Either(..), either)
+import Control.Monad.Aff (Aff, attempt, makeAff)
+import Control.Monad.Eff.Exception (Error)
 
 -- Geolocation API with Aff
 foreign import data GEOLOCATION :: !

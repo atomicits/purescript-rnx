@@ -1,7 +1,6 @@
 module RNX.Color where
 
 import Prelude
-import Data.String
 
 data Color
   = RGBA Int Int Int Number

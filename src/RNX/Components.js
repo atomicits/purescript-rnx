@@ -3,21 +3,29 @@
 var React = require('react');
 var ReactNative = require('react-native');
 
-exports.createElement = function(clazz) {
-    return function(props) {
-        return function(children) {
-            return React.createElement(clazz, props.length > 0 ? mkProps(props) : null, children);
-        };
-    };
-};
+// exports.createElement = function(clazz) {
+//     return function(props) {
+//         return function(children) {
+//             return React.createElement(clazz, props.length > 0 ? mkProps(props) : null, children);
+//         };
+//     };
+// };
 
-exports.createElementOneChild = function(clazz) {
+// exports.createElementOneChild = function(clazz) {
+//     return function(props) {
+//         return function(child) {
+//             console.log(child);
+//             var elm = React.createElement(clazz, props.length > 0 ? mkProps(props) : null, child);
+//             //console.log(elm);
+//             return elm;
+//         };
+//     };
+// };
+
+exports.createElementOneChild = function (class_) {
     return function(props) {
-        return function(child) {
-            console.log(child);
-            var elm = React.createElement(clazz, props.length > 0 ? mkProps(props) : null, child);
-            //console.log(elm);
-            return elm;
+        return function(child){
+            return React.createElement(class_, props, child);
         };
     };
 };
@@ -79,45 +87,58 @@ exports.viewClass                     = ReactNative.View;
 exports.viewPagerAndroidClass         = ReactNative.ViewPagerAndroid;
 exports.webViewClass                  = ReactNative.WebView;
 
-function mkProps(props) {
-    var result = {};
-    for (var i = 0, len = props.length; i < len; i++) {
-        var prop = props[i];
-        for (var key in prop) {
-            if (prop.hasOwnProperty(key)) {
-                result[key] = prop[key];
-            }
-        }
-    }
-    return result;
+//Navigation Experimental
+exports.cardStackClass = ReactNative.NavigationExperimental.CardStack;
+//exports.stateUtilsPush = ReactNative.NavigationExperimental.StateUtils.push;
+exports.stateUtilsPop  = ReactNative.NavigationExperimental.StateUtils.pop;
+exports.stateUtilsPush = function(state){
+    return function(route){
+        return ReactNative.NavigationExperimental.StateUtils.push(state, route);
+    };
 };
+// exports.stateUtilsPop = function(state){
+//     return ReactNative.NavigationExperimental.StateUtils.pop(state);
+// };
+
+// function mkProps(props) {
+//     var result = {};
+//     for (var i = 0, len = props.length; i < len; i++) {
+//         var prop = props[i];
+//         for (var key in prop) {
+//             if (prop.hasOwnProperty(key)) {
+//                 result[key] = prop[key];
+//             }
+//         }
+//     }
+//     return result;
+// };
 
 
 // :: (a -> b) -> Html a -> Html b
-exports.forwardTo = function (parentAction) {
-    return function (html) {
-        if (!html.props) return html;
-        var childAction = html.props.puxParentAction;
-        var action = parentAction;
-        if (childAction) {
-            action = function (a) {
-                return parentAction(childAction(a));
-            };
-        }
-        return React.cloneElement(html, { puxParentAction: action });
-    };
-};
+// exports.forwardTo = function (parentAction) {
+//     return function (html) {
+//         if (!html.props) return html;
+//         var childAction = html.props.puxParentAction;
+//         var action = parentAction;
+//         if (childAction) {
+//             action = function (a) {
+//                 return parentAction(childAction(a));
+//             };
+//         }
+//         return React.cloneElement(html, { puxParentAction: action });
+//     };
+// };
 
-// :: (a -> b) -> Attribute a -> Attribute b
-exports.mapAttribute = function (f) {
-    return function (attr) {
-        if (typeof attr[1] !== 'function') {
-            return attr;
-        }
-        return [attr[0], function(input, parentAction) {
-            return attr[1](input, function(e) {
-                return f(parentAction(e));
-            });
-        }];
-    };
-};
+// // :: (a -> b) -> Attribute a -> Attribute b
+// exports.mapAttribute = function (f) {
+//     return function (attr) {
+//         if (typeof attr[1] !== 'function') {
+//             return attr;
+//         }
+//         return [attr[0], function(input, parentAction) {
+//             return attr[1](input, function(e) {
+//                 return f(parentAction(e));
+//             });
+//         }];
+//     };
+// };

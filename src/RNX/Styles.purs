@@ -1,11 +1,8 @@
 module RNX.Styles where
 
-import RNX
-import RNX.Components
-import RNX.Events
-import RNX.Props
-import RNX.Color
+import RNX.Color (Color)
 import Prelude
+import React.DOM.Props (Props)
 
 foreign import data StyleSheet :: *
 foreign import data StyleProp :: *
@@ -18,21 +15,22 @@ foreign import _createStyleSheet :: StyleSheet' -> StyleSheet
 
 createStyleSheet :: Array Style -> StyleSheet
 createStyleSheet s =
-  _createStyleSheet $ map getStyle s
-  where
-    getStyle (Style name styleProps) = {name: name, styles: styleProps}
+ _createStyleSheet $ map getStyle s
+ where
+   getStyle (Style name styleProps) = {name: name, styles: styleProps}
 
 
 -- TODO: make this type safe!
 foreign import getStyleId :: StyleSheet -> String -> StyleId
-
 foreign import unsafeMkStyleProp :: forall val. String -> val -> StyleProp
+foreign import unsafeMkStyleSheet :: forall val. String -> val -> Props
 
-style :: forall action. StyleId -> Prop action
-style = unsafeMkProps "style"
 
-styles :: forall action. Array StyleId -> Prop action
-styles = unsafeMkProps "style"
+style :: StyleId -> Props
+style = unsafeMkStyleSheet "style"
+
+styles :: Array StyleId -> Props
+styles = unsafeMkStyleSheet "style"
 
 --------- Styles ---------------
 
@@ -444,5 +442,5 @@ writingDirection WritingDirectionRtl  = unsafeMkStyleProp "writingDirection" "rt
 zIndex :: Int -> StyleProp
 zIndex = unsafeMkStyleProp "zIndex"
 
--- TODO: Transform Props
+-- TODO: Transform StyleProp
 -- TODO: resizeMode

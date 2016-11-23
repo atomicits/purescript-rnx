@@ -1,16 +1,15 @@
 module RNX.Props where
 
-import RNX.PropsTypes
-import RNX.Components
-import Control.Monad.Eff (Eff)
+import RNX.PropsTypes (AccessibilityComponentTypeProp(..), AccessibilityLiveRegionProp(..), ImportantForAccessibilityProp(..))
 import Data.Date (Date)
-import Data.Function.Uncurried (mkFn3, mkFn4)
-import Prelude (class Show, show, Unit, (<<<), map, (<>))
-import RNX.Color
+import Prelude
+import RNX.Color (Color)
+import React.DOM.Props (Props, unsafeMkProps)
+import React (ReactElement)
 
-foreign import unsafeMkProps :: forall val action. String -> val -> Prop action
+--foreign import unsafeMkProps :: forall val. String -> val -> Props
 
-foreign import unsafeMkFnProps :: forall val action. String -> val -> Prop action
+--foreign import unsafeMkFnPropss :: forall val. String -> val -> Props
 
 foreign import dPLeft :: forall a. a
 foreign import dPRight :: forall a. a
@@ -58,7 +57,7 @@ data Size
   | SizeNum Int
 
 
-pointerEvents :: forall action. PtrEvents -> Prop action
+pointerEvents :: PtrEvents -> Props
 pointerEvents PtrEventsBoxNone = unsafeMkProps "pointerEvents" "box-none"
 pointerEvents PtrEventsNone    = unsafeMkProps "pointerEvents" "none"
 pointerEvents PtrEventsBoxOnly = unsafeMkProps "pointerEvents" "box-only"
@@ -71,65 +70,65 @@ data PtrEvents
   | PtrEventsAuto
 
 
-testID :: forall action. String -> Prop action
+testID :: String -> Props
 testID = unsafeMkProps "testID"
 
-key :: forall action. String -> Prop action
+key :: String -> Props
 key = unsafeMkProps "key"
 
 
 -- Animating
 
-animating :: forall action. Boolean -> Prop action
+animating :: Boolean -> Props
 animating = unsafeMkProps "animating"
 
 
-pColor :: forall action. Color -> Prop action
+pColor :: Color -> Props
 pColor c = unsafeMkProps "color" (show c)
 
-accessibilityLiveRegion :: forall action. AccessibilityLiveRegionProp -> Prop action
+accessibilityLiveRegion :: AccessibilityLiveRegionProp -> Props
 accessibilityLiveRegion  ALRPNone  = unsafeMkProps "accessibilityLiveRegion" "none"
 accessibilityLiveRegion  Polite    = unsafeMkProps "accessibilityLiveRegion" "none"
 accessibilityLiveRegion  Assertive = unsafeMkProps "accessibilityLiveRegion" "none"
 
 
-collapsable :: forall action. Boolean -> Prop action
+collapsable :: Boolean -> Props
 collapsable = unsafeMkProps "collapsable"
 
 
-importantForAccessibility :: forall action. ImportantForAccessibilityProp -> Prop action
+importantForAccessibility :: ImportantForAccessibilityProp -> Props
 importantForAccessibility IAPAuto           = unsafeMkProps "importantForAccessibility" "auto"
 importantForAccessibility Yes               = unsafeMkProps "importantForAccessibility" "yes"
 importantForAccessibility No                = unsafeMkProps "importantForAccessibility" "no"
 importantForAccessibility NoHideDescenDants = unsafeMkProps "importantForAccessibility" "no-hide-descendents"
 
 
-needsOffscreenAlphaCompositing :: forall action. Boolean -> Prop action
+needsOffscreenAlphaCompositing :: Boolean -> Props
 needsOffscreenAlphaCompositing = unsafeMkProps "needsOffscreenAlphaCompositing"
 
 
-renderToHardwareTextureAndroid :: forall action. Boolean -> Prop action
+renderToHardwareTextureAndroid :: Boolean -> Props
 renderToHardwareTextureAndroid = unsafeMkProps "renderToHardwareTextureAndroid"
 
 
-shouldRasterizeIOS :: forall action. Boolean -> Prop action
+shouldRasterizeIOS :: Boolean -> Props
 shouldRasterizeIOS = unsafeMkProps "shouldRasterizeIOS"
 
 
 
-hidesWhenStopped :: forall action. Boolean -> Prop action
+hidesWhenStopped :: Boolean -> Props
 hidesWhenStopped = unsafeMkProps "hidesWhenStopped"
 
 
-date :: forall action. Date -> Prop action
+date :: Date -> Props
 date = unsafeMkProps "date"
 
 
-maximumDate :: forall action. Date -> Prop action
+maximumDate :: Date -> Props
 maximumDate = unsafeMkProps "maximumDate"
 
 
-minimumDate :: forall action. Date -> Prop action
+minimumDate :: Date -> Props
 minimumDate = unsafeMkProps "minimumDate"
 
 
@@ -147,7 +146,7 @@ data MIType
   | MI30
 
 
-minuteInterval :: forall action. MIType -> Prop action
+minuteInterval :: MIType -> Props
 minuteInterval MI1  = unsafeMkProps "minuteInterval" 1
 minuteInterval MI2  = unsafeMkProps "minuteInterval" 2
 minuteInterval MI3  = unsafeMkProps "minuteInterval" 3
@@ -167,17 +166,17 @@ data DateMode
   | DMDateTime
 
 
-modeDate :: forall action. DateMode -> Prop action
+modeDate :: DateMode -> Props
 modeDate DMDate     = unsafeMkProps "mode" "date"
 modeDate DMTime     = unsafeMkProps "mode" "time"
 modeDate DMDateTime = unsafeMkProps "mode" "datetime"
 
 
-timeZoneOffsetInMinutes :: forall action. Int -> Prop action
+timeZoneOffsetInMinutes :: Int -> Props
 timeZoneOffsetInMinutes = unsafeMkProps "timeZoneOffsetInMinutes"
 
 
-drawerBackgroundColor :: forall action. Color -> Prop action
+drawerBackgroundColor :: Color -> Props
 drawerBackgroundColor c = unsafeMkProps "drawerBackgroundColor" (show c)
 
 
@@ -187,7 +186,7 @@ data DLM
   | DLMLockedOpen
 
 
-drawerLockMode :: forall action. DLM -> Prop action
+drawerLockMode :: DLM -> Props
 drawerLockMode DLMUnlocked     = unsafeMkProps "drawerLockMode" "unlocked"
 drawerLockMode DLMLockedClosed = unsafeMkProps "drawerLockMode" "locked-closed"
 drawerLockMode DLMLockedOpen   = unsafeMkProps "drawerLockMode" "locked-open"
@@ -197,16 +196,16 @@ data DrawerPosition
   = DPLeft
   | DPRight
 
-drawerPosition :: forall action. DrawerPosition -> Prop action
+drawerPosition :: DrawerPosition -> Props
 drawerPosition DPLeft  = unsafeMkProps "drawerPosition" dPLeft
 drawerPosition DPRight = unsafeMkProps "drawerPosition" dPRight
 
 
-drawerWidth :: forall action. Int -> Prop action
+drawerWidth :: Int -> Props
 drawerWidth = unsafeMkProps "drawerWidth"
 
 
-keyboardDismissModeViewAndroid :: forall action. KDMVA -> Prop action
+keyboardDismissModeViewAndroid :: KDMVA -> Props
 keyboardDismissModeViewAndroid KDMVANone   = unsafeMkProps "keyboardDismissModeViewAndroid" "none"
 keyboardDismissModeViewAndroid KDMVAOnDrag = unsafeMkProps "keyboardDismissModeViewAndroid" "on-drag"
 
@@ -215,7 +214,7 @@ data KDMVA
   | KDMVAOnDrag
 
 
-statusBarBackgroundColor :: forall action. Color -> Prop action
+statusBarBackgroundColor :: Color -> Props
 statusBarBackgroundColor c = unsafeMkProps "statusBarBackgroundColor" (show c)
 
 
@@ -227,7 +226,7 @@ data RSMode
   | RSMCenter
 
 
-resizeMode :: forall action. RSMode -> Prop action
+resizeMode :: RSMode -> Props
 resizeMode RSMCover   = unsafeMkProps "resizeMode" "cover"
 resizeMode RSMContain = unsafeMkProps "resizeMode" "contain"
 resizeMode RSMStretch = unsafeMkProps "resizeMode" "stretch"
@@ -241,20 +240,20 @@ data RSMD
   | RSMScale
 
 
-resizeMethod :: forall action. RSMD -> Prop action
+resizeMethod :: RSMD -> Props
 resizeMethod RSMAuto   = unsafeMkProps "resizeMethod" "auto"
 resizeMethod RSMResize = unsafeMkProps "resizeMethod" "resize"
 resizeMethod RSMScale  = unsafeMkProps "resizeMethod" "scale"
 
--- TODO: ImageSourcePropType
-data ImageURISourcePropType = Shape
+-- TODO: ImageSourcePropsType
+data ImageURISourcePropsType = Shape
 
 
-accessibilityLabel :: forall action. String -> Prop action
+accessibilityLabel :: String -> Props
 accessibilityLabel = unsafeMkProps "accessibilityLabel"
 
 
-blurRadius :: forall action. Int -> Prop action
+blurRadius :: Int -> Props
 blurRadius = unsafeMkProps "blurRadius"
 
 data BT
@@ -263,43 +262,43 @@ data BT
   | BTPadding
 
 
-behavior :: forall action. BT -> Prop action
+behavior :: BT -> Props
 behavior BTHeight   = unsafeMkProps "behavior" "height"
 behavior BTPosition = unsafeMkProps "behavior" "position"
 behavior BTPadding  = unsafeMkProps "behavior" "padding"
 
 
-capInsets :: forall action. Box -> Prop action
+capInsets :: Box -> Props
 capInsets = unsafeMkProps "capInsets"
 
-enableEmptySections :: forall action. Boolean -> Prop action
+enableEmptySections :: Boolean -> Props
 enableEmptySections = unsafeMkProps "enableEmptySections"
 
 
-initialListSize :: forall action. Int -> Prop action
+initialListSize :: Int -> Props
 initialListSize = unsafeMkProps "initialListSize"
 
 
-pageSize :: forall action. Int -> Prop action
+pageSize :: Int -> Props
 pageSize = unsafeMkProps "pageSize"
 
 
-scrollRenderAheadDistance :: forall action. Int -> Prop action
+scrollRenderAheadDistance :: Int -> Props
 scrollRenderAheadDistance = unsafeMkProps "scrollRenderAheadDistance"
 
 
 
--- annotations [{latitude: number, longitude: number, animateDrop: bool, draggable: bool, onDragStateChange: function, onFocus: function, onBlur: function, title: string, subtitle: string, leftCalloutView: element, rightCalloutView: element, detailCalloutView: element, tintColor: [object Object], image: Image.propTypes.source, view: element, id: string, hasLeftCallout: deprecatedPropType( React.PropTypes.bool, 'Use `leftCalloutView` instead.' ), hasRightCallout: deprecatedPropType( React.PropTypes.bool, 'Use `rightCalloutView` instead.' ), onLeftCalloutPress: deprecatedPropType( React.PropTypes.func, 'Use `leftCalloutView` instead.' ), onRightCalloutPress: deprecatedPropType( React.PropTypes.func, 'Use `rightCalloutView` instead.' )}] #
-annotations :: forall action. Boolean -> Prop action
+-- annotations [{latitude: number, longitude: number, animateDrop: bool, draggable: bool, onDragStateChange: function, onFocus: function, onBlur: function, title: string, subtitle: string, leftCalloutView: element, rightCalloutView: element, detailCalloutView: element, tintColor: [object Object], image: Image.propTypes.source, view: element, id: string, hasLeftCallout: deprecatedPropsType( React.PropsTypes.bool, 'Use `leftCalloutView` instead.' ), hasRightCallout: deprecatedPropsType( React.PropsTypes.bool, 'Use `rightCalloutView` instead.' ), onLeftCalloutPress: deprecatedPropsType( React.PropsTypes.func, 'Use `leftCalloutView` instead.' ), onRightCalloutPress: deprecatedPropsType( React.PropsTypes.func, 'Use `rightCalloutView` instead.' )}] #
+annotations :: Boolean -> Props
 annotations = unsafeMkProps "annotations"
 
 
 
-followUserLocation :: forall action. Boolean -> Prop action
+followUserLocation :: Boolean -> Props
 followUserLocation = unsafeMkProps "followUserLocation"
 
 
-legalLabelInsets :: forall action. Box -> Prop action
+legalLabelInsets :: Box -> Props
 legalLabelInsets = unsafeMkProps "legalLabelInsets"
 
 
@@ -309,17 +308,17 @@ data MT
   | MTHybrid
 
 
-mapType :: forall action. MT -> Prop action
+mapType :: MT -> Props
 mapType MTStandard  = unsafeMkProps "mapType" "standard"
 mapType MTSatellite = unsafeMkProps "mapType" "satellite"
 mapType MTHybrid    = unsafeMkProps "mapType" "hybrid"
 
 
-maxDelta :: forall action. Int -> Prop action
+maxDelta :: Int -> Props
 maxDelta = unsafeMkProps "maxDelta"
 
 
-minDelta :: forall action. Int -> Prop action
+minDelta :: Int -> Props
 minDelta = unsafeMkProps "minDelta"
 
 
@@ -339,11 +338,11 @@ newtype Overlay = Overlay
   }
 
 -- overlays [{coordinates: [object Object], lineWidth: number, strokeColor: [object Object], fillColor: [object Object], id: string}] #
-overlays :: forall action. Array Overlay -> Prop action
+overlays :: Array Overlay -> Props
 overlays = unsafeMkProps "overlays"
 
 
-pitchEnabled :: forall action. Boolean -> Prop action
+pitchEnabled :: Boolean -> Props
 pitchEnabled = unsafeMkProps "pitchEnabled"
 
 newtype Region = Region
@@ -353,31 +352,31 @@ newtype Region = Region
   , longitudeDelta :: Number
   }
 
-region :: forall action. Region -> Prop action
+region :: Region -> Props
 region = unsafeMkProps "region"
 
 
-rotateEnabled :: forall action. Boolean -> Prop action
+rotateEnabled :: Boolean -> Props
 rotateEnabled = unsafeMkProps "rotateEnabled"
 
 
-showsCompass :: forall action. Boolean -> Prop action
+showsCompass :: Boolean -> Props
 showsCompass = unsafeMkProps "showsCompass"
 
 
-showsPointsOfInterest :: forall action. Boolean -> Prop action
+showsPointsOfInterest :: Boolean -> Props
 showsPointsOfInterest = unsafeMkProps "showsPointsOfInterest"
 
 
-showsUserLocation :: forall action. Boolean -> Prop action
+showsUserLocation :: Boolean -> Props
 showsUserLocation = unsafeMkProps "showsUserLocation"
 
 
-zoomEnabled :: forall action. Boolean -> Prop action
+zoomEnabled :: Boolean -> Props
 zoomEnabled = unsafeMkProps "zoomEnabled"
 
 
-active :: forall action. Boolean -> Prop action
+active :: Boolean -> Props
 active = unsafeMkProps "active"
 
 
@@ -387,17 +386,17 @@ data AT
   | ATFade
 
 
-animationType :: forall action. AT -> Prop action
+animationType :: AT -> Props
 animationType ATNone  = unsafeMkProps "animationType" "none"
 animationType ATSlide = unsafeMkProps "animationType" "slide"
 animationType ATFade  = unsafeMkProps "animationType" "fade"
 
 
-transparent :: forall action. Boolean -> Prop action
+transparent :: Boolean -> Props
 transparent = unsafeMkProps "transparent"
 
 
-visible :: forall action. Boolean -> Prop action
+visible :: Boolean -> Props
 visible = unsafeMkProps "visible"
 
 
@@ -417,54 +416,54 @@ instance showSupportedOrientations :: Show SupportedOrientations where
   show SOLandscapeRight     = "landscape-right"
 
 
-supportedOrientations :: forall action. Array SupportedOrientations -> Prop action
+supportedOrientations :: Array SupportedOrientations -> Props
 supportedOrientations ary = unsafeMkProps "supportedOrientations" (map show ary)
 
 
 
 -- initialRouteStack [object] #
-initialRouteStack :: forall action. Boolean -> Prop action
+initialRouteStack :: Boolean -> Props
 initialRouteStack = unsafeMkProps "initialRouteStack"
 
 -- navigationBar node #
-navigationBar :: forall action. Boolean -> Prop action
+navigationBar :: Boolean -> Props
 navigationBar = unsafeMkProps "navigationBar"
 
 -- navigator object #
-navigator :: forall action. Boolean -> Prop action
+navigator :: Boolean -> Props
 navigator = unsafeMkProps "navigator"
 
 
 
 
--- initialRoute {component: function, title: string, titleImage: Image.propTypes.source, passProps: object, backButtonIcon: Image.propTypes.source, backButtonTitle: string, leftButtonIcon: Image.propTypes.source, leftButtonTitle: string, onLeftButtonPress: function, rightButtonIcon: Image.propTypes.source, rightButtonTitle: string, onRightButtonPress: function, wrapperStyle: [object Object], navigationBarHidden: bool, shadowHidden: bool, tintColor: string, barTintColor: string, titleTextColor: string, translucent: bool} #
-initialRoute :: forall action. Boolean -> Prop action
+-- initialRoute {component: function, title: string, titleImage: Image.propTypes.source, passPropss: object, backButtonIcon: Image.propTypes.source, backButtonTitle: string, leftButtonIcon: Image.propTypes.source, leftButtonTitle: string, onLeftButtonPress: function, rightButtonIcon: Image.propTypes.source, rightButtonTitle: string, onRightButtonPress: function, wrapperStyle: [object Object], navigationBarHidden: bool, shadowHidden: bool, tintColor: string, barTintColor: string, titleTextColor: string, translucent: bool} #
+initialRoute :: Boolean -> Props
 initialRoute = unsafeMkProps "initialRoute"
 
 
-interactivePopGestureEnabled :: forall action. Boolean -> Prop action
+interactivePopGestureEnabled :: Boolean -> Props
 interactivePopGestureEnabled = unsafeMkProps "interactivePopGestureEnabled"
 
 -- itemWrapperStyle View#style #
-itemWrapperStyle :: forall action. Boolean -> Prop action
+itemWrapperStyle :: Boolean -> Props
 itemWrapperStyle = unsafeMkProps "itemWrapperStyle"
 
 
-navigationBarHidden :: forall action. Boolean -> Prop action
+navigationBarHidden :: Boolean -> Props
 navigationBarHidden = unsafeMkProps "navigationBarHidden"
 
 
-shadowHidden :: forall action. Boolean -> Prop action
+shadowHidden :: Boolean -> Props
 shadowHidden = unsafeMkProps "shadowHidden"
 
 
-titleTextColor :: forall action. Color -> Prop action
+titleTextColor :: Color -> Props
 titleTextColor c = unsafeMkProps "titleTextColor" (show c)
 
 
 
 -- style pickerStyleType #
-style :: forall action. Boolean -> Prop action
+style :: Boolean -> Props
 style = unsafeMkProps "style"
 
 data PM
@@ -472,25 +471,25 @@ data PM
   | PMDropDown
 
 
-pickerMode :: forall action. PM -> Prop action
+pickerMode :: PM -> Props
 pickerMode PMDialog   = unsafeMkProps "mode" "dialog"
 pickerMode PMDropDown = unsafeMkProps "mode" "dropdown"
 
 
-prompt :: forall action. String -> Prop action
+prompt :: String -> Props
 prompt = unsafeMkProps "prompt"
 
 
--- itemStyle itemStylePropType #
-itemStyle :: forall action. Boolean -> Prop action
+-- itemStyle itemStylePropsType #
+itemStyle :: Boolean -> Props
 itemStyle = unsafeMkProps "itemStyle"
 
 
-selectedValue :: forall action a. a -> Prop action
+selectedValue :: forall a. a -> Props
 selectedValue = unsafeMkProps "selectedValue"
 
 
-indeterminate :: forall action. Boolean -> Prop action
+indeterminate :: Boolean -> Props
 indeterminate = unsafeMkProps "indeterminate"
 
 data StyleAttributes
@@ -503,7 +502,7 @@ data StyleAttributes
   | SALargeInverse
 
 
-styleAttr :: forall action. StyleAttributes -> Prop action
+styleAttr :: StyleAttributes -> Props
 styleAttr SAHorizontal   = unsafeMkProps "styleAttr" "Horizontal"
 styleAttr SANormal       = unsafeMkProps "styleAttr" "Normal"
 styleAttr SASmall        = unsafeMkProps "styleAttr" "Small"
@@ -513,10 +512,10 @@ styleAttr SASmallInverse = unsafeMkProps "styleAttr" "SmallInverse"
 styleAttr SALargeInverse = unsafeMkProps "styleAttr" "LargeInverse"
 
 
-progress :: forall action. Number -> Prop action
+progress :: Number -> Props
 progress = unsafeMkProps "progress"
 
-progressTintColor :: forall action. Color -> Prop action
+progressTintColor :: Color -> Props
 progressTintColor c = unsafeMkProps "progressTintColor" (show c)
 
 
@@ -525,32 +524,32 @@ data PVS
   | PVSBar
 
 
-progressViewStyle :: forall action. PVS -> Prop action
+progressViewStyle :: PVS -> Props
 progressViewStyle PVSDefault = unsafeMkProps "progressViewStyle" "default"
 progressViewStyle PVSBar     = unsafeMkProps "progressViewStyle" "bar"
 
 
-trackTintColor :: forall action. Color -> Prop action
+trackTintColor :: Color -> Props
 trackTintColor c = unsafeMkProps "trackTintColor" (show c)
 
 
-refreshing :: forall action. Boolean -> Prop action
+refreshing :: Boolean -> Props
 refreshing = unsafeMkProps "refreshing"
 
 
-colors :: forall action. Array Color -> Prop action
+colors :: Array Color -> Props
 colors cs = unsafeMkProps "colors" (map show cs)
 
 
-progressBackgroundColor :: forall action. Color -> Prop action
+progressBackgroundColor :: Color -> Props
 progressBackgroundColor c = unsafeMkProps "progressBackgroundColor" (show c)
 
 
-progressViewOffset :: forall action. Int -> Prop action
+progressViewOffset :: Int -> Props
 progressViewOffset = unsafeMkProps "progressViewOffset"
 
 -- size enum(RefreshLayoutConsts.SIZE.DEFAULT, RefreshLayoutConsts.SIZE.LARGE) #
-size :: forall action. Size -> Prop action
+size :: Size -> Props
 size SizeSmall   = unsafeMkProps "size" "small"
 size SizeLarge   = unsafeMkProps "size" "large"
 size (SizeNum a) = unsafeMkProps "size" a
@@ -558,123 +557,123 @@ size (SizeNum a) = unsafeMkProps "size" a
 
 data RefreshControlSize = RCDefault | RCLarge
 
-refreshControlSize :: forall action. RefreshControlSize -> Prop action
+refreshControlSize :: RefreshControlSize -> Props
 refreshControlSize RCDefault = unsafeMkProps "size" refreshControlSizeDefault
 refreshControlSize RCLarge = unsafeMkProps "size" refreshControlSizeLarge
 
 
--- contentContainerStyle StyleSheetPropType(ViewStylePropTypes) #
-contentContainerStyle :: forall action. Boolean -> Prop action
+-- contentContainerStyle StyleSheetPropsType(ViewStylePropsTypes) #
+contentContainerStyle :: Boolean -> Props
 contentContainerStyle = unsafeMkProps "contentContainerStyle"
 
 
-horizontal :: forall action. Boolean -> Prop action
+horizontal :: Boolean -> Props
 horizontal = unsafeMkProps "horizontal"
 
 
-keyboardShouldPersistTaps :: forall action. Boolean -> Prop action
+keyboardShouldPersistTaps :: Boolean -> Props
 keyboardShouldPersistTaps = unsafeMkProps "keyboardShouldPersistTaps"
 
 
-keyboardVerticalOffset :: forall action. Int -> Prop action
+keyboardVerticalOffset :: Int -> Props
 keyboardVerticalOffset = unsafeMkProps "keyboardVerticalOffset"
 
 
 
-pagingEnabled :: forall action. Boolean -> Prop action
+pagingEnabled :: Boolean -> Props
 pagingEnabled = unsafeMkProps "pagingEnabled"
 
 -- refreshControl element #
-refreshControl :: forall action. Boolean -> Prop action
+refreshControl :: Boolean -> Props
 refreshControl = unsafeMkProps "refreshControl"
 
 
-removeClippedSubviews :: forall action. Boolean -> Prop action
+removeClippedSubviews :: Boolean -> Props
 removeClippedSubviews = unsafeMkProps "removeClippedSubviews"
 
-showsHorizontalScrollIndicator :: forall action. Boolean -> Prop action
+showsHorizontalScrollIndicator :: Boolean -> Props
 showsHorizontalScrollIndicator = unsafeMkProps "showsHorizontalScrollIndicator"
 
 
-showsVerticalScrollIndicator :: forall action. Boolean -> Prop action
+showsVerticalScrollIndicator :: Boolean -> Props
 showsVerticalScrollIndicator = unsafeMkProps "showsVerticalScrollIndicator"
 
 
-endFillColor :: forall action. Color -> Prop action
+endFillColor :: Color -> Props
 endFillColor c = unsafeMkProps "endFillColor" (show c)
 
 
-scrollPerfTag :: forall action. String -> Prop action
+scrollPerfTag :: String -> Props
 scrollPerfTag = unsafeMkProps "scrollPerfTag"
 
 
-alwaysBounceHorizontal :: forall action. Boolean -> Prop action
+alwaysBounceHorizontal :: Boolean -> Props
 alwaysBounceHorizontal = unsafeMkProps "alwaysBounceHorizontal"
 
 
-alwaysBounceVertical :: forall action. Boolean -> Prop action
+alwaysBounceVertical :: Boolean -> Props
 alwaysBounceVertical = unsafeMkProps "alwaysBounceVertical"
 
 
-automaticallyAdjustContentInsets :: forall action. Boolean -> Prop action
+automaticallyAdjustContentInsets :: Boolean -> Props
 automaticallyAdjustContentInsets = unsafeMkProps "automaticallyAdjustContentInsets"
 
 
-bounces :: forall action. Boolean -> Prop action
+bounces :: Boolean -> Props
 bounces = unsafeMkProps "bounces"
 
 
-bouncesZoom :: forall action. Boolean -> Prop action
+bouncesZoom :: Boolean -> Props
 bouncesZoom = unsafeMkProps "bouncesZoom"
 
 
-injectedJavaScript :: forall action. String -> Prop action
+injectedJavaScript :: String -> Props
 injectedJavaScript = unsafeMkProps "injectedJavaScript"
 
 
-userAgent :: forall action. String -> Prop action
+userAgent :: String -> Props
 userAgent = unsafeMkProps "userAgent"
 
 
-scalesPageToFit :: forall action. Boolean -> Prop action
+scalesPageToFit :: Boolean -> Props
 scalesPageToFit = unsafeMkProps "scalesPageToFit"
 
 
-startInLoadingState :: forall action. Boolean -> Prop action
+startInLoadingState :: Boolean -> Props
 startInLoadingState = unsafeMkProps "startInLoadingState"
 
 
-domStorageEnabled :: forall action. Boolean -> Prop action
+domStorageEnabled :: Boolean -> Props
 domStorageEnabled = unsafeMkProps "domStorageEnabled"
 
 
-javaScriptEnabled :: forall action. Boolean -> Prop action
+javaScriptEnabled :: Boolean -> Props
 javaScriptEnabled = unsafeMkProps "javaScriptEnabled"
 
 
-allowsInlineMediaPlayback :: forall action. Boolean -> Prop action
+allowsInlineMediaPlayback :: Boolean -> Props
 allowsInlineMediaPlayback = unsafeMkProps "allowsInlineMediaPlayback"
 
 
-mediaPlaybackRequiresUserAction :: forall action. Boolean -> Prop action
+mediaPlaybackRequiresUserAction :: Boolean -> Props
 mediaPlaybackRequiresUserAction = unsafeMkProps "mediaPlaybackRequiresUserAction"
 
 
-canCancelContentTouches :: forall action. Boolean -> Prop action
+canCancelContentTouches :: Boolean -> Props
 canCancelContentTouches = unsafeMkProps "canCancelContentTouches"
 
 
-centerContent :: forall action. Boolean -> Prop action
+centerContent :: Boolean -> Props
 centerContent = unsafeMkProps "centerContent"
 
 
-contentInset :: forall action. Box -> Prop action
+contentInset :: Box -> Props
 contentInset = unsafeMkProps "contentInset"
 
 type Point = {x :: Int, y :: Int}
 
 
-contentOffset :: forall action. Point -> Prop action
+contentOffset :: Point -> Props
 contentOffset = unsafeMkProps "contentOffset"
 
 
@@ -684,13 +683,13 @@ data DRT
   | DRTNum Number
 
 
-decelerationRate :: forall action. DRT -> Prop action
+decelerationRate :: DRT -> Props
 decelerationRate DRTFast    = unsafeMkProps "decelerationRate" "fast"
 decelerationRate DRTNormal  = unsafeMkProps "decelerationRate" "normal"
 decelerationRate (DRTNum a) = unsafeMkProps "decelerationRate" a
 
 
-directionalLockEnabled :: forall action. Boolean -> Prop action
+directionalLockEnabled :: Boolean -> Props
 directionalLockEnabled = unsafeMkProps "directionalLockEnabled"
 
 
@@ -700,30 +699,30 @@ data IndicatorStyle
   | ISWhite
 
 
-indicatorStyle :: forall action. IndicatorStyle -> Prop action
+indicatorStyle :: IndicatorStyle -> Props
 indicatorStyle ISDefault = unsafeMkProps "indicatorStyle" "default"
 indicatorStyle ISBlack   = unsafeMkProps "indicatorStyle" "black"
 indicatorStyle ISWhite   = unsafeMkProps "indicatorStyle" "white"
 
 
 
-maximumZoomScale :: forall action. Number -> Prop action
+maximumZoomScale :: Number -> Props
 maximumZoomScale = unsafeMkProps "maximumZoomScale"
 
-minimumZoomScale :: forall action. Number -> Prop action
+minimumZoomScale :: Number -> Props
 minimumZoomScale = unsafeMkProps "minimumZoomScale"
 
 
 
-scrollEventThrottle :: forall action. Int -> Prop action
+scrollEventThrottle :: Int -> Props
 scrollEventThrottle = unsafeMkProps "scrollEventThrottle"
 
 
-scrollIndicatorInsets :: forall action. Box -> Prop action
+scrollIndicatorInsets :: Box -> Props
 scrollIndicatorInsets = unsafeMkProps "scrollIndicatorInsets"
 
 
-scrollsToTop :: forall action. Boolean -> Prop action
+scrollsToTop :: Boolean -> Props
 scrollsToTop = unsafeMkProps "scrollsToTop"
 
 
@@ -733,76 +732,76 @@ data SnapToAlignment
   | STAEnd
 
 
-snapToAlignment :: forall action. SnapToAlignment -> Prop action
+snapToAlignment :: SnapToAlignment -> Props
 snapToAlignment STAStart = unsafeMkProps "snapToAlignment" "start"
 snapToAlignment STACenter = unsafeMkProps "snapToAlignment" "center"
 snapToAlignment STAEnd = unsafeMkProps "snapToAlignment" "end"
 
 
 
-snapToInterval :: forall action. Int -> Prop action
+snapToInterval :: Int -> Props
 snapToInterval = unsafeMkProps "snapToInterval"
 
 
-stickyHeaderIndices :: forall action. Array Int -> Prop action
+stickyHeaderIndices :: Array Int -> Props
 stickyHeaderIndices = unsafeMkProps "stickyHeaderIndices"
 
 
-zoomScale :: forall action. Number -> Prop action
+zoomScale :: Number -> Props
 zoomScale = unsafeMkProps "zoomScale"
 
 
-enabled :: forall action. Boolean -> Prop action
+enabled :: Boolean -> Props
 enabled = unsafeMkProps "enabled"
 
 
-momentary :: forall action. Boolean -> Prop action
+momentary :: Boolean -> Props
 momentary = unsafeMkProps "momentary"
 
 
 
-selectedIndex :: forall action. Int -> Prop action
+selectedIndex :: Int -> Props
 selectedIndex = unsafeMkProps "selectedIndex"
 
 
 
-values :: forall action. Array String -> Prop action
+values :: Array String -> Props
 values = unsafeMkProps "values"
 
 
-valueNum :: forall action. Int -> Prop action
+valueNum :: Int -> Props
 valueNum = unsafeMkProps "value"
 
 
-valueBool :: forall action. Boolean -> Prop action
+valueBool :: Boolean -> Props
 valueBool = unsafeMkProps "value"
 
 
-maximumTrackTintColor :: forall action. Color -> Prop action
+maximumTrackTintColor :: Color -> Props
 maximumTrackTintColor c = unsafeMkProps "maximumTrackTintColor" (show c)
 
 
-maximumValue :: forall action. Int -> Prop action
+maximumValue :: Int -> Props
 maximumValue = unsafeMkProps "maximumValue"
 
 
 
-minimumTrackTintColor :: forall action. Color -> Prop action
+minimumTrackTintColor :: Color -> Props
 minimumTrackTintColor c = unsafeMkProps "minimumTrackTintColor" (show c)
 
 
-minimumValue :: forall action. Int -> Prop action
+minimumValue :: Int -> Props
 minimumValue = unsafeMkProps "minimumValue"
 
 
-step :: forall action. Int -> Prop action
+step :: Int -> Props
 step = unsafeMkProps "step"
 
-hidden :: forall action. Boolean -> Prop action
+hidden :: Boolean -> Props
 hidden = unsafeMkProps "hidden"
 
 
-pBackgroundColor :: forall action. Color -> Prop action
+pBackgroundColor :: Color -> Props
 pBackgroundColor c = unsafeMkProps "backgroundColor" (show c)
 
 
@@ -812,14 +811,14 @@ data BarStyle
   | BSDarkContent
 
 
-barStyle :: forall action. BarStyle -> Prop action
+barStyle :: BarStyle -> Props
 barStyle BSDefault      = unsafeMkProps "barStyle" "default"
 barStyle BSLightContent = unsafeMkProps "barStyle" "light-content"
 barStyle BSDarkContent  = unsafeMkProps "barStyle" "dark-content"
 
 
 
-networkActivityIndicatorVisible :: forall action. Boolean -> Prop action
+networkActivityIndicatorVisible :: Boolean -> Props
 networkActivityIndicatorVisible = unsafeMkProps "networkActivityIndicatorVisible"
 
 
@@ -828,26 +827,26 @@ data ShowHideTransition
   | SHTSlide
 
 
-showHideTransition :: forall action. ShowHideTransition -> Prop action
+showHideTransition :: ShowHideTransition -> Props
 showHideTransition SHTFade = unsafeMkProps "showHideTransition" "fade"
 showHideTransition SHTSlide = unsafeMkProps "showHideTransition" "slide"
 
 
 
-testIdentifier :: forall action. String -> Prop action
+testIdentifier :: String -> Props
 testIdentifier = unsafeMkProps "testIdentifier"
 
 
 
-onTintColor :: forall action. Color -> Prop action
+onTintColor :: Color -> Props
 onTintColor c = unsafeMkProps "onTintColor" (show c)
 
 
-thumbTintColor :: forall action. Color -> Prop action
+thumbTintColor :: Color -> Props
 thumbTintColor c = unsafeMkProps "thumbTintColor" (show c)
 
 
-barTintColor :: forall action. Color -> Prop action
+barTintColor :: Color -> Props
 barTintColor c = unsafeMkProps "barTintColor" (show c)
 
 
@@ -857,37 +856,37 @@ data ItemPositioning
   | IPAuto
 
 
-itemPositioning :: forall action. ItemPositioning -> Prop action
+itemPositioning :: ItemPositioning -> Props
 itemPositioning IPFill   = unsafeMkProps "itemPositioning" "fill"
 itemPositioning IPCenter = unsafeMkProps "itemPositioning" "center"
 itemPositioning IPAuto   = unsafeMkProps "itemPositioning" "auto"
 
 
-tintColor :: forall action. Color -> Prop action
+tintColor :: Color -> Props
 tintColor c = unsafeMkProps "tintColor" (show c)
 
 
-translucent :: forall action. Boolean -> Prop action
+translucent :: Boolean -> Props
 translucent = unsafeMkProps "translucent"
 
 
-unselectedTintColor :: forall action. Color -> Prop action
+unselectedTintColor :: Color -> Props
 unselectedTintColor c = unsafeMkProps "unselectedTintColor" (show c)
 
 
 data Badge = BadgeStr String | BadgeNum Int
 
 
-badge :: forall action. Badge -> Prop action
+badge :: Badge -> Props
 badge (BadgeStr str) = unsafeMkProps "badge" str
 badge (BadgeNum num) = unsafeMkProps "badge" num
 
 
-renderAsOriginal :: forall action. Boolean -> Prop action
+renderAsOriginal :: Boolean -> Props
 renderAsOriginal = unsafeMkProps "renderAsOriginal"
 
 
-selected :: forall action. Boolean -> Prop action
+selected :: Boolean -> Props
 selected = unsafeMkProps "selected"
 
 data SysIcon
@@ -905,7 +904,7 @@ data SysIcon
   | SysIconTopRated
 
 
-systemIcon :: forall action. SysIcon -> Prop action
+systemIcon :: SysIcon -> Props
 systemIcon SysIconBookmarks  = unsafeMkProps "systemIcon" "bookmarks"
 systemIcon SysIconContacts   = unsafeMkProps "systemIcon" "contacts"
 systemIcon SysIconDownloads  = unsafeMkProps "systemIcon" "downloads"
@@ -927,30 +926,30 @@ data EllipsizeMode
   | EMClip
 
 
-ellipsizeMode :: forall action. EllipsizeMode -> Prop action
+ellipsizeMode :: EllipsizeMode -> Props
 ellipsizeMode EMHead   = unsafeMkProps "ellipsizeMode" "head"
 ellipsizeMode EMMiddle = unsafeMkProps "ellipsizeMode" "middle"
 ellipsizeMode EMTail   = unsafeMkProps "ellipsizeMode" "tail"
 ellipsizeMode EMClip   = unsafeMkProps "ellipsizeMode" "clip"
 
 
-selectable :: forall action. Boolean -> Prop action
+selectable :: Boolean -> Props
 selectable = unsafeMkProps "selectable"
 
 
-adjustsFontSizeToFit :: forall action. Boolean -> Prop action
+adjustsFontSizeToFit :: Boolean -> Props
 adjustsFontSizeToFit = unsafeMkProps "adjustsFontSizeToFit"
 
 
-allowFontScaling :: forall action. Boolean -> Prop action
+allowFontScaling :: Boolean -> Props
 allowFontScaling = unsafeMkProps "allowFontScaling"
 
 
-minimumFontScale :: forall action. Number -> Prop action
+minimumFontScale :: Number -> Props
 minimumFontScale = unsafeMkProps "minimumFontScale"
 
 
-suppressHighlighting :: forall action. Boolean -> Prop action
+suppressHighlighting :: Boolean -> Props
 suppressHighlighting = unsafeMkProps "suppressHighlighting"
 
 
@@ -961,30 +960,30 @@ data AutoCapitalize
   | AutoCapCharacters
 
 
-autoCapitalize :: forall action. AutoCapitalize -> Prop action
+autoCapitalize :: AutoCapitalize -> Props
 autoCapitalize AutoCapNone       = unsafeMkProps "autoCapitalize" "none"
 autoCapitalize AutoCapSentences  = unsafeMkProps "autoCapitalize" "sentences"
 autoCapitalize AutoCapWords      = unsafeMkProps "autoCapitalize" "words"
 autoCapitalize AutoCapCharacters = unsafeMkProps "autoCapitalize" "characters"
 
 
-autoCorrect :: forall action. Boolean -> Prop action
+autoCorrect :: Boolean -> Props
 autoCorrect = unsafeMkProps "autoCorrect"
 
 
-autoFocus :: forall action. Boolean -> Prop action
+autoFocus :: Boolean -> Props
 autoFocus = unsafeMkProps "autoFocus"
 
 
-blurOnSubmit :: forall action. Boolean -> Prop action
+blurOnSubmit :: Boolean -> Props
 blurOnSubmit = unsafeMkProps "blurOnSubmit"
 
 
-defaultValue :: forall action. String -> Prop action
+defaultValue :: String -> Props
 defaultValue = unsafeMkProps "defaultValue"
 
 
-editable :: forall action. Boolean -> Prop action
+editable :: Boolean -> Props
 editable = unsafeMkProps "editable"
 
 data KeyBoardType
@@ -1002,7 +1001,7 @@ data KeyBoardType
   | KBTWebSearch
 
 
-keyboardType :: forall action. KeyBoardType -> Prop action
+keyboardType :: KeyBoardType -> Props
 keyboardType KBTDefault               = unsafeMkProps "keyboardType" "default"
 keyboardType KBTEmailAddress          = unsafeMkProps "keyboardType" "email-address"
 keyboardType KBTNumeric               = unsafeMkProps "keyboardType" "numeric"
@@ -1017,20 +1016,20 @@ keyboardType KBTTwitter               = unsafeMkProps "keyboardType" "twitter"
 keyboardType KBTWebSearch             = unsafeMkProps "keyboardType" "web-search"
 
 
-maxLength :: forall action. Int -> Prop action
+maxLength :: Int -> Props
 maxLength = unsafeMkProps "maxLength"
 
 
-multiline :: forall action. Boolean -> Prop action
+multiline :: Boolean -> Props
 multiline = unsafeMkProps "multiline"
 
 
 
-placeholder :: forall action. String -> Prop action
+placeholder :: String -> Props
 placeholder = unsafeMkProps "placeholder"
 
 
-placeholderTextColor :: forall action. Color -> Prop action
+placeholderTextColor :: Color -> Props
 placeholderTextColor c = unsafeMkProps "placeholderTextColor" (show c)
 
 
@@ -1050,7 +1049,7 @@ data ReturnKeyType
   | RKTYahoo
 
 
-returnKeyType :: forall action. ReturnKeyType -> Prop action
+returnKeyType :: ReturnKeyType -> Props
 returnKeyType RKTDone           = unsafeMkProps "returnKeyType" "done"
 returnKeyType RKTGo             = unsafeMkProps "returnKeyType" "go"
 returnKeyType RKTNext           = unsafeMkProps "returnKeyType" "next"
@@ -1067,40 +1066,40 @@ returnKeyType RKTYahoo          = unsafeMkProps "returnKeyType" "yahoo"
 
 
 
-secureTextEntry :: forall action. Boolean -> Prop action
+secureTextEntry :: Boolean -> Props
 secureTextEntry = unsafeMkProps "secureTextEntry"
 
 
-selectTextOnFocus :: forall action. Boolean -> Prop action
+selectTextOnFocus :: Boolean -> Props
 selectTextOnFocus = unsafeMkProps "selectTextOnFocus"
 
 
-selectionColor :: forall action. Color -> Prop action
+selectionColor :: Color -> Props
 selectionColor c = unsafeMkProps "selectionColor" (show c)
 
 
 
-valueString :: forall action. String -> Prop action
+valueString :: String -> Props
 valueString = unsafeMkProps "value"
 
 
-inlineImageLeft :: forall action. String -> Prop action
+inlineImageLeft :: String -> Props
 inlineImageLeft = unsafeMkProps "inlineImageLeft"
 
 
-inlineImagePadding :: forall action. Int -> Prop action
+inlineImagePadding :: Int -> Props
 inlineImagePadding = unsafeMkProps "inlineImagePadding"
 
 
-numberOfLines :: forall action. Int -> Prop action
+numberOfLines :: Int -> Props
 numberOfLines = unsafeMkProps "numberOfLines"
 
 
-returnKeyLabel :: forall action. String -> Prop action
+returnKeyLabel :: String -> Props
 returnKeyLabel = unsafeMkProps "returnKeyLabel"
 
 
-underlineColorAndroid :: forall action. Color -> Prop action
+underlineColorAndroid :: Color -> Props
 underlineColorAndroid c = unsafeMkProps "underlineColorAndroid" (show c)
 
 
@@ -1111,18 +1110,18 @@ data ClearButtonMode
  | CBMAlways
 
 
-clearButtonMode :: forall action. ClearButtonMode -> Prop action
+clearButtonMode :: ClearButtonMode -> Props
 clearButtonMode CBMNever         = unsafeMkProps "clearButtonMode" "never"
 clearButtonMode CBMWhileEditing  = unsafeMkProps "clearButtonMode" "while-editing"
 clearButtonMode CBMUnlessEditing = unsafeMkProps "clearButtonMode" "unless-editing"
 clearButtonMode CBMAlways        = unsafeMkProps "clearButtonMode" "always"
 
 
-clearTextOnFocus :: forall action. Boolean -> Prop action
+clearTextOnFocus :: Boolean -> Props
 clearTextOnFocus = unsafeMkProps "clearTextOnFocus"
 
 
-enablesReturnKeyAutomatically :: forall action. Boolean -> Prop action
+enablesReturnKeyAutomatically :: Boolean -> Props
 enablesReturnKeyAutomatically = unsafeMkProps "enablesReturnKeyAutomatically"
 
 
@@ -1132,81 +1131,81 @@ data KeyBoardAppearance
   | KBADark
 
 
-keyboardAppearance :: forall action. KeyBoardAppearance -> Prop action
+keyboardAppearance :: KeyBoardAppearance -> Props
 keyboardAppearance KBADefault = unsafeMkProps "keyboardAppearance" "default"
 keyboardAppearance KBALight   = unsafeMkProps "keyboardAppearance" "light"
 keyboardAppearance KBADark    = unsafeMkProps "keyboardAppearance" "dark"
 
 
 -- TODO: implement DocumentSelectionState through FFI
--- selectionState PropTypes.instanceOf(DocumentSelectionState) #
-selectionState :: forall action. Boolean -> Prop action
+-- selectionState PropsTypes.instanceOf(DocumentSelectionState) #
+selectionState :: Boolean -> Props
 selectionState = unsafeMkProps "selectionState"
 
 
-data ActionPropType = ActionPropType
+data PropsType = PropsType
   { title :: String
   , icon :: String -- optionl
   , show :: String -- implement enum
   , showWithText :: Boolean
   }
 
-data ShowProp
+data ShowProps
   = Always
   | IfRoom
   | Never
 
--- actions ReactPropTypes.arrayOf(ReactPropTypes.shape({ title: ReactPropTypes.string.isRequired, icon: optionalImageSource, show: ReactPropTypes.oneOf(['always', 'ifRoom', 'never']), showWithText: ReactPropTypes.bool })) #
-actions :: forall action. Boolean -> Prop action
+--s ReactPropsTypes.arrayOf(ReactPropsTypes.shape({ title: ReactPropsTypes.string.isRequired, icon: optionalImageSource, show: ReactPropsTypes.oneOf(['always', 'ifRoom', 'never']), showWithText: ReactPropsTypes.bool })) #
+actions :: Boolean -> Props
 actions = unsafeMkProps "actions"
 
 
-contentInsetEnd :: forall action. Int -> Prop action
+contentInsetEnd :: Int -> Props
 contentInsetEnd = unsafeMkProps "contentInsetEnd"
 
 
-contentInsetStart :: forall action. Int -> Prop action
+contentInsetStart :: Int -> Props
 contentInsetStart = unsafeMkProps "contentInsetStart"
 
 
 
-rtl :: forall action. Boolean -> Prop action
+rtl :: Boolean -> Props
 rtl = unsafeMkProps "rtl"
 
 
-subtitle :: forall action. String -> Prop action
+subtitle :: String -> Props
 subtitle = unsafeMkProps "subtitle"
 
 
-subtitleColor :: forall action. Color -> Prop action
+subtitleColor :: Color -> Props
 subtitleColor c = unsafeMkProps "subtitleColor" (show c)
 
 
-title :: forall action. String -> Prop action
+title :: String -> Props
 title = unsafeMkProps "title"
 
 
-titleColor :: forall action. Color -> Prop action
+titleColor :: Color -> Props
 titleColor c = unsafeMkProps "titleColor" (show c)
 
 
-underlayColor :: forall action. Color -> Prop action
+underlayColor :: Color -> Props
 underlayColor c = unsafeMkProps "underlayColor" (show c)
 
 
--- background backgroundPropType #
-background :: forall action. Boolean -> Prop action
+-- background backgroundPropsType #
+background :: Boolean -> Props
 background = unsafeMkProps "background"
 
-useForeground :: forall action. Boolean -> Prop action
+useForeground :: Boolean -> Props
 useForeground = unsafeMkProps "useForeground"
 
 
-activeOpacity :: forall action. Number -> Prop action
+activeOpacity :: Number -> Props
 activeOpacity = unsafeMkProps "activeOpacity"
 
 
-accessibilityComponentType :: forall action. AccessibilityComponentTypeProp -> Prop action
+accessibilityComponentType :: AccessibilityComponentTypeProp -> Props
 accessibilityComponentType ACTPNone             = unsafeMkProps "accessibilityComponentType" "none"
 accessibilityComponentType Button               = unsafeMkProps "accessibilityComponentType" "button"
 accessibilityComponentType RadiobuttonChecked   = unsafeMkProps "accessibilityComponentType" "radiobutton_checked"
@@ -1216,39 +1215,39 @@ accessibilityComponentType RadiobuttonUnchecked = unsafeMkProps "accessibilityCo
 
 -- TODO: implement accessibilityTraits
 -- accessibilityTraits View.AccessibilityTraits, [object Object] #
--- accessibilityTraits :: Array  AccessibilityTraitsProp -> Prop action
+-- accessibilityTraits :: Array  AccessibilityTraitsProps -> Props
 -- accessibilityTraits = unsafeMkProps "accessibilityTraits"
 
 
-accessible :: forall action. Boolean -> Prop action
+accessible :: Boolean -> Props
 accessible = unsafeMkProps "accessible"
 
 
-delayLongPress :: forall action. Int -> Prop action
+delayLongPress :: Int -> Props
 delayLongPress = unsafeMkProps "delayLongPress"
 
 
-delayPressIn :: forall action. Int -> Prop action
+delayPressIn :: Int -> Props
 delayPressIn = unsafeMkProps "delayPressIn"
 
 
-delayPressOut :: forall action. Int -> Prop action
+delayPressOut :: Int -> Props
 delayPressOut = unsafeMkProps "delayPressOut"
 
 
-disabled :: forall action. Boolean -> Prop action
+disabled :: Boolean -> Props
 disabled = unsafeMkProps "disabled"
 
 
-hitSlop :: forall action. Box -> Prop action
+hitSlop :: Box -> Props
 hitSlop = unsafeMkProps "hitSlop"
 
 
-pressRetentionOffset :: forall action. Box -> Prop action
+pressRetentionOffset :: Box -> Props
 pressRetentionOffset = unsafeMkProps "pressRetentionOffset"
 
 
-initialPage :: forall action. Int -> Prop action
+initialPage :: Int -> Props
 initialPage = unsafeMkProps "initialPage"
 
 
@@ -1258,83 +1257,83 @@ data KeyboardDismissMode
   | KDMOnDrag
 
 
-keyboardDismissMode :: forall action. KeyboardDismissMode -> Prop action
+keyboardDismissMode :: KeyboardDismissMode -> Props
 keyboardDismissMode KDMNone        = unsafeMkProps "keyboardDismissMode" "none"
 keyboardDismissMode KDMInteractive = unsafeMkProps "keyboardDismissMode" "interactive"
 keyboardDismissMode KDMOnDrag      = unsafeMkProps "keyboardDismissMode" "on-drag"
 
 
-pageMargin :: forall action. Int -> Prop action
+pageMargin :: Int -> Props
 pageMargin = unsafeMkProps "pageMargin"
 
 
-scrollEnabled :: forall action. Boolean -> Prop action
+scrollEnabled :: Boolean -> Props
 scrollEnabled = unsafeMkProps "scrollEnabled"
 
 
-renderNavigationView :: forall action. Element action -> Prop action
-renderNavigationView = unsafeMkFnProps "renderNavigationView"
+renderNavigationView :: ReactElement -> Props
+renderNavigationView = unsafeMkProps "renderNavigationView"
 
-renderFooter :: forall action. Element action -> Prop action
-renderFooter = unsafeMkFnProps "renderFooter"
+renderFooter :: ReactElement -> Props
+renderFooter = unsafeMkProps "renderFooter"
 
-renderHeader :: forall action. Element action -> Prop action
-renderHeader = unsafeMkFnProps "renderHeader"
+renderHeader :: ReactElement -> Props
+renderHeader = unsafeMkProps "renderHeader"
 
 data ImageSource
   = ImgURI {uri :: String}
   | Local String
   | URIs (Array {uri :: String, width::Int, height :: Int})
 
-sourceWithName :: forall action. String -> ImageSource -> Prop action
+sourceWithName :: String -> ImageSource -> Props
 sourceWithName name (ImgURI uri)  = unsafeMkProps name  uri
 sourceWithName name (URIs aryuri) = unsafeMkProps name aryuri
 sourceWithName name (Local path)  = unsafeMkProps name (require path)
 
-source :: forall action. ImageSource -> Prop action
+source :: ImageSource -> Props
 source = sourceWithName "source"
 
-defaultSource :: forall action. ImageSource -> Prop action
+defaultSource :: ImageSource -> Props
 defaultSource = sourceWithName "defaultSource"
 
-progressImage :: forall action. ImageSource -> Prop action
+progressImage :: ImageSource -> Props
 progressImage = sourceWithName "progressImage"
 
-trackImage :: forall action. ImageSource -> Prop action
+trackImage :: ImageSource -> Props
 trackImage = sourceWithName "trackImage"
 
-minimumTrackImage :: forall action. ImageSource -> Prop action
+minimumTrackImage :: ImageSource -> Props
 minimumTrackImage = sourceWithName "minimumTrackImage"
 
-maximumTrackImage :: forall action. ImageSource -> Prop action
+maximumTrackImage :: ImageSource -> Props
 maximumTrackImage = sourceWithName "maximumTrackImage"
 
-thumbImage :: forall action. ImageSource -> Prop action
+thumbImage :: ImageSource -> Props
 thumbImage = sourceWithName "thumbImage"
 
-icon :: forall action. ImageSource -> Prop action
+icon :: ImageSource -> Props
 icon = sourceWithName "icon"
 
-overflowIcon :: forall action. ImageSource -> Prop action
+overflowIcon :: ImageSource -> Props
 overflowIcon = sourceWithName "overflowIcon"
 
-navIcon :: forall action. ImageSource -> Prop action
+navIcon :: ImageSource -> Props
 navIcon = sourceWithName "navIcon"
 
 
-logo :: forall action. ImageSource -> Prop action
+logo :: ImageSource -> Props
 logo = sourceWithName "logo"
 
 
-selectedIcon :: forall action. ImageSource -> Prop action
+selectedIcon :: ImageSource -> Props
 selectedIcon = sourceWithName "selectedIcon"
 
-defaultValueNode :: forall action. Element action -> Prop action
+defaultValueNode :: ReactElement -> Props
 defaultValueNode = unsafeMkProps "defaultValue"
 
 newtype TISelection = TISelection {start :: Int, end :: Int}
 
-selection :: forall action. TISelection -> Prop action
+selection :: TISelection -> Props
 selection = unsafeMkProps "selection"
 
 
@@ -1359,9 +1358,15 @@ instance showDataDetectorType :: Show DataDetectorType where
   show DDTAll           = "all"
 
 
-dataDetectorTypes :: forall action. DataDetectorType -> Prop action
+dataDetectorTypes :: DataDetectorType -> Props
 dataDetectorTypes d = unsafeMkProps "dataDetectorTypes" (show d)
 
 
-dataDetectorTypesAry :: forall action. Array DataDetectorType -> Prop action
+dataDetectorTypesAry :: Array DataDetectorType -> Props
 dataDetectorTypesAry d = unsafeMkProps "dataDetectorTypes" (map show d)
+
+navigationState :: forall ns. ns -> Props
+navigationState = unsafeMkProps "navigationState"
+
+renderScene :: forall ns. ns -> Props
+renderScene = unsafeMkProps "renderScene"

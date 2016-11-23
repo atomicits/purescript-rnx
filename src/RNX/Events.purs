@@ -1,9 +1,9 @@
 module RNX.Events where
 
-import RNX.Components
 import Prelude
-import Data.Date
-import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
+import Data.Date (Date)
+import React (Event, EventHandlerContext, handle)
+import React.DOM.Props (unsafeMkProps, Props)
 
 
 type LayoutEvent = {nativeEvent :: {layout :: {x :: Int, y :: Int, width :: Int, height :: Int}} }
@@ -61,235 +61,358 @@ type ProgressEvent = { nativeEvent :: { loaded :: Boolean, total :: Number } }
 -- onShouldStartLoadWithRequest
 -- Boolean
 
-onPress :: forall action. (Unit -> action) -> Prop action
-onPress = runFn2 handler "onPress"
+onPress :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPress f = unsafeMkProps "onPress" (handle f)
 
-onChangeText :: forall action. (String -> action) -> Prop action
-onChangeText = runFn2 handler "onChangeText"
+onChangeText :: forall eff props state result.
+           (String -> EventHandlerContext eff props state result)
+           -> Props
+onChangeText f = unsafeMkProps "onChangeText" (handle f)
 
-onLayout :: forall action. (LayoutEvent -> action) -> Prop action
-onLayout  = runFn2 handler "onLayout"
+onLayout :: forall eff props state result.
+           (LayoutEvent -> EventHandlerContext eff props state result)
+           -> Props
+onLayout  f = unsafeMkProps "onLayout" (handle f)
 
-onMoveShouldSetResponder :: forall event action. (event -> action) -> Prop action
-onMoveShouldSetResponder = runFn2 handler "onMoveShouldSetResponder"
+onMoveShouldSetResponder :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onMoveShouldSetResponder f = unsafeMkProps "onMoveShouldSetResponder" (handle f)
 
-onMoveShouldSetResponderCapture :: forall event action. (event -> action) -> Prop action
-onMoveShouldSetResponderCapture = runFn2 handler "onMoveShouldSetResponderCapture"
+onMoveShouldSetResponderCapture :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onMoveShouldSetResponderCapture f = unsafeMkProps "onMoveShouldSetResponderCapture" (handle f)
 
-onResponderGrant :: forall event action. (event -> action) -> Prop action
-onResponderGrant = runFn2 handler "onResponderGrant"
+onResponderGrant ::forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderGrant f = unsafeMkProps "onResponderGrant" (handle f)
 
 
-onResponderMove :: forall event action. (event -> action) -> Prop action
-onResponderMove = runFn2 handler "onResponderMove"
+onResponderMove :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderMove f = unsafeMkProps "onResponderMove" (handle f)
 
 
-onResponderReject :: forall event action. (event -> action) -> Prop action
-onResponderReject = runFn2 handler "onResponderReject"
+onResponderReject :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderReject f = unsafeMkProps "onResponderReject" (handle f)
 
 
-onResponderRelease :: forall event action. (event -> action) -> Prop action
-onResponderRelease = runFn2 handler "onResponderRelease"
+onResponderRelease :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderRelease f = unsafeMkProps "onResponderRelease" (handle f)
 
 
-onResponderTerminate :: forall event action. (event -> action) -> Prop action
-onResponderTerminate = runFn2 handler "onResponderTerminate"
+onResponderTerminate :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderTerminate f = unsafeMkProps "onResponderTerminate" (handle f)
 
 
-onResponderTerminationRequest :: forall event action. (event -> action) -> Prop action
-onResponderTerminationRequest = runFn2 handler "onResponderTerminationRequest"
+onResponderTerminationRequest :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onResponderTerminationRequest f = unsafeMkProps "onResponderTerminationRequest" (handle f)
 
 
-onStartShouldSetResponder :: forall event action. (event -> action) -> Prop action
-onStartShouldSetResponder = runFn2 handler "onStartShouldSetResponder"
+onStartShouldSetResponder :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onStartShouldSetResponder f = unsafeMkProps "onStartShouldSetResponder" (handle f)
 
 
-onStartShouldSetResponderCapture :: forall event action. (event -> action) -> Prop action
-onStartShouldSetResponderCapture = runFn2 handler "onStartShouldSetResponderCapture"
+onStartShouldSetResponderCapture :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onStartShouldSetResponderCapture f = unsafeMkProps "onStartShouldSetResponderCapture" (handle f)
 
 
-onDateChange :: forall action. (Date -> action) -> Prop action
-onDateChange = runFn2 handler "onDateChange"
+onDateChange :: forall eff props state result.
+           (Date -> EventHandlerContext eff props state result)
+           -> Props
+onDateChange f = unsafeMkProps "onDateChange" (handle f)
 
 
-onDrawerClose :: forall action. (Unit -> action) -> Prop action
-onDrawerClose = runFn2 handler "onDrawerClose"
+onDrawerClose :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onDrawerClose f = unsafeMkProps "onDrawerClose" (handle f)
 
 
-onDrawerOpen :: forall action. (Unit -> action) -> Prop action
-onDrawerOpen = runFn2 handler "onDrawerOpen"
+onDrawerOpen :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onDrawerOpen f = unsafeMkProps "onDrawerOpen" (handle f)
 
 
-onDrawerSlide :: forall action. (Unit -> action) -> Prop action
-onDrawerSlide = runFn2 handler "onDrawerSlide"
+onDrawerSlide :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onDrawerSlide f = unsafeMkProps "onDrawerSlide" (handle f)
 
 
-onDrawerStateChanged :: forall event action. (event -> action) -> Prop action
-onDrawerStateChanged = runFn2 handler "onDrawerStateChanged"
+onDrawerStateChanged :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onDrawerStateChanged f = unsafeMkProps "onDrawerStateChanged" (handle f)
 
 
-onLoad :: forall action. (Unit -> action) -> Prop action
-onLoad = runFn2 handler "onLoad"
+onLoad :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onLoad f = unsafeMkProps "onLoad" (handle f)
 
 
-onLoadEnd :: forall action. (Unit -> action) -> Prop action
-onLoadEnd = runFn2 handler "onLoadEnd"
+onLoadEnd :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onLoadEnd f = unsafeMkProps "onLoadEnd" (handle f)
 
 
-onLoadStart :: forall action. (Unit -> action) -> Prop action
-onLoadStart = runFn2 handler "onLoadStart"
+onLoadStart :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onLoadStart f = unsafeMkProps "onLoadStart" (handle f)
 
 
-onError :: forall event action. (event -> action) -> Prop action
-onError = runFn2 handler "onError"
+onError :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onError f = unsafeMkProps "onError" (handle f)
 
 
-onPartialLoad  :: forall event action. (event -> action) -> Prop action
-onPartialLoad = runFn2 handler "onPartialLoad"
+onPartialLoad  :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPartialLoad f = unsafeMkProps "onPartialLoad" (handle f)
 
 
-onProgress :: forall action. (ProgressEvent -> action) -> Prop action
-onProgress  = runFn2 handler "onProgress"
+onProgress :: forall eff props state result.
+           (ProgressEvent -> EventHandlerContext eff props state result)
+           -> Props
+onProgress  f = unsafeMkProps "onProgress" (handle f)
 
 
 
-onChangeVisibleRows  :: forall event action. (event -> action) -> Prop action
-onChangeVisibleRows = runFn2 handler "onChangeVisibleRows"
+onChangeVisibleRows  :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onChangeVisibleRows f = unsafeMkProps "onChangeVisibleRows" (handle f)
 
 
-onEndReached :: forall event action. (event -> action) -> Prop action
-onEndReached = runFn2 handler "onEndReached"
+onEndReached :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onEndReached f = unsafeMkProps "onEndReached" (handle f)
 
 
-onRegionChange  :: forall event action. (event -> action) -> Prop action
-onRegionChange  = runFn2 handler "onRegionChange"
+onRegionChange  :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onRegionChange  f = unsafeMkProps "onRegionChange" (handle f)
 
 
-onRegionChangeComplete :: forall event action. (event -> action) -> Prop action
-onRegionChangeComplete = runFn2 handler "onRegionChangeComplete"
+onRegionChangeComplete :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onRegionChangeComplete f = unsafeMkProps "onRegionChangeComplete" (handle f)
 
 
-onRequestClose :: forall action. (Unit -> action) -> Prop action
-onRequestClose = runFn2 handler "onRequestClose"
+onRequestClose :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onRequestClose f = unsafeMkProps "onRequestClose" (handle f)
 
 
-onShow :: forall action. (Unit -> action) -> Prop action
-onShow = runFn2 handler "onShow"
+onShow :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onShow f = unsafeMkProps "onShow" (handle f)
 
 
-onValueChange :: forall event action. (event -> action) -> Prop action
-onValueChange = runFn2 handler "onValueChange"
+onValueChange :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onValueChange f = unsafeMkProps "onValueChange" (handle f)
 
 
-onRefresh :: forall action. (Unit -> action) -> Prop action
-onRefresh = runFn2 handler "onRefresh"
+onRefresh :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onRefresh f = unsafeMkProps "onRefresh" (handle f)
 
 
-onContentSizeChange :: forall action. (SizeEvent -> action) -> Prop action
-onContentSizeChange = runFn2 handler "onContentSizeChange"
+onContentSizeChange :: forall eff props state result.
+           (SizeEvent -> EventHandlerContext eff props state result)
+           -> Props
+onContentSizeChange f = unsafeMkProps "onContentSizeChange" (handle f)
 
 
-onScroll :: forall action. (Unit -> action) -> Prop action
-onScroll = runFn2 handler "onScroll"
+onScroll :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onScroll f = unsafeMkProps "onScroll" (handle f)
 
 
-onChange :: forall event action. (event -> action) -> Prop action
-onChange = runFn2 handler "onChange"
+onChange :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onChange f = unsafeMkProps "onChange" (handle f)
 
 
-onSlidingComplete :: forall action. (Unit -> action) -> Prop action
-onSlidingComplete = runFn2 handler "onSlidingComplete"
+onSlidingComplete :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onSlidingComplete f = unsafeMkProps "onSlidingComplete" (handle f)
 
 
-onSnapshotReady :: forall event action. (event -> action) -> Prop action
-onSnapshotReady = runFn2 handler "onSnapshotReady"
+onSnapshotReady :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onSnapshotReady f = unsafeMkProps "onSnapshotReady" (handle f)
 
 
-onLongPress :: forall action. (Unit -> action) -> Prop action
-onLongPress = runFn2 handler "onLongPress"
+onLongPress :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onLongPress f = unsafeMkProps "onLongPress" (handle f)
 
-onScrollAnimationEnd :: forall action. (Unit -> action) -> Prop action
-onScrollAnimationEnd = runFn2 handler "onScrollAnimationEnd"
+onScrollAnimationEnd :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onScrollAnimationEnd f = unsafeMkProps "onScrollAnimationEnd" (handle f)
 
 
---onPress :: forall event action. (event -> action) -> Prop action
---onPress = runFn2 handler "onPress"
+--onPress :: forall eff props state result.
+--           (Event -> EventHandlerContext eff props state result)
+--           -> Props
+--onPress f = unsafeMkProps "onPress" (handle f)
 
 
-onBlur :: forall action. (Unit -> action) -> Prop action
-onBlur = runFn2 handler "onBlur"
+onBlur :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onBlur f = unsafeMkProps "onBlur" (handle f)
 
 
---onChangeText :: forall event action. (event -> action) -> Prop action
---onChangeText = runFn2 handler "onChangeText"
+--onChangeText :: forall eff props state result.
+--           (Event -> EventHandlerContext eff props state result)
+--           -> Props
+--onChangeText f = unsafeMkProps "onChangeText" (handle f)
 
 
---onContentSizeChange :: forall event action. (event -> action) -> Prop action
---onContentSizeChange = runFn2 handler "onContentSizeChange"
+--onContentSizeChange :: forall eff props state result.
+--           (Event -> EventHandlerContext eff props state result)
+--           -> Props
+--onContentSizeChange f = unsafeMkProps "onContentSizeChange" (handle f)
 
 
-onEndEditing :: forall action. (Unit -> action) -> Prop action
-onEndEditing = runFn2 handler "onEndEditing"
+onEndEditing :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onEndEditing f = unsafeMkProps "onEndEditing" (handle f)
 
 
-onFocus :: forall action. (Unit -> action) -> Prop action
-onFocus = runFn2 handler "onFocus"
+onFocus :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onFocus f = unsafeMkProps "onFocus" (handle f)
 
 
 type SelectionEvent = {nativeEvent::{selection::{start::Int, end:: Int}}}
 
 -- TODO: handle selectionevent
-onSelectionChange :: forall action. (SelectionEvent -> action) -> Prop action
-onSelectionChange = runFn2 handler "onSelectionChange"
+onSelectionChange :: forall eff props state result.
+           (SelectionEvent -> EventHandlerContext eff props state result)
+           -> Props
+onSelectionChange f = unsafeMkProps "onSelectionChange" (handle f)
 
 
-onSubmitEditing :: forall action. (Unit -> action) -> Prop action
-onSubmitEditing = runFn2 handler "onSubmitEditing"
+onSubmitEditing :: forall eff props state result.
+           (Unit -> EventHandlerContext eff props state result)
+           -> Props
+onSubmitEditing f = unsafeMkProps "onSubmitEditing" (handle f)
 
 
-onKeyPress :: forall event action. (event -> action) -> Prop action
-onKeyPress = runFn2 handler "onKeyPress"
+onKeyPress :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onKeyPress f = unsafeMkProps "onKeyPress" (handle f)
 
 
-onActionSelected :: forall action. (Int -> action) -> Prop action
-onActionSelected = runFn2 handler "onActionSelected"
+onActionSelected :: forall eff props state result.
+           (Int -> EventHandlerContext eff props state result)
+           -> Props
+onActionSelected f = unsafeMkProps "onActionSelected" (handle f)
 
 
-onIconClicked :: forall event action. (event -> action) -> Prop action
-onIconClicked = runFn2 handler "onIconClicked"
+onIconClicked :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onIconClicked f = unsafeMkProps "onIconClicked" (handle f)
 
 
-onHideUnderlay :: forall event action. (event -> action) -> Prop action
-onHideUnderlay = runFn2 handler "onHideUnderlay"
+onHideUnderlay :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onHideUnderlay f = unsafeMkProps "onHideUnderlay" (handle f)
 
 
-onShowUnderlay :: forall event action. (event -> action) -> Prop action
-onShowUnderlay = runFn2 handler "onShowUnderlay"
+onShowUnderlay :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onShowUnderlay f = unsafeMkProps "onShowUnderlay" (handle f)
 
 
-onPressIn :: forall event action. (event -> action) -> Prop action
-onPressIn = runFn2 handler "onPressIn"
+onPressIn :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPressIn f = unsafeMkProps "onPressIn" (handle f)
 
 
-onPressOut :: forall event action. (event -> action) -> Prop action
-onPressOut = runFn2 handler "onPressOut"
+onPressOut :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPressOut f = unsafeMkProps "onPressOut" (handle f)
 
 
-onPageScroll :: forall event action. (event -> action) -> Prop action
-onPageScroll = runFn2 handler "onPageScroll"
+onPageScroll :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPageScroll f = unsafeMkProps "onPageScroll" (handle f)
 
 
-onPageScrollStateChanged :: forall event action. (event -> action) -> Prop action
-onPageScrollStateChanged = runFn2 handler "onPageScrollStateChanged"
+onPageScrollStateChanged :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPageScrollStateChanged f = unsafeMkProps "onPageScrollStateChanged" (handle f)
 
 
-onPageSelected :: forall event action. (event -> action) -> Prop action
-onPageSelected = runFn2 handler "onPageSelected"
+onPageSelected :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onPageSelected f = unsafeMkProps "onPageSelected" (handle f)
 
 
-onNavigationStateChange :: forall event action. (event -> action) -> Prop action
-onNavigationStateChange = runFn2 handler "onNavigationStateChange"
+onNavigationStateChange :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onNavigationStateChange f = unsafeMkProps "onNavigationStateChange" (handle f)
 
 
-onShouldStartLoadWithRequest :: forall event action. (event -> action) -> Prop action
-onShouldStartLoadWithRequest = runFn2 handler "onShouldStartLoadWithRequest"
+onShouldStartLoadWithRequest :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onShouldStartLoadWithRequest f = unsafeMkProps "onShouldStartLoadWithRequest" (handle f)
+
+onNavigateBack :: forall eff props state result.
+           (Event -> EventHandlerContext eff props state result)
+           -> Props
+onNavigateBack f = unsafeMkProps "onNavigateBack" (handle f)
