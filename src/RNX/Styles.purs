@@ -81,8 +81,14 @@ backgroundVisibility Hidden  = unsafeMkStyleProp "backgroundVisibility" "hidden"
 borderBottomColor :: Color -> StyleProp
 borderBottomColor c = unsafeMkStyleProp "borderBottomColor" (show c)
 
+borderTopColor :: Color -> StyleProp
+borderTopColor c = unsafeMkStyleProp "borderTopColor" (show c)
+
 borderBottomRightRadius :: Int -> StyleProp
 borderBottomRightRadius = unsafeMkStyleProp "borderBottomRightRadius"
+
+borderBottomLeftRadius :: Int -> StyleProp
+borderBottomLeftRadius = unsafeMkStyleProp "borderBottomLeftRadius"
 
 borderBottomWidth :: Int -> StyleProp
 borderBottomWidth = unsafeMkStyleProp "borderBottomWidth"
