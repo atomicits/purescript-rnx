@@ -1,11 +1,12 @@
 module RNX.Props where
 
-import RNX.PropsTypes (AccessibilityComponentTypeProp(..), AccessibilityLiveRegionProp(..), ImportantForAccessibilityProp(..))
-import Data.Date (Date)
 import Prelude
+import Data.Date (Date)
 import RNX.Color (Color)
-import React.DOM.Props (Props, unsafeMkProps)
+import RNX.PropsTypes (AccessibilityComponentTypeProp(..), AccessibilityLiveRegionProp(..), ImportantForAccessibilityProp(..))
 import React (ReactElement)
+import React.DOM.Props (Props, unsafeMkProps)
+import Unsafe.Coerce (unsafeCoerce)
 
 --foreign import unsafeMkProps :: forall val. String -> val -> Props
 
@@ -1280,15 +1281,19 @@ renderFooter = unsafeMkProps "renderFooter"
 renderHeader :: ReactElement -> Props
 renderHeader = unsafeMkProps "renderHeader"
 
-data ImageSource
-  = ImgURI {uri :: String}
-  | Local String
-  | URIs (Array {uri :: String, width::Int, height :: Int})
+foreign import data ImageSource :: *
+
+uriSrc :: String -> ImageSource
+uriSrc uri = unsafeCoerce {uri}
+
+uriSrc' :: {uri::String, width:: Int, height:: Int} -> ImageSource
+uriSrc' = unsafeCoerce
+
+urisSrc :: Array {uri::String, width:: Int, height:: Int} -> ImageSource
+urisSrc = unsafeCoerce
 
 sourceWithName :: String -> ImageSource -> Props
-sourceWithName name (ImgURI uri)  = unsafeMkProps name  uri
-sourceWithName name (URIs aryuri) = unsafeMkProps name aryuri
-sourceWithName name (Local path)  = unsafeMkProps name (require path)
+sourceWithName = unsafeMkProps
 
 source :: ImageSource -> Props
 source = sourceWithName "source"
