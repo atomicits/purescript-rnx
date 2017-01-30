@@ -6,7 +6,7 @@ import Prelude
 import RNX.Color (Color)
 import React.DOM.Props (Props, unsafeMkProps)
 import React (ReactElement)
-
+import RNX.Styles (StyleId)
 --foreign import unsafeMkProps :: forall val. String -> val -> Props
 
 --foreign import unsafeMkFnPropss :: forall val. String -> val -> Props
@@ -563,7 +563,7 @@ refreshControlSize RCLarge = unsafeMkProps "size" refreshControlSizeLarge
 
 
 -- contentContainerStyle StyleSheetPropsType(ViewStylePropsTypes) #
-contentContainerStyle :: Boolean -> Props
+contentContainerStyle :: StyleId -> Props
 contentContainerStyle = unsafeMkProps "contentContainerStyle"
 
 
