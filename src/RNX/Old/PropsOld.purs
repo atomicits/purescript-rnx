@@ -1,4 +1,4 @@
-module RNX.Props where
+module RNX.PropsOld where
 
 import RNX.PropsTypes (AccessibilityComponentTypeProp(..), AccessibilityLiveRegionProp(..), ImportantForAccessibilityProp(..))
 import Data.Date (Date)

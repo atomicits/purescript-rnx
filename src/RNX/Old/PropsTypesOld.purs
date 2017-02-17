@@ -1,4 +1,4 @@
-module RNX.PropsTypes where
+module RNX.PropsTypesOld where
 
 data AccessibilityComponentTypeProp
   = ACTPNone
