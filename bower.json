@@ -29,7 +29,8 @@
         "purescript-globals": "^2.0.0",
         "purescript-profunctor-lenses": "^2.0.0",
         "purescript-react": "^2.0.0",
-        "purescript-coroutines": "^3.0.0"
+        "purescript-coroutines": "^3.0.0",
+        "purescript-eff-functions": "^2.0.0"
     },
     "authors": [
         "Sudhir Kumar <s@atomicits.com>"
