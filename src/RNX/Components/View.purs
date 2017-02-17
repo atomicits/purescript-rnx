@@ -1,4 +1,4 @@
-module RNX.View where
+module View where
 
 import RNX.Events
 import RNX.PropTypes (class AutoEnum, class NoneEnum, Prop, RefType)

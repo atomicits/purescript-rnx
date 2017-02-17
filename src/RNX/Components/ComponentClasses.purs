@@ -54,3 +54,11 @@ foreign import textElem :: String -> ReactElement
 foreign import handler     :: forall props event action. Fn2 String (event -> action) props
 foreign import handlerBool :: forall props event. Fn2 String (event -> Boolean) props
 foreign import handlerUnit :: forall props event. Fn2 String (event -> Unit) props
+
+
+--
+
+foreign import data RowRenderer :: * -> *
+foreign import data SectionRenderer :: * -> *
+foreign import data SceneConfig :: *
+foreign import require :: forall a. String -> a

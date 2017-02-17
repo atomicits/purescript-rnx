@@ -31,9 +31,9 @@ module RNX
   , split
   , foreach
   , registerComponent
-
   , module T
   ) where
+
 
 import Prelude
 import React as React
@@ -55,6 +55,7 @@ import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
 import RNX.Components (view')
 import RNX.Styles (minHeight, height, StyleSheet, Style(..), flex, createStyleSheet, getStyleId, style)
+
 
 foreign import registerComponent :: forall eff component. String -> component -> Eff eff Unit
 

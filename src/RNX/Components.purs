@@ -1,1 +1,5 @@
-module RNX.Components where
+module RNX.Components (
+  view', activityIndicator
+                      ) where
+
+import View

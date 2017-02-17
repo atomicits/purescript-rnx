@@ -96,6 +96,9 @@ exports.stateUtilsPush = function(state){
         return ReactNative.NavigationExperimental.StateUtils.push(state, route);
     };
 };
+
+exports.require = require;
+
 // exports.stateUtilsPop = function(state){
 //     return ReactNative.NavigationExperimental.StateUtils.pop(state);
 // };
