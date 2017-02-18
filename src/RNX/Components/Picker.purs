@@ -1,32 +1,37 @@
 module Picker where
 
+import RNX.Styles (Style)
+import View (ViewPropsEx)
+import RNX.Events (EventHandler)
+import Prelude
+import RNX.PropTypes (Prop)
+import React (ReactElement, createElement)
+import RNX.ComponentClasses (pickerClass)
 
-import RNX.Styles
-import View
-import RNX.Events
 
-
-type PickerProps a eff = ViewPropsEx eff (
-    onValueChange :: EventHandler eff {itemValue :: a, itemPosition :: Int}
+type PickerProps a eff = ViewPropsEx eff
+  ( onValueChange :: EventHandler eff {itemValue :: a, itemPosition :: Int}
   , selectedValue :: a
-) (
-    enabled :: Boolean
+  )
+  ( enabled :: Boolean
   , mode :: PickerMode
   , prompt :: String
-) (
-  itemStyle :: Style
-)
-
-
+  )
+  (itemStyle :: Style)
 
 
 newtype PickerMode = PickerMode String
 
-pickerMode :: {
-    dialog :: PickerMode
+
+pickerMode ::
+  { dialog :: PickerMode
   , dropdown :: PickerMode
-}
-pickerMode = {
-    dialog: PickerMode "dialog"
+  }
+pickerMode =
+  { dialog: PickerMode "dialog"
   , dropdown: PickerMode "dropdown"
-}
+  }
+
+
+picker :: forall a eff. Prop (PickerProps a eff)  -> Array (ReactElement) -> ReactElement
+picker = createElement pickerClass

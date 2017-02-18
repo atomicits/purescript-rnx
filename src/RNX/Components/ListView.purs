@@ -1,25 +1,27 @@
 module ListView where
 
 
-import View
-import ScrollView
-import RNX.PropTypes
-import Data.Nullable
-import RNX.Events
-import Data.StrMap
+import ScrollView (ScrollViewPropsEx)
+import RNX.PropTypes (Prop, UnKnownType)
+import Data.Nullable (Nullable)
+import RNX.Events (EventHandler, ScrollEvent)
+import Data.StrMap (StrMap)
 import Prelude
-import RNX.ComponentClasses
-import React (ReactElement, createClass, createElement)
+import RNX.ComponentClasses (RowRenderer, SectionRenderer, listViewClass)
+import React (ReactElement, createElement)
 import Unsafe.Coerce (unsafeCoerce)
 import Data.Function.Eff (EffFn2)
-import Data.Function.Uncurried (Fn2, Fn3, Fn4, mkFn2, mkFn4, runFn3, runFn4)
+import Data.Function.Uncurried (Fn3, mkFn2, mkFn4)
 
 
 type SectionIndex = String
+
+
 type RowIndex = String
 
-type ListViewProps a section blob eff = ScrollViewPropsEx eff (
-    dataSource :: UnKnownType -- ListViewDataSource' blob a section
+
+type ListViewProps a section blob eff = ScrollViewPropsEx eff
+  ( dataSource :: UnKnownType -- ListViewDataSource' blob a section
   , enableEmptySections :: Boolean
   , initialListSize :: Int
   , onChangeVisibleRows :: UnKnownType --EventHandler2 eff RowMap RowMap
@@ -33,25 +35,27 @@ type ListViewProps a section blob eff = ScrollViewPropsEx eff (
   , renderSectionHeader :: SectionRenderer section
   , renderSeparator :: Fn3 SectionIndex RowIndex Boolean ReactElement
   , scrollRenderAheadDistance :: Int
-)
+  )
 
 
 type RowMap = StrMap (StrMap Boolean)
 
 
-
 rowRenderer :: forall a. (a -> ReactElement) -> RowRenderer a
 rowRenderer = unsafeCoerce
+
 
 rowRenderer' :: forall a eff. (a -> SectionIndex -> RowIndex -> EffFn2 eff SectionIndex RowIndex Unit -> ReactElement) -> RowRenderer a
 rowRenderer' = unsafeCoerce <<< mkFn4
 
+
 sectionRenderer :: forall section. (section -> ReactElement) -> SectionRenderer section
 sectionRenderer = unsafeCoerce
+
 
 sectionRenderer' :: forall section. (section -> SectionIndex -> ReactElement) -> SectionRenderer section
 sectionRenderer' = unsafeCoerce <<< mkFn2
 
 
-listView :: forall a section blob  eff. Prop (ListViewProps a section blob eff ) -> Array (ReactElement) -> ReactElement
-listView  = createElement listViewClass
+listView :: forall a section blob eff. Prop (ListViewProps a section blob eff ) -> Array (ReactElement) -> ReactElement
+listView = createElement listViewClass

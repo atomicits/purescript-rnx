@@ -1,12 +1,14 @@
 module ScrollView where
 
+import View (ViewPropsEx)
+import RNX.Styles (Style)
+import RNX.Color (Color)
+import RNX.PropTypes (Insets, Prop, UnKnownType)
+import React (ReactElement, createElement)
+import RNX.Events (UnitEventHandler)
+import RNX.ComponentClasses (refreshControlClass, scrollViewClass)
+import Prelude
 
-import View
-import RNX.Styles
-import RNX.Color
-import RNX.PropTypes
-import React
-import RNX.Events
 
 type ScrollViewProps eff = ScrollViewPropsEx eff ()
 
@@ -29,9 +31,8 @@ type RefreshProps eff =
   }
 
 
-
-type ScrollViewPropsEx eff r = ViewPropsEx eff (
-    contentContainerStyle :: Style
+type ScrollViewPropsEx eff r = ViewPropsEx eff
+  ( contentContainerStyle :: Style
   , horizontal :: Boolean
   , keyboardDismissMode :: KeyboardDismissMode
   , keyboardShouldPersistTaps :: KeyboardShouldPersistTaps
@@ -43,12 +44,12 @@ type ScrollViewPropsEx eff r = ViewPropsEx eff (
   , showsHorizontalScrollIndicator :: Boolean
   , showsVerticalScrollIndicator :: Boolean
   | r
-) ScrollViewAndroid (ScrollViewIOS eff)
+  ) ScrollViewAndroid (ScrollViewIOS eff)
 
 
 newtype KeyboardDismissMode = KeyboardDismissMode String
 keyboardDismissMode ::
-  {  none :: KeyboardDismissMode
+  { none :: KeyboardDismissMode
   , interactive :: KeyboardDismissMode
   , onDrag :: KeyboardDismissMode
   }
@@ -57,6 +58,7 @@ keyboardDismissMode =
   , interactive: KeyboardDismissMode "interactive"
   , onDrag: KeyboardDismissMode "on-drag"
   }
+
 
 newtype KeyboardShouldPersistTaps = KeyboardShouldPersistTaps String
 keyboardShouldPersistTaps ::
@@ -74,13 +76,13 @@ keyboardShouldPersistTaps =
 newtype RefreshControl = RefreshControl ReactElement
 
 
-type ScrollViewAndroid =  (
-    endFillColor :: Color
+type ScrollViewAndroid =
+  ( endFillColor :: Color
   , scrollPerfTag :: String
-)
+  )
 
-type ScrollViewIOS eff = (
-    alwaysBounceHorizontal :: Boolean
+type ScrollViewIOS eff =
+  ( alwaysBounceHorizontal :: Boolean
   , alwaysBounceVertical :: Boolean
   , automaticallyAdjustContentInsets :: Boolean
   , bounces :: Boolean
@@ -102,43 +104,69 @@ type ScrollViewIOS eff = (
   , snapToInterval :: Number
   , stickyHeaderIndices :: Array Number
   , zoomScale :: Number
-)
+  )
+
+
+foreign import data RefreshControlSize :: *
+foreign import rcSizeImpl :: String -> RefreshControlSize
+
+
+refreshControlSize ::
+  { default :: RefreshControlSize
+  , large :: RefreshControlSize
+  }
+refreshControlSize =
+  { default: rcSizeImpl "DEFAULT"
+  , large: rcSizeImpl "LARGE"
+  }
 
 
 newtype DecelerationRate = DecelerationRate String
 decelerationRate :: { fast :: DecelerationRate
-, normal :: DecelerationRate
-}
-decelerationRate = {
-    fast: DecelerationRate "fast"
-  , normal: DecelerationRate "normal"
-}
+                    , normal :: DecelerationRate
+                    }
+decelerationRate = { fast: DecelerationRate "fast"
+                   , normal: DecelerationRate "normal"
+                   }
+
 
 -- need to discuss
 -- decelerateBy :: Number -> DecelerationRate
 -- decelerateBy = unsafeCoerce
 
+
 newtype IndicatorStyle = IndicatorStyle String
 
-indicatorStyle :: {
-    default :: IndicatorStyle
+
+indicatorStyle ::
+  { default :: IndicatorStyle
   , black :: IndicatorStyle
   , white :: IndicatorStyle
-}
-indicatorStyle = {
-    default: IndicatorStyle "default"
+  }
+indicatorStyle =
+  { default: IndicatorStyle "default"
   , black: IndicatorStyle "black"
   , white: IndicatorStyle "white"
-}
+  }
+
 
 newtype SnapToAlignment = SnapToAlignment String
-snapToAlignment :: {
-    start :: SnapToAlignment
+
+
+snapToAlignment ::
+  { start :: SnapToAlignment
   , center :: SnapToAlignment
   , end :: SnapToAlignment
-}
-snapToAlignment = {
-    start: SnapToAlignment "start"
+  }
+snapToAlignment =
+  { start: SnapToAlignment "start"
   , center: SnapToAlignment "center"
   , end: SnapToAlignment "end"
-}
+  }
+
+
+refreshControl' :: forall eff. Prop (RefreshProps eff) ->  Array (ReactElement)  -> ReactElement
+refreshControl'  = createElement refreshControlClass
+
+scrollView :: forall eff. Prop (ScrollViewProps eff) -> Array (ReactElement) -> ReactElement
+scrollView  = createElement scrollViewClass

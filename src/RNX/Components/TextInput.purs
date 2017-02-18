@@ -1,23 +1,21 @@
 module TextInput where
 
-
-import View
-import RNX.Color
-import RNX.Events
-import RNX.Styles
-import React
-import RNX.PropTypes
-import RNX.ComponentClasses
+import View (ViewPropsEx')
+import RNX.Color (Color)
+import RNX.Events (ContentSizeEvent, EventHandler, ScrollEvent, TextInputEvent)
+import RNX.PropTypes (Prop)
+import RNX.ComponentClasses (textInputClass)
 import Control.Monad.Eff (Eff)
 import Data.Unit (Unit)
+import React (ReactElement, ReactThis, createElement)
 import Unsafe.Coerce (unsafeCoerce)
-
 
 
 newtype TextInputRef = TextInputRef (forall p s. ReactThis p s)
 
-type TextInputProps eff = ViewPropsEx' eff TextInputRef (
-    autoCapitalize:: AutoCapitalize
+
+type TextInputProps eff = ViewPropsEx' eff TextInputRef
+  ( autoCapitalize:: AutoCapitalize
   , autoCorrect :: Boolean
   , autoFocus :: Boolean
   , blurOnSubmit :: Boolean
@@ -43,29 +41,28 @@ type TextInputProps eff = ViewPropsEx' eff TextInputRef (
   , selectionColor :: Color
   , returnKeyType :: ReturnKeyType
   , value :: String
-) (
-    inlineImagePadding :: Int
+  )
+  ( inlineImagePadding :: Int
   , inlineImageLeft :: String
   , returnKeyLabel :: String
   , underlineColorAndroid :: Color
   , numberOfLines :: Int
-) (
-    clearTextOnFocus :: Boolean
+  )
+  ( clearTextOnFocus :: Boolean
   , enablesReturnKeyAutomatically :: Boolean
   , clearButtonMode :: ClearButtonMode
   , keyboardAppearance :: KeyboardAppearance
   , onKeyPress :: EventHandler eff TextInputEvent
   , selectionState :: DocumentSelectionState
   , dataDetectorTypes :: DataDetectorType
-)
-
-
+  )
 
 
 newtype KeyboardType = KeyboardType String
 
-keyboardType :: {
-    default :: KeyboardType
+
+keyboardType ::
+  { default :: KeyboardType
   , numeric :: KeyboardType
   , emailAddress :: KeyboardType
   , phonePad :: KeyboardType
@@ -77,9 +74,9 @@ keyboardType :: {
   , decimalPad :: KeyboardType
   , twitter :: KeyboardType
   , webSearch :: KeyboardType
-}
-keyboardType = {
-    default: KeyboardType "default"
+  }
+keyboardType =
+  { default: KeyboardType "default"
   , numeric: KeyboardType "numeric"
   , emailAddress: KeyboardType "email-address"
   , phonePad: KeyboardType "phonePad"
@@ -91,26 +88,31 @@ keyboardType = {
   , decimalPad: KeyboardType "decimal-pad"
   , twitter: KeyboardType "twitter"
   , webSearch: KeyboardType "web-search"
-}
+  }
+
 
 newtype AutoCapitalize = AutoCapitalize String
-autoCapitalize :: {
-    none :: AutoCapitalize
+
+
+autoCapitalize ::
+  { none :: AutoCapitalize
   , sentences :: AutoCapitalize
   , words :: AutoCapitalize
   , characters :: AutoCapitalize
-}
-autoCapitalize = {
-    none: AutoCapitalize "none"
+  }
+autoCapitalize =
+  { none: AutoCapitalize "none"
   , sentences: AutoCapitalize "sentences"
   , words: AutoCapitalize "words"
   , characters: AutoCapitalize "characters"
-}
+  }
+
 
 newtype ReturnKeyType = ReturnKeyType String
 
-returnKeyType :: {
-    done :: ReturnKeyType
+
+returnKeyType ::
+  { done :: ReturnKeyType
   , go :: ReturnKeyType
   , next :: ReturnKeyType
   , search :: ReturnKeyType
@@ -126,87 +128,85 @@ returnKeyType :: {
            , yahoo :: ReturnKeyType
            }
 }
-returnKeyType = {
-    done: ReturnKeyType "done"
+returnKeyType =
+  { done: ReturnKeyType "done"
   , go: ReturnKeyType "go"
   , next: ReturnKeyType "next"
   , search: ReturnKeyType "search"
   , send: ReturnKeyType "send"
-  , android: {
-      none: ReturnKeyType "none"
-    , previous: ReturnKeyType "previous"
+  , android: {  none: ReturnKeyType "none"
+             , previous: ReturnKeyType "previous"
+             }
+  , ios: { default: ReturnKeyType "default"
+         , emergencyCall: ReturnKeyType "emergency-call"
+         , google: ReturnKeyType "google"
+         , join: ReturnKeyType "join"
+         , route: ReturnKeyType "route"
+         , yahoo: ReturnKeyType "yahoo"
+         }
   }
-  , ios: {
-      default: ReturnKeyType "default"
-    , emergencyCall: ReturnKeyType "emergency-call"
-    , google: ReturnKeyType "google"
-    , join: ReturnKeyType "join"
-    , route: ReturnKeyType "route"
-    , yahoo: ReturnKeyType "yahoo"
-  }
-}
+
 
 newtype ClearButtonMode = ClearButtonMode String
 
-clearButtonMode :: {
-    never :: ClearButtonMode
+
+clearButtonMode ::
+  { never :: ClearButtonMode
   , whileEditing :: ClearButtonMode
   , unlessEditing :: ClearButtonMode
   , always :: ClearButtonMode
-}
-clearButtonMode = {
-    never: ClearButtonMode "never"
+  }
+clearButtonMode =
+  { never: ClearButtonMode "never"
   , whileEditing: ClearButtonMode "while-editing"
   , unlessEditing: ClearButtonMode "unless-editing"
   , always: ClearButtonMode "always"
-}
+  }
+
 
 newtype KeyboardAppearance = KeyboardAppearance String
 
-keyboardAppearance :: {
-    default :: KeyboardAppearance
+
+keyboardAppearance ::
+  { default :: KeyboardAppearance
   , light :: KeyboardAppearance
   , dark :: KeyboardAppearance
-}
-keyboardAppearance = {
-    default: KeyboardAppearance "default"
+  }
+keyboardAppearance =
+  { default: KeyboardAppearance "default"
   , light: KeyboardAppearance "light"
   , dark: KeyboardAppearance "dark"
-}
+  }
 
 newtype DataDetectorType = DataDetectorType String
 
-dataDetectorType :: {
-    phoneNumber :: DataDetectorType
+
+dataDetectorType ::
+  { phoneNumber :: DataDetectorType
   , link :: DataDetectorType
   , address :: DataDetectorType
   , calendarEvent :: DataDetectorType
   , none :: DataDetectorType
   , all :: DataDetectorType
-}
-dataDetectorType = {
-    phoneNumber: DataDetectorType "phoneNumber"
+  }
+dataDetectorType =
+  { phoneNumber: DataDetectorType "phoneNumber"
   , link: DataDetectorType "link"
   , address: DataDetectorType "address"
   , calendarEvent: DataDetectorType "calendarEvent"
   , none: DataDetectorType "none"
   , all: DataDetectorType "all"
-}
+  }
+
 
 dataDetectors :: Array DataDetectorType -> DataDetectorType
 dataDetectors = unsafeCoerce
 
 
-
 foreign import focus :: forall eff. TextInputRef -> Eff eff Unit
-
 foreign import isFocused :: TextInputRef -> Boolean
-
 foreign import clear :: forall eff. TextInputRef -> Eff eff Unit
-
 foreign import data DocumentSelectionState :: *
-
-
 
 
 textInput :: forall eff. Prop ( TextInputProps eff) -> Array (ReactElement)  -> ReactElement

@@ -1,10 +1,10 @@
 module Navigator where
 
-import React
-import RNX.Styles
-import RNX.Events
-import RNX.ComponentClasses
-import RNX.PropTypes
+import React (ReactElement, ReactState, ReactThis, ReadWrite)
+import RNX.Styles (Style)
+import RNX.Events (UnitEventHandler)
+import RNX.ComponentClasses (SceneConfig)
+import RNX.PropTypes (RefType)
 import Prelude
 import Control.Monad.Eff (Eff)
 import Data.Function.Uncurried (Fn2, mkFn2)
@@ -12,8 +12,9 @@ import Data.Function.Uncurried (Fn2, mkFn2)
 
 newtype Navigator r = Navigator (forall props state. ReactThis props state)
 
-type NavigatorProps r eff = {
-    ref :: RefType (Navigator r)
+
+type NavigatorProps r eff =
+  { ref :: RefType (Navigator r)
   , configureScene :: SceneConfigurer r
   , initialRoute :: r
   , initialRouteStack :: Array r
@@ -24,20 +25,23 @@ type NavigatorProps r eff = {
   , renderScene :: SceneRenderer r
   , sceneStyle :: Style
   , style :: Style
-}
+  }
 
 
 newtype SceneRenderer r = SceneRenderer (Fn2 r (Navigator r) ReactElement)
 newtype SceneConfigurer r = SceneConfigurer (Fn2 r (Array r) SceneConfig)
 
+
 sceneConfig' :: forall r. (r -> Array r -> SceneConfig) -> SceneConfigurer r
 sceneConfig' = SceneConfigurer <<< mkFn2
+
 
 sceneConfig :: forall r. SceneConfig -> SceneConfigurer r
 sceneConfig c = sceneConfig' \_ _ -> c
 
-sceneConfigs :: {
-    pushFromRight :: SceneConfig
+
+sceneConfigs ::
+  { pushFromRight :: SceneConfig
   , fadeAndroid :: SceneConfig
   , floatFromRight :: SceneConfig
   , floatFromLeft :: SceneConfig
@@ -49,9 +53,9 @@ sceneConfigs :: {
   , horizontalSwipeJumpFromLeft :: SceneConfig
   , verticalUpSwipeJump :: SceneConfig
   , verticalDownSwipeJump :: SceneConfig
-}
-sceneConfigs = {
-    pushFromRight: sceneConfigEnum "PushFromRight"
+  }
+sceneConfigs =
+  { pushFromRight: sceneConfigEnum "PushFromRight"
   , fadeAndroid: sceneConfigEnum "FadeAndroid"
   , floatFromRight: sceneConfigEnum "FloatFromRight"
   , floatFromLeft: sceneConfigEnum "FloatFromLeft"
@@ -63,15 +67,14 @@ sceneConfigs = {
   , horizontalSwipeJumpFromLeft: sceneConfigEnum "HorizontalSwipeJumpFromLeft"
   , verticalUpSwipeJump: sceneConfigEnum "VerticalUpSwipeJump"
   , verticalDownSwipeJump: sceneConfigEnum "VerticalDownSwipeJump"
-}
+  }
+
 
 sceneRenderer :: forall r. (r -> (Navigator r) -> ReactElement) -> SceneRenderer r
 sceneRenderer = SceneRenderer <<< mkFn2
 
+
 foreign import sceneConfigEnum :: String -> SceneConfig
-
 foreign import getCurrentRoutes :: forall r. (Navigator r) -> Array r
-
 foreign import push :: forall r eff. (Navigator r) -> r -> Eff (state::ReactState ReadWrite|eff) Unit
-
 foreign import pop :: forall r eff. (Navigator r) -> Eff (state::ReactState ReadWrite|eff) Unit
