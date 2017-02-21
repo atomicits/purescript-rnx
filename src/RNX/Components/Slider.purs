@@ -4,9 +4,8 @@ import RNX.Events (EventHandler)
 import RNX.Color (Color)
 import RNX.PropTypes (ImageSource, Prop)
 import RNX.ComponentClasses (sliderClass)
-import View
+import View (ViewPropsEx)
 import React (ReactElement, createElement)
-
 
 type SliderProps a eff = ViewPropsEx eff
   ( disabled :: Boolean
@@ -25,9 +24,7 @@ type SliderProps a eff = ViewPropsEx eff
   , trackImage :: ImageSource
   )
 
-
 class SliderType a
-
 
 instance intSlider :: SliderType Int
 instance numberSlider :: SliderType Number

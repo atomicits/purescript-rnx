@@ -3,15 +3,13 @@ module NavigatorIOS where
 import RNX.Color (Color)
 import React (ReactElement, ReactState, ReactThis, ReadWrite)
 import RNX.Styles (Style)
-import RNX.PropTypes (ImageSource, RefType)
+import RNX.PropTypes (ImageSource, Prop, RefType) 
 import RNX.Events (UnitEventHandler)
 import Control.Monad.Eff (Eff)
 import Prelude
 import Unsafe.Coerce (unsafeCoerce)
 
-
 newtype NavigatorIOS = NavigatorIOS (forall props state. ReactThis props state)
-
 
 type RouteDefaults r =
   { barTintColor :: Color
@@ -22,7 +20,6 @@ type RouteDefaults r =
   , translucent :: Boolean
   | r
   }
-
 
 type Route eff props = RouteDefaults
   ( component :: { navigator :: NavigatorIOS | props } -> ReactElement
@@ -42,7 +39,6 @@ type Route eff props = RouteDefaults
   , wrapperStyle :: Style
   )
 
-
 type NavigatorIOSProps = RouteDefaults
   ( ref :: RefType NavigatorIOS
   , initialRoute :: forall eff props. Route eff props
@@ -51,15 +47,13 @@ type NavigatorIOSProps = RouteDefaults
   , style :: Style
   )
 
-
 mkRoute :: forall props eff. {title :: String, component:: { navigator :: NavigatorIOS | props } -> ReactElement, passProps :: {|props}} -> Route eff props
 mkRoute = unsafeCoerce
 
-
 -- need to discuss about  unsafeApplyProps
--- mkRoute' :: forall props eff. {title :: String, component:: { navigator :: NavigatorIOS | props } -> ReactElement, passProps :: {|props}} -> Prop (Route eff props) -> Route eff props
--- mkRoute' {title,component,passProps} p = unsafeApplyProps {title,component,passProps} p
+mkRoute' :: forall props eff. {title :: String, component:: { navigator :: NavigatorIOS | props } -> ReactElement, passProps :: {|props}} -> Prop (Route eff props) -> Route eff props
+mkRoute' {title,component,passProps} p = unsafeApplyProps {title,component,passProps} p
 
-
+foreign import unsafeApplyProps :: forall p p2 a. p -> (a -> a) -> p2
 foreign import push :: forall eff props. NavigatorIOS -> Route eff props -> Eff (state::ReactState ReadWrite|eff) Unit
 foreign import pop :: forall eff. NavigatorIOS -> Eff (state::ReactState ReadWrite|eff) Unit

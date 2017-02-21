@@ -1,19 +1,15 @@
 module TouchableNativeFeedback where
 
-
-import RNX.Color
-import RNX.PropTypes
-import RNX.Events
-import React
-import Touchable
-import RNX.ComponentClasses
-
+import RNX.Color (Color)
+import RNX.PropTypes (Prop)
+import Touchable (TouchablePropsEx)
+import React (ReactElement)
+import RNX.ComponentClasses (createElementOneChild, touchableNativeFeedbackClass)
 
 type TouchableNativeFeedbackProps eff = TouchablePropsEx eff
   ( background :: TouchableNativeBackground
   , useForeground :: Boolean
   )
-
 
 foreign import data TouchableNativeBackground :: *
 

@@ -1,12 +1,10 @@
 module Text where
 
-import Prelude
 import RNX.Styles (Style)
 import RNX.Events (EventHandler, LayoutEvent, TouchEvent)
 import RNX.PropTypes (Prop)
 import RNX.ComponentClasses (textClass)
-import React ( ReactElement,  createElement)
-
+import React (ReactElement, createElement)
 
 type TextProps eff =
   { style :: Style

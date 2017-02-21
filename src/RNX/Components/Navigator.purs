@@ -2,16 +2,13 @@ module Navigator where
 
 import React (ReactElement, ReactState, ReactThis, ReadWrite)
 import RNX.Styles (Style)
-import RNX.Events (UnitEventHandler)
-import RNX.ComponentClasses (SceneConfig)
+import RNX.Events (UnitEventHandler) 
 import RNX.PropTypes (RefType)
 import Prelude
 import Control.Monad.Eff (Eff)
 import Data.Function.Uncurried (Fn2, mkFn2)
 
-
 newtype Navigator r = Navigator (forall props state. ReactThis props state)
-
 
 type NavigatorProps r eff =
   { ref :: RefType (Navigator r)
@@ -27,18 +24,16 @@ type NavigatorProps r eff =
   , style :: Style
   }
 
+foreign import data SceneConfig :: *
 
 newtype SceneRenderer r = SceneRenderer (Fn2 r (Navigator r) ReactElement)
 newtype SceneConfigurer r = SceneConfigurer (Fn2 r (Array r) SceneConfig)
 
-
 sceneConfig' :: forall r. (r -> Array r -> SceneConfig) -> SceneConfigurer r
 sceneConfig' = SceneConfigurer <<< mkFn2
 
-
 sceneConfig :: forall r. SceneConfig -> SceneConfigurer r
 sceneConfig c = sceneConfig' \_ _ -> c
-
 
 sceneConfigs ::
   { pushFromRight :: SceneConfig
@@ -69,10 +64,8 @@ sceneConfigs =
   , verticalDownSwipeJump: sceneConfigEnum "VerticalDownSwipeJump"
   }
 
-
 sceneRenderer :: forall r. (r -> (Navigator r) -> ReactElement) -> SceneRenderer r
 sceneRenderer = SceneRenderer <<< mkFn2
-
 
 foreign import sceneConfigEnum :: String -> SceneConfig
 foreign import getCurrentRoutes :: forall r. (Navigator r) -> Array r

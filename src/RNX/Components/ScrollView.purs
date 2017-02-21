@@ -3,15 +3,13 @@ module ScrollView where
 import View (ViewPropsEx)
 import RNX.Styles (Style)
 import RNX.Color (Color)
-import RNX.PropTypes (Insets, Prop, UnKnownType)
+import RNX.PropTypes (Insets, Prop) 
 import React (ReactElement, createElement)
-import RNX.Events (UnitEventHandler)
+import RNX.Events (EventHandler, EventHandler2, ScrollEvent, UnitEventHandler) 
 import RNX.ComponentClasses (refreshControlClass, scrollViewClass)
-import Prelude
-
+import Unsafe.Coerce (unsafeCoerce)
 
 type ScrollViewProps eff = ScrollViewPropsEx eff ()
-
 
 type RefreshProps eff =
   { onRefresh :: UnitEventHandler eff
@@ -21,7 +19,7 @@ type RefreshProps eff =
                 , enabled :: Boolean
                 , progressBackgroundColor :: Color
                 , progressViewOffset :: Number
-                , size :: UnKnownType   -- RefreshControlSize
+                , size :: RefreshControlSize
                 }
   , ios :: Prop
             { tintColor :: Color
@@ -36,8 +34,8 @@ type ScrollViewPropsEx eff r = ViewPropsEx eff
   , horizontal :: Boolean
   , keyboardDismissMode :: KeyboardDismissMode
   , keyboardShouldPersistTaps :: KeyboardShouldPersistTaps
-  , onContentSizeChange :: UnKnownType --  EventHandler2 eff Number Number
-  , onScroll :: UnKnownType -- EventHandler eff ScrollEvent
+  , onContentSizeChange ::   EventHandler2 eff Number Number
+  , onScroll :: EventHandler eff ScrollEvent
   , pagingEnabled :: Boolean
   , refreshControl :: RefreshControl
   , scrollEnabled :: Boolean
@@ -129,10 +127,8 @@ decelerationRate = { fast: DecelerationRate "fast"
                    , normal: DecelerationRate "normal"
                    }
 
-
--- need to discuss
--- decelerateBy :: Number -> DecelerationRate
--- decelerateBy = unsafeCoerce
+decelerateBy :: Number -> DecelerationRate
+decelerateBy = unsafeCoerce
 
 
 newtype IndicatorStyle = IndicatorStyle String

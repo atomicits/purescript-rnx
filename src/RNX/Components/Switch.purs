@@ -4,8 +4,7 @@ import RNX.Events (EventHandler)
 import RNX.Color (Color)
 import RNX.PropTypes (Prop)
 import React (ReactElement, createElement)
-import  RNX.ComponentClasses
-
+import RNX.ComponentClasses (switchClass)
 
 type SwitchProps eff  =
   { onValueChange :: EventHandler eff Boolean

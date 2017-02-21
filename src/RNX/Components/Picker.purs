@@ -3,11 +3,9 @@ module Picker where
 import RNX.Styles (Style)
 import View (ViewPropsEx)
 import RNX.Events (EventHandler)
-import Prelude
 import RNX.PropTypes (Prop)
 import React (ReactElement, createElement)
 import RNX.ComponentClasses (pickerClass)
-
 
 type PickerProps a eff = ViewPropsEx eff
   ( onValueChange :: EventHandler eff {itemValue :: a, itemPosition :: Int}
@@ -19,9 +17,7 @@ type PickerProps a eff = ViewPropsEx eff
   )
   (itemStyle :: Style)
 
-
 newtype PickerMode = PickerMode String
-
 
 pickerMode ::
   { dialog :: PickerMode

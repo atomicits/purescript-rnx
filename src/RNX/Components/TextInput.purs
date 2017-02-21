@@ -10,9 +10,7 @@ import Data.Unit (Unit)
 import React (ReactElement, ReactThis, createElement)
 import Unsafe.Coerce (unsafeCoerce)
 
-
 newtype TextInputRef = TextInputRef (forall p s. ReactThis p s)
-
 
 type TextInputProps eff = ViewPropsEx' eff TextInputRef
   ( autoCapitalize:: AutoCapitalize
@@ -57,9 +55,7 @@ type TextInputProps eff = ViewPropsEx' eff TextInputRef
   , dataDetectorTypes :: DataDetectorType
   )
 
-
 newtype KeyboardType = KeyboardType String
-
 
 keyboardType ::
   { default :: KeyboardType
@@ -90,9 +86,7 @@ keyboardType =
   , webSearch: KeyboardType "web-search"
   }
 
-
 newtype AutoCapitalize = AutoCapitalize String
-
 
 autoCapitalize ::
   { none :: AutoCapitalize
@@ -107,9 +101,7 @@ autoCapitalize =
   , characters: AutoCapitalize "characters"
   }
 
-
 newtype ReturnKeyType = ReturnKeyType String
-
 
 returnKeyType ::
   { done :: ReturnKeyType
@@ -146,9 +138,7 @@ returnKeyType =
          }
   }
 
-
 newtype ClearButtonMode = ClearButtonMode String
-
 
 clearButtonMode ::
   { never :: ClearButtonMode
@@ -163,9 +153,7 @@ clearButtonMode =
   , always: ClearButtonMode "always"
   }
 
-
 newtype KeyboardAppearance = KeyboardAppearance String
-
 
 keyboardAppearance ::
   { default :: KeyboardAppearance
@@ -179,7 +167,6 @@ keyboardAppearance =
   }
 
 newtype DataDetectorType = DataDetectorType String
-
 
 dataDetectorType ::
   { phoneNumber :: DataDetectorType
@@ -198,10 +185,8 @@ dataDetectorType =
   , all: DataDetectorType "all"
   }
 
-
 dataDetectors :: Array DataDetectorType -> DataDetectorType
 dataDetectors = unsafeCoerce
-
 
 foreign import focus :: forall eff. TextInputRef -> Eff eff Unit
 foreign import isFocused :: TextInputRef -> Boolean

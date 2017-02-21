@@ -1,18 +1,15 @@
 module View where
 
-import Prelude
 import RNX.Events (EventHandler, LayoutEvent, TouchEvent)
 import RNX.PropTypes (class AutoEnum, class NoneEnum, Prop, RefType)
 import RNX.Styles (Style)
 import React (ReactElement, ReactThis, createElement)
 import RNX.ComponentClasses (viewClass)
-
+import Unsafe.Coerce (unsafeCoerce)
 
 type ViewProps eff = ViewPropsEx eff () () ()
 
-
 type ViewPropsEx eff r ra ri = ViewPropsEx' eff (forall props state. ReactThis props state) r ra ri
-
 
 type ViewPropsEx' eff ref r ra ri =
   { key :: String
@@ -54,33 +51,24 @@ type ViewPropsEx' eff ref r ra ri =
   | r
 }
 
-
 newtype PointerEvents = PointerEvents String
-
 
 newtype AccessibilityType = AccessibilityType String
 
-
 newtype AccessibilityLiveRegion = AccessibilityLiveRegion String
-
 
 newtype ImportanceForAccessibility = ImportanceForAccessibility String
 
-
 newtype AccessibilityTraits = Trait String
-
 
 instance alrNone :: NoneEnum AccessibilityLiveRegion where
   none = AccessibilityLiveRegion "none"
 
-
 instance atNone :: NoneEnum AccessibilityType where
   none = AccessibilityType "none"
 
-
 instance atraitNone :: NoneEnum AccessibilityTraits where
   none = Trait "none"
-
 
 importanceForAccessibility ::
   { auto :: ImportanceForAccessibility
@@ -94,7 +82,6 @@ importanceForAccessibility =
   , no: ImportanceForAccessibility "no"
   , noHideDescendants: ImportanceForAccessibility "no-hide-descendants"
   }
-
 
 accessibiltyLiveRegion ::
   { none :: AccessibilityLiveRegion
@@ -119,7 +106,6 @@ accessibiltyType =
   , radiobutton_checked: AccessibilityType "radiobutton_checked"
   , radiobutton_unchecked: AccessibilityType "radiobutton_unchecked"
   }
-
 
 accessibilityTraits ::
   { none :: AccessibilityTraits
@@ -161,20 +147,17 @@ accessibilityTraits =
   }
 
 -- need to discuss
--- traits :: Array AccessibilityTraits -> AccessibilityTraits
--- traits = unsafeCoerce
+traits :: Array AccessibilityTraits -> AccessibilityTraits
+traits = unsafeCoerce
 
 boxNone :: PointerEvents
 boxNone = PointerEvents "box-none"
 
-
 instance autoPE :: AutoEnum PointerEvents where
   auto = PointerEvents "auto"
 
-
 none :: PointerEvents
 none = PointerEvents "none"
-
 
 boxOnly :: PointerEvents
 boxOnly = PointerEvents "box-only"
