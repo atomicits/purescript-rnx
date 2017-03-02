@@ -1,8 +1,8 @@
 module Image where
 
-import RNX.Styles (Style, StyleProp) 
+import RNX.Styles (Style, StyleProp)
 import RNX.Events (EventHandler, LayoutEvent, UnitEventHandler)
-import RNX.PropTypes (class AutoEnum, class CenterEnum, ImageSource, Prop) 
+import RNX.PropTypes (class AutoEnum, class CenterEnum, ImageSource, Prop)
 import RNX.ComponentClasses (imageClass)
 import React (ReactElement, createElement)
 
