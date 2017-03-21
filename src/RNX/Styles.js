@@ -18,7 +18,7 @@ exports._createStyleSheet = function(styleSheet){
 
 
 
-var _createStyleSheet1 = function(styles){
+var_createStyleSheet1 = function(styles){
     var stylesObj = {};
     styles.forEach(function(s) {
         var elemStyles = s.value1;
@@ -42,6 +42,7 @@ function unsafeMkStyleProp (key) {
         obj[key] = value;
         return obj;
     };
-};
+}
+
 exports.unsafeMkStyleProp = unsafeMkStyleProp;
 exports.unsafeMkStyleSheet = unsafeMkStyleProp;

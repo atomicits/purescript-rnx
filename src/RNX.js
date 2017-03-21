@@ -9,8 +9,8 @@ if (ReactNative.Platform !== "ios") {
     ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
         console.log('back button pressed');
         return true;
-    });
-};
+    } );
+}
 
 
 exports.registerComponent = function(name){
