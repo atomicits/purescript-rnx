@@ -42,6 +42,7 @@ function unsafeMkStyleProp (key) {
         obj[key] = value;
         return obj;
     };
-};
+}
+
 exports.unsafeMkStyleProp = unsafeMkStyleProp;
 exports.unsafeMkStyleSheet = unsafeMkStyleProp;

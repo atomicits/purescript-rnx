@@ -1,5 +1,7 @@
 'use strict';
 
+/*jshint maxparams: 2*/
+
 var React = require('react');
 var ReactNative = require('react-native');
 

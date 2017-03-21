@@ -1,20 +1,20 @@
 'use strict';
 
-const RN = require('react-native');
+// var RN = require('react-native');
 
 exports.push = function(this_) {
     return function (route) {
         return function() {
             this_.push(route);
-        }
-    }
-}
+        };
+    };
+};
 
 exports.pop = function(this_) {
     return function() {
         this_.pop();
-    }
-}
+    };
+};
 
 exports.unsafeApplyProps = function (p) {
   return function (f) {
@@ -28,5 +28,5 @@ exports.unsafeApplyProps = function (p) {
       delete r.android;
     }
     return r;
-  }
-}
+  };
+};

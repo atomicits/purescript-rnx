@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var React = require('react');
 
@@ -10,7 +10,7 @@ if (ReactNative.Platform !== "ios") {
         console.log('back button pressed');
         return true;
     });
-};
+}
 
 
 exports.registerComponent = function(name){

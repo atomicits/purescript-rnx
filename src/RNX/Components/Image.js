@@ -5,5 +5,5 @@ exports.unsafeStyleProp = function(s) {
     var o = {};
     o[s] = v;
     return o;
-  }
-}
+  };
+};
