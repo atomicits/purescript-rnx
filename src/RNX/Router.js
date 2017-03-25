@@ -57,4 +57,4 @@ exports.goBack = goBack;
 exports.stringify = function(o){
     console.log(JSON.stringify(o));
     return JSON.stringify(o);
-}
+};

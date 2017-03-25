@@ -3,6 +3,8 @@
 var React = require('react');
 var ReactNative = require('react-native');
 
+/*jshint maxparams: 4*/
+
 // exports.createElement = function(clazz) {
 //     return function(props) {
 //         return function(children) {
