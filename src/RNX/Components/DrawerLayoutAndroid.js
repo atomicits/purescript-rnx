@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var UIManager = require('UIManager');
+var UIManager = require("UIManager");
 var DrawerConsts = UIManager.AndroidDrawerLayout.Constants;
 
 exports.dPLeft = DrawerConsts.DrawerPosition.Left;

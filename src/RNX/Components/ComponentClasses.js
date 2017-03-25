@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /*jshint maxparams: 2*/
 
-var React = require('react');
-var ReactNative = require('react-native');
+var React = require("react");
+var ReactNative = require("react-native");
 
 // exports.createElement = function(clazz) {
 //     return function(props) {
@@ -25,12 +25,12 @@ var ReactNative = require('react-native');
 // };
 
 exports.createElementOneChild = function (class_) {
-    return function(props) {
-        return function(child){
+    return function (props) {
+        return function (child) {
             return React.createElement(class_, props, child);
-        };
-    };
-};
+          };
+      };
+  };
 
 var handler = function (key, action) {
     //console.log(key);
@@ -40,21 +40,20 @@ var handler = function (key, action) {
         var fn = function (ev) {
             console.log("action " + action  + "called with ev:" + ev);
             input(parentAction(action(ev)))();
-        };
+          };
         console.log("function created with parentAction: " + parentAction + " input: " + input + " key: " + key + " action: " + action + " fn: " + fn);
         return fn;
-    };
+      };
     return obj;
-};
+  };
 
 exports.handler = handler;
 exports.handlerBool = handler;
 exports.handlerUnit = handler;
 
-
-exports.textElem = function(text) {
+exports.textElem = function (text) {
     return text;
-};
+  };
 
 exports.activityIndicatorClass        = ReactNative.ActivityIndicator;
 exports.buttonClass                   = ReactNative.Button;
@@ -93,11 +92,11 @@ exports.webViewClass                  = ReactNative.WebView;
 exports.cardStackClass = ReactNative.NavigationExperimental.CardStack;
 //exports.stateUtilsPush = ReactNative.NavigationExperimental.StateUtils.push;
 exports.stateUtilsPop  = ReactNative.NavigationExperimental.StateUtils.pop;
-exports.stateUtilsPush = function(state){
-    return function(route){
+exports.stateUtilsPush = function (state) {
+    return function (route) {
         return ReactNative.NavigationExperimental.StateUtils.push(state, route);
-    };
-};
+      };
+  };
 
 exports.require = require;
 

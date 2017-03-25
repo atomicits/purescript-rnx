@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
 var RN = require("react-native");
 var ListView = RN.ListView;
 
 /*jshint maxparams: 4*/
 
-exports.refEquality = function (a,b) {
+exports.refEquality = function (a, b) {
   return a === b;
 };
 
-exports.listViewDataSourceImpl = function(props){
+exports.listViewDataSourceImpl = function (props) {
     return new ListView.DataSource(props);
+  };
+
+exports.cloneWithRowsImpl = function (ds, data, ids) {
+  return ds.cloneWithRows(data, ids);
 };
 
-exports.cloneWithRowsImpl = function(ds,data,ids) {
-  return ds.cloneWithRows(data,ids);
-};
-
-exports.cloneWithRowsAndSectionsImpl = function(ds,data,sids,rids) {
+exports.cloneWithRowsAndSectionsImpl = function (ds, data, sids, rids) {
   return ds.cloneWithRowsAndSections(data, sids, rids);
 };
 
@@ -30,7 +30,7 @@ exports.getRowAndSectionCount = function (ds) {
 };
 
 exports.getRowData = function (ds) {
-  return function(sid) {
+  return function (sid) {
     return function (rid) {
       return ds.getRowData(sid, rid);
     };
@@ -38,7 +38,7 @@ exports.getRowData = function (ds) {
 };
 
 exports.rowShouldUpdate = function (ds) {
-  return function(sid) {
+  return function (sid) {
     return function (rid) {
       return ds.rowShouldUpdate(sid, rid);
     };
@@ -46,13 +46,13 @@ exports.rowShouldUpdate = function (ds) {
 };
 
 exports.sectionHeaderShouldUpdate = function (ds) {
-  return function(sid) {
+  return function (sid) {
     return ds.sectionHeaderShouldUpdate(sid);
   };
 };
 
 exports.getSectionHeaderData = function (ds) {
-  return function(sid) {
+  return function (sid) {
     return ds.getSectionHeaderData(sid);
   };
 };
