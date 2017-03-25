@@ -26,7 +26,7 @@ exports.registerComponent = function(name){
 };
 
 
-function reactClass(signal) {
+exports.signal = function reactClass(signal) {
     return React.createClass({
         componentWillMount: function () {
             var ctx = this;
@@ -38,7 +38,7 @@ function reactClass(signal) {
             return signal.get();
         }
     });
-}
+};
 
 
 // exports.render = function (input, parentAction, element) {
