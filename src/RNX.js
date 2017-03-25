@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react');
+// var React = require('react');
 
 var ReactNative = require("react-native");
 
@@ -26,19 +26,19 @@ exports.registerComponent = function(name){
 };
 
 
-function reactClass(signal) {
-    return React.createClass({
-        componentWillMount: function () {
-            var ctx = this;
-            signal.subscribe(function () {
-                ctx.forceUpdate();
-            });
-        },
-        render: function () {
-            return signal.get();
-        }
-    });
-}
+// function reactClass(signal) {
+//     return React.createClass({
+//         componentWillMount: function () {
+//             var ctx = this;
+//             signal.subscribe(function () {
+//                 ctx.forceUpdate();
+//             });
+//         },
+//         render: function () {
+//             return signal.get();
+//         }
+//     });
+// }
 
 
 // exports.render = function (input, parentAction, element) {
