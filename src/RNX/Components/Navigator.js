@@ -1,27 +1,27 @@
 
-'use strict';
+"use strict";
 
-var RN = require('react-native');
+var RN = require("react-native");
 var SC = RN.Navigator.SceneConfigs;
 
-exports.sceneConfigEnum = function(n) {
+exports.sceneConfigEnum = function (n) {
     return SC[n];
-};
+  };
 
-exports.push = function(this_) {
+exports.push = function (this_) {
     return function (s) {
-        return function() {
+        return function () {
             this_.push(s);
-        };
-    };
-};
+          };
+      };
+  };
 
-exports.pop = function(this_) {
-    return function() {
+exports.pop = function (this_) {
+    return function () {
         this_.pop();
-    };
-};
+      };
+  };
 
-exports.getCurrentRoutes = function(this_) {
+exports.getCurrentRoutes = function (this_) {
     return this_.getCurrentRoutes();
-};
+  };

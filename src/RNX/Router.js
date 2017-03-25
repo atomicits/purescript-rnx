@@ -6,55 +6,47 @@ var navSignal = {};
 
 var stateUtils = ReactNative.NavigationExperimental.StateUtils;
 
-exports.stateUtils_push = function (navState){
-    return function(route){
-        //return function(){
+exports.stateUtils_push = function (navState) {
+    return function (route) {
         return stateUtils.push(navState, route);
-        //};
-    };
-};
+      };
+  };
 
-exports.stateUtils_pop = function (navState){
-    return function(route){
-        //return function(){
+exports.stateUtils_pop = function (navState) {
+    return function (route) {
         return stateUtils.pop(navState, route);
-        //};
-    };
-};
+      };
+  };
 
+var navigateTo = function (route) {
+    return function () {
+        navSignal.set({ action: "Push", route: { key: "Key-" + new Date(), route: route } });
+      };
+  };
 
-var navigateTo = function(route) {
-    return function(){
-        navSignal.set({action: 'Push', route: {key: "Key-" + new Date(), route : route}});
-    };
-};
+var goBack = function () {
+    navSignal.set({ action: "Pop", route: { key: "emptykey", route: "emptyroute" } });
+  };
 
-var goBack = function() {
-    //return function(){
-    navSignal.set({action: 'Pop', route: {key: "emptykey", route: "emptyroute"}});
-    //};
-};
-
-
-exports.createNavSignal = function(constant) {
+exports.createNavSignal = function (constant) {
     navSignal = constant({});
 
-    if (ReactNative.Platform !== "ios"){
-        ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
-            navSignal.set({action: 'pop', route: {key: "emptykey", route: "emptyroute"}});
-            return true;
+    if (ReactNative.Platform !== "ios") {
+      ReactNative.BackAndroid.addEventListener("hardwareBackPress", function () {
+          navSignal.set({ action: "pop", route: { key: "emptykey", route: "emptyroute" } });
+          return true;
         });
     }
 
     return function () {
         return navSignal;
-    };
-};
+      };
+  };
 
 exports.navigateTo = navigateTo;
 exports.goBack = goBack;
 
-exports.stringify = function(o){
+exports.stringify = function (o) {
     console.log(JSON.stringify(o));
     return JSON.stringify(o);
-};
+  };

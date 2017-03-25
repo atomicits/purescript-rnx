@@ -4,8 +4,7 @@
         "build:clean": "rm -rf dist output",
         "build": "pulp build",
         "clean": "rimraf output && rimraf .pulp-cache",
-        "build": "jshint src && psa \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" --censor-lib --strict",
-        "build-all": "jshint src && jscs src && psa \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" --censor-lib --strict",
+        "build": "jshint src && jscs src && psa \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" --censor-lib --strict",
         "test": "psc \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" \"test/**/*.purs\" && psc-bundle \"output/**/*.js\" --module Test.Main --main Test.Main | node"
     },
     "devDependencies": {
