@@ -8,16 +8,16 @@
         "test": "psc \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" \"test/**/*.purs\" && psc-bundle \"output/**/*.js\" --module Test.Main --main Test.Main | node"
     },
     "devDependencies": {
-        "bower": "^1.7.9",
-        "pulp": "^9.0.1",
+        "bower": "^1.8.2",
+        "pulp": "^12.0.1",
         "jscs": "^3.0.7",
-        "jshint": "^2.9.4",
-        "purescript-psa": "^0.3.8",
-        "rimraf": "^2.5.0"
+        "jshint": "^2.9.5",
+        "purescript-psa": "^0.6.0",
+        "rimraf": "^2.6.2"
     },
     "name": "purescript-rnx",
-    "description": "RNX is a PureScript interface to React Native, similar to the Elm app architecture.",
-    "version": "0.1.1-alpha",
+    "description": "RNX is a PureScript interface to React Native",
+    "version": "0.2.0-alpha",
     "main": "src/RNX.js",
     "directories": {
         "example": "examples"

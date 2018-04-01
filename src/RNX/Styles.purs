@@ -4,8 +4,8 @@ import RNX.Color (Color)
 import Prelude
 import React.DOM.Props (Props)
 
-foreign import data StyleSheet :: *
-foreign import data StyleProp :: *
+foreign import data StyleSheet :: Type
+foreign import data StyleProp :: Type
 
 type StyleId = Int
 data Style = Style String (Array StyleProp)

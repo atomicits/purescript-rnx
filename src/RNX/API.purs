@@ -1,25 +1,24 @@
 module RNX.API where
 
-import Control.Monad.Eff (Eff)
 import Prelude
-import Data.Either (Either(..), either)
-import Control.Monad.Aff (Aff, attempt, makeAff)
+
+import Control.Monad.Eff (Eff, kind Effect)
 import Control.Monad.Eff.Exception (Error)
 
 -- Geolocation API with Aff
-foreign import data GEOLOCATION :: !
+foreign import data GEOLOCATION :: Effect
 
 foreign import _getCurrentPosition :: forall geodata options e. (geodata -> Eff e Unit) -> (Error -> Eff e Unit) -> options -> Eff e Unit
 
-_getCurrentPosition' :: forall e options geodata. options -> Aff e geodata
-_getCurrentPosition' options = makeAff (\error success -> _getCurrentPosition success error options)
+-- _getCurrentPosition' :: forall e options geodata. options -> Aff e geodata
+-- _getCurrentPosition' options = makeAff (\error success -> _getCurrentPosition success error options)
 
 --getCurrentPosition :: forall options geodata. options -> Either String geodata
 
-getCurrentPosition :: forall e options geodata. options -> Aff e (Either Error geodata)
-getCurrentPosition options = do
-  res <- attempt $ _getCurrentPosition' options
-  pure $ either Left Right res
+-- getCurrentPosition :: forall e options geodata. options -> Aff e (Either Error geodata)
+-- getCurrentPosition options = do
+--   res <- attempt $ _getCurrentPosition' options
+--   pure $ either Left Right res
 
 
 -- / Geolocation API
