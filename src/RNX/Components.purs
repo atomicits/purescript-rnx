@@ -62,10 +62,10 @@ foreign import viewClass                     :: forall props. ReactClass props
 foreign import viewPagerAndroidClass         :: forall props. ReactClass props
 foreign import webViewClass                  :: forall props. ReactClass props
 
-foreign import cardStackClass                :: forall props. ReactClass props
+--foreign import cardStackClass                :: forall props. ReactClass props
 
-foreign import stateUtilsPush                :: forall state route. state -> route -> state
-foreign import stateUtilsPop                 :: forall state. state -> state
+-- foreign import stateUtilsPush                :: forall state route. state -> route -> state
+-- foreign import stateUtilsPop                 :: forall state. state -> state
 
 
 -- Elements
@@ -175,5 +175,5 @@ webView :: Array Props -> ReactElement
 webView props = createElement webViewClass (unsafeFromPropsArray props) []
 
 
-cardStack :: Array Props -> ReactElement
-cardStack props = createElement cardStackClass (unsafeFromPropsArray props) []
+-- cardStack :: Array Props -> ReactElement
+-- cardStack props = createElement cardStackClass (unsafeFromPropsArray props) []
