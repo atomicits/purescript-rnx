@@ -2,16 +2,15 @@
     "scripts": {
         "postinstall": "bower install",
         "build:clean": "rm -rf dist output",
-        "build": "pulp build",
-        "clean": "rimraf output && rimraf .pulp-cache",
         "build": "jshint src && jscs src && psa \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" --censor-lib --strict",
+        "clean": "rimraf output && rimraf .pulp-cache",
         "test": "psc \"src/**/*.purs\" \"bower_components/purescript-*/**/*.purs\" \"test/**/*.purs\" && psc-bundle \"output/**/*.js\" --module Test.Main --main Test.Main | node"
     },
     "devDependencies": {
         "bower": "^1.8.2",
-        "pulp": "^12.0.1",
         "jscs": "^3.0.7",
         "jshint": "^2.9.5",
+        "pulp": "^12.0.1",
         "purescript-psa": "^0.6.0",
         "rimraf": "^2.6.2"
     },
@@ -45,5 +44,8 @@
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/atomicits/purescript-rnx/issues"
+    },
+    "dependencies": {
+        "create-react-class": "^15.6.3"
     }
 }

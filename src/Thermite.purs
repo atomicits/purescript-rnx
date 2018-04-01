@@ -32,11 +32,10 @@ module Thermite
   , split
   , foreach
   , cmapProps
-
   , module T
   ) where
 
-import Prelude
+import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
 import React as React
 import Control.Coroutine (CoTransform(CoTransform), CoTransformer, cotransform, transform, transformCoTransformL, transformCoTransformR)
 import Control.Coroutine (CoTransformer, cotransform) as T
@@ -47,14 +46,12 @@ import Control.Monad.Eff.Unsafe (unsafeCoerceEff)
 import Control.Monad.Free.Trans (resume)
 import Control.Monad.Rec.Class (Step(..), forever, tailRecM)
 import Data.Either (Either(..))
-import Data.Foldable (for_, traverse_)
+import Data.Foldable (for_)
 import Data.Lens (Prism', Lens', matching, view, review, preview, lens, over)
 import Data.List (List(..), (!!), modifyAt)
 import Data.Maybe (Maybe(Just), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
-import React (createFactory)
-import RNX.Components
 
 -- | A type synonym for an action handler, which takes an action, the current props
 -- | and state for the component, and return a `CoTransformer` which will emit
@@ -204,10 +201,10 @@ createReactSpec
   :: forall eff state props action
    . Spec eff state props action
   -> state
-  -> { spec :: React.ReactSpec props state eff
+  -> { spec :: React.ReactSpec props state (Array React.ReactElement) eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
-createReactSpec = createReactSpec' (view' [])
+createReactSpec = createReactSpec' id
 
 -- | Create a React component spec from a Thermite component `Spec` with an additional
 -- | function for converting the rendered Array of ReactElement's into a single ReactElement
@@ -217,11 +214,12 @@ createReactSpec = createReactSpec' (view' [])
 -- | component spec needs to be modified before being turned into a component class,
 -- | e.g. by adding additional lifecycle methods.
 createReactSpec'
-  :: forall eff state props action
-   . (Array React.ReactElement -> React.ReactElement)
+  :: forall eff state props render action
+   . (React.ReactRender render)
+   => (Array React.ReactElement -> render)
   -> Spec eff state props action
   -> state
-  -> { spec :: React.ReactSpec props state eff
+  -> { spec :: React.ReactSpec props state render eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
 createReactSpec' wrap (Spec spec) =
@@ -257,7 +255,7 @@ createReactSpec' wrap (Spec spec) =
       -- functions do quite what we want here.
       unsafeCoerceEff (launchAff (tailRecM step cotransformer))
 
-    render :: React.Render props state eff
+    render :: React.Render props state render eff
     render this = map wrap $
       spec.render (dispatcher this)
         <$> React.getProps this
