@@ -19,15 +19,15 @@
 // };
 
 var UIManager = require('UIManager');
-var DrawerConsts = UIManager.AndroidDrawerLayout.Constants;
+//var DrawerConsts = UIManager.AndroidDrawerLayout.Constants;
 
-exports.dPLeft = DrawerConsts.DrawerPosition.Left;
-exports.dPRight = DrawerConsts.DrawerPosition.Right;
+//exports.dPLeft = DrawerConsts.DrawerPosition.Left;
+//exports.dPRight = DrawerConsts.DrawerPosition.Right;
 
-var RefreshLayoutConsts = UIManager.AndroidSwipeRefreshLayout.Constants;
+//var RefreshLayoutConsts = UIManager.AndroidSwipeRefreshLayout.Constants;
 
 
-exports.refreshControlSizeDefault = RefreshLayoutConsts.SIZE.DEFAULT;
-exports.refreshControlSizeLarge = RefreshLayoutConsts.SIZE.LARGE;
+//exports.refreshControlSizeDefault = RefreshLayoutConsts.SIZE.DEFAULT;
+//exports.refreshControlSizeLarge = RefreshLayoutConsts.SIZE.LARGE;
 
 exports.require = require;

@@ -11,11 +11,11 @@ import RNX.Styles (StyleId)
 
 --foreign import unsafeMkFnPropss :: forall val. String -> val -> Props
 
-foreign import dPLeft :: forall a. a
-foreign import dPRight :: forall a. a
+-- foreign import dPLeft :: forall a. a
+-- foreign import dPRight :: forall a. a
 
-foreign import refreshControlSizeDefault :: forall a. a
-foreign import refreshControlSizeLarge :: forall a. a
+-- foreign import refreshControlSizeDefault :: forall a. a
+-- foreign import refreshControlSizeLarge :: forall a. a
 
 -- TODO: add accessibility stuff
 
@@ -196,9 +196,9 @@ data DrawerPosition
   = DPLeft
   | DPRight
 
-drawerPosition :: DrawerPosition -> Props
-drawerPosition DPLeft  = unsafeMkProps "drawerPosition" dPLeft
-drawerPosition DPRight = unsafeMkProps "drawerPosition" dPRight
+-- drawerPosition :: DrawerPosition -> Props
+-- drawerPosition DPLeft  = unsafeMkProps "drawerPosition" dPLeft
+-- drawerPosition DPRight = unsafeMkProps "drawerPosition" dPRight
 
 
 drawerWidth :: Int -> Props
@@ -557,9 +557,9 @@ size (SizeNum a) = unsafeMkProps "size" a
 
 data RefreshControlSize = RCDefault | RCLarge
 
-refreshControlSize :: RefreshControlSize -> Props
-refreshControlSize RCDefault = unsafeMkProps "size" refreshControlSizeDefault
-refreshControlSize RCLarge = unsafeMkProps "size" refreshControlSizeLarge
+-- refreshControlSize :: RefreshControlSize -> Props
+-- refreshControlSize RCDefault = unsafeMkProps "size" refreshControlSizeDefault
+-- refreshControlSize RCLarge = unsafeMkProps "size" refreshControlSizeLarge
 
 
 -- contentContainerStyle StyleSheetPropsType(ViewStylePropsTypes) #
