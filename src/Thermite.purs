@@ -35,8 +35,6 @@ module Thermite
   , module T
   ) where
 
-import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
-import React as React
 import Control.Coroutine (CoTransform(CoTransform), CoTransformer, cotransform, transform, transformCoTransformL, transformCoTransformR)
 import Control.Coroutine (CoTransformer, cotransform) as T
 import Control.Monad.Aff (Aff, launchAff, makeAff, nonCanceler)
@@ -52,6 +50,9 @@ import Data.List (List(..), (!!), modifyAt)
 import Data.Maybe (Maybe(Just), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
+import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
+import RNX.Components (view')
+import React as React
 
 -- | A type synonym for an action handler, which takes an action, the current props
 -- | and state for the component, and return a `CoTransformer` which will emit
@@ -201,10 +202,10 @@ createReactSpec
   :: forall eff state props action
    . Spec eff state props action
   -> state
-  -> { spec :: React.ReactSpec props state (Array React.ReactElement) eff
+  -> { spec :: React.ReactSpec props state eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
-createReactSpec = createReactSpec' id
+createReactSpec = createReactSpec' (view' [])
 
 -- | Create a React component spec from a Thermite component `Spec` with an additional
 -- | function for converting the rendered Array of ReactElement's into a single ReactElement
@@ -214,12 +215,11 @@ createReactSpec = createReactSpec' id
 -- | component spec needs to be modified before being turned into a component class,
 -- | e.g. by adding additional lifecycle methods.
 createReactSpec'
-  :: forall eff state props render action
-   . (React.ReactRender render)
-   => (Array React.ReactElement -> render)
+  :: forall eff state props action
+   . (Array React.ReactElement -> React.ReactElement)
   -> Spec eff state props action
   -> state
-  -> { spec :: React.ReactSpec props state render eff
+  -> { spec :: React.ReactSpec props state eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
 createReactSpec' wrap (Spec spec) =
@@ -255,13 +255,12 @@ createReactSpec' wrap (Spec spec) =
       -- functions do quite what we want here.
       unsafeCoerceEff (launchAff (tailRecM step cotransformer))
 
-    render :: React.Render props state render eff
+    render :: React.Render props state eff
     render this = map wrap $
       spec.render (dispatcher this)
         <$> React.getProps this
         <*> React.readState this
         <*> React.getChildren this
-
 
 -- | This function captures the state of the `Spec` as a function argument.
 -- |

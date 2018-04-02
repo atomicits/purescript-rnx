@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "purescript-signal": "^9.0.0",
-    "purescript-react": "^5.1.0",
+    "purescript-react": "^4.0.0",
     "purescript-aff": "^4.0.2",
     "purescript-coroutines": "^4.0.0",
     "purescript-profunctor-lenses": "^3.8.0"
