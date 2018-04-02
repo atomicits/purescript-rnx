@@ -51,7 +51,9 @@ import Data.Maybe (Maybe(Just), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
 import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
+import RNX.Color (strColor)
 import RNX.Components (view')
+import RNX.Styles (AlignItems(..), JustifyContent(..), Style(..), StyleSheet, alignItems, backgroundColor, createStyleSheet, flex, getStyleId, justifyContent, style)
 import React as React
 
 -- | A type synonym for an action handler, which takes an action, the current props
@@ -205,7 +207,7 @@ createReactSpec
   -> { spec :: React.ReactSpec props state eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
-createReactSpec = createReactSpec' (view' [])
+createReactSpec = createReactSpec' (view' [style $ getStyleId styleSheet "container"])
 
 -- | Create a React component spec from a Thermite component `Spec` with an additional
 -- | function for converting the rendered Array of ReactElement's into a single ReactElement
@@ -384,3 +386,17 @@ foreach f = Spec
       where
       go _ Nil         r = r
       go i (Cons x xs) r = go (i + 1) xs (g i x r)
+
+
+
+
+styleSheet ::  StyleSheet
+styleSheet =
+  createStyleSheet
+  [ Style "container"
+    [ flex 1
+    , backgroundColor $ strColor "#fff"
+    , alignItems AlignItemsCenter
+    , justifyContent JustifyContentCenter
+    ]
+  ]
