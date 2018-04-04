@@ -2,329 +2,462 @@ module RNX.Color where
 
 import Prelude
 
-data Color
-  = RGBA Int Int Int Number
-  | HSLA Int Int Int Number
-  | Str String
-  | Transparent
-  | AliceBlue
-  | AntiqueWhite
-  | Aqua
-  | AquaMarine
-  | Azure
-  | Beige
-  | Bisque
-  | Black
-  | BlanchedAlmond
-  | Blue
-  | BlueViolet
-  | Brown
-  | BurlyWood
-  | CadetBlue
-  | Chartreuse
-  | Chocolate
-  | Coral
-  | CornFlowerBlue
-  | CornSilk
-  | Crimson
-  | Cyan
-  | DarkBlue
-  | DarkCyan
-  | DarkGoldenRod
-  | DarkGray
-  | DarkGreen
-  | DarkGrey
-  | DarkKhaki
-  | DarkMagenta
-  | DarkOlivegreen
-  | DarkOrange
-  | DarkOrchid
-  | DarkRed
-  | DarkSalmon
-  | DarkSeaGreen
-  | DarkSlateBlue
-  | DarkSlateGray
-  | DarkSlateGrey
-  | DarkTurquoise
-  | DarkViolet
-  | DeepPink
-  | DeepSkyBlue
-  | DimGray
-  | DimGrey
-  | DodgerBlue
-  | FireBrick
-  | FloralWhite
-  | ForestGreen
-  | Fuchsia
-  | GainsBoro
-  | GhostWhite
-  | Gold
-  | GoldenRod
-  | Gray
-  | Green
-  | GreenYellow
-  | Grey
-  | HoneyDew
-  | HotPink
-  | IndianRed
-  | Indigo
-  | Ivory
-  | Khaki
-  | Lavender
-  | LavenderBlush
-  | LawnGreen
-  | LemonChiffon
-  | LightBlue
-  | LightCoral
-  | LightCyan
-  | LightGoldenRodYellow
-  | LightGray
-  | LightGreen
-  | LightGrey
-  | LightPink
-  | LightSalmon
-  | LightSeaGreen
-  | LightSkyBlue
-  | LightSlateGray
-  | LightSlateGrey
-  | LightSteelBlue
-  | LightYellow
-  | Lime
-  | LimeGreen
-  | Linen
-  | Magenta
-  | Maroon
-  | MediumAquaMarine
-  | MediumBlue
-  | MediumOrchid
-  | MediumPurple
-  | MediumSeaGreen
-  | MediumSlateBlue
-  | MediumSpringGreen
-  | MediumTurquoise
-  | MediumVioletRed
-  | MidNightBlue
-  | MintCream
-  | MistyRose
-  | Moccasin
-  | NavajoWhite
-  | Navy
-  | OldLace
-  | Olive
-  | OlivedRab
-  | Orange
-  | OrangeRed
-  | Orchid
-  | PaleGoldenRod
-  | PaleGreen
-  | PaleTurquoise
-  | PaleVioletRed
-  | PapayaWhip
-  | PeachPuff
-  | Peru
-  | Pink
-  | Plum
-  | PowderBlue
-  | Purple
-  | RebeccaPurple
-  | Red
-  | RosyBrown
-  | RoyalBlue
-  | SaddleBrown
-  | Salmon
-  | SandyBrown
-  | SeaGreen
-  | SeaShell
-  | Sienna
-  | Silver
-  | SkyBlue
-  | SlateBlue
-  | SlateGray
-  | SlateGrey
-  | Snow
-  | SpringGreen
-  | SteelBlue
-  | Tan
-  | Teal
-  | Thistle
-  | Tomato
-  | Turquoise
-  | Violet
-  | Wheat
-  | White
-  | WhiteSmoke
-  | Yellow
-  | YellowGreen
+import Data.Int (hexadecimal, toStringAs)
 
-instance showColor :: Show Color where
-  show (RGBA r g b a)       = "rgba(" <> show r <> ", " <> show g <> ", " <> show b <> ", "  <> show a <> ")"
-  show (HSLA h s l a)       = "hsl(" <> show h <> "," <> show s  <> "% ," <> show l <> "%, " <> show a <> ")"
-  show (Str str)            = str
-  show Transparent          = "transparent"
-  show AliceBlue            = "aliceblue"
-  show AntiqueWhite         = "antiquewhite"
-  show Aqua                 = "aqua"
-  show AquaMarine           = "aquamarine"
-  show Azure                = "azure"
-  show Beige                = "beige"
-  show Bisque               = "bisque"
-  show Black                = "black"
-  show BlanchedAlmond       = "blanchedalmond"
-  show Blue                 = "blue"
-  show BlueViolet           = "blueviolet"
-  show Brown                = "brown"
-  show BurlyWood            = "burlywood"
-  show CadetBlue            = "cadetblue"
-  show Chartreuse           = "chartreuse"
-  show Chocolate            = "chocolate"
-  show Coral                = "coral"
-  show CornFlowerBlue       = "cornflowerblue"
-  show CornSilk             = "cornsilk"
-  show Crimson              = "crimson"
-  show Cyan                 = "cyan"
-  show DarkBlue             = "darkblue"
-  show DarkCyan             = "darkcyan"
-  show DarkGoldenRod        = "darkgoldenrod"
-  show DarkGray             = "darkgray"
-  show DarkGreen            = "darkgreen"
-  show DarkGrey             = "darkgrey"
-  show DarkKhaki            = "darkkhaki"
-  show DarkMagenta          = "darkmagenta"
-  show DarkOlivegreen       = "darkolivegreen"
-  show DarkOrange           = "darkorange"
-  show DarkOrchid           = "darkorchid"
-  show DarkRed              = "darkred"
-  show DarkSalmon           = "darksalmon"
-  show DarkSeaGreen         = "darkseagreen"
-  show DarkSlateBlue        = "darkslateblue"
-  show DarkSlateGray        = "darkslategray"
-  show DarkSlateGrey        = "darkslategrey"
-  show DarkTurquoise        = "darkturquoise"
-  show DarkViolet           = "darkviolet"
-  show DeepPink             = "deeppink"
-  show DeepSkyBlue          = "deepskyblue"
-  show DimGray              = "dimgray"
-  show DimGrey              = "dimgrey"
-  show DodgerBlue           = "dodgerblue"
-  show FireBrick            = "firebrick"
-  show FloralWhite          = "floralwhite"
-  show ForestGreen          = "forestgreen"
-  show Fuchsia              = "fuchsia"
-  show GainsBoro            = "gainsboro"
-  show GhostWhite           = "ghostwhite"
-  show Gold                 = "gold"
-  show GoldenRod            = "goldenrod"
-  show Gray                 = "gray"
-  show Green                = "green"
-  show GreenYellow          = "greenyellow"
-  show Grey                 = "grey"
-  show HoneyDew             = "honeydew"
-  show HotPink              = "hotpink"
-  show IndianRed            = "indianred"
-  show Indigo               = "indigo"
-  show Ivory                = "ivory"
-  show Khaki                = "khaki"
-  show Lavender             = "lavender"
-  show LavenderBlush        = "lavenderblush"
-  show LawnGreen            = "lawngreen"
-  show LemonChiffon         = "lemonchiffon"
-  show LightBlue            = "lightblue"
-  show LightCoral           = "lightcoral"
-  show LightCyan            = "lightcyan"
-  show LightGoldenRodYellow = "lightgoldenrodyellow"
-  show LightGray            = "lightgray"
-  show LightGreen           = "lightgreen"
-  show LightGrey            = "lightgrey"
-  show LightPink            = "lightpink"
-  show LightSalmon          = "lightsalmon"
-  show LightSeaGreen        = "lightseagreen"
-  show LightSkyBlue         = "lightskyblue"
-  show LightSlateGray       = "lightslategray"
-  show LightSlateGrey       = "lightslategrey"
-  show LightSteelBlue       = "lightsteelblue"
-  show LightYellow          = "lightyellow"
-  show Lime                 = "lime"
-  show LimeGreen            = "limegreen"
-  show Linen                = "linen"
-  show Magenta              = "magenta"
-  show Maroon               = "maroon"
-  show MediumAquaMarine     = "mediumaquamarine"
-  show MediumBlue           = "mediumblue"
-  show MediumOrchid         = "mediumorchid"
-  show MediumPurple         = "mediumpurple"
-  show MediumSeaGreen       = "mediumseagreen"
-  show MediumSlateBlue      = "mediumslateblue"
-  show MediumSpringGreen    = "mediumspringgreen"
-  show MediumTurquoise      = "mediumturquoise"
-  show MediumVioletRed      = "mediumvioletred"
-  show MidNightBlue         = "midnightblue"
-  show MintCream            = "mintcream"
-  show MistyRose            = "mistyrose"
-  show Moccasin             = "moccasin"
-  show NavajoWhite          = "navajowhite"
-  show Navy                 = "navy"
-  show OldLace              = "oldlace"
-  show Olive                = "olive"
-  show OlivedRab            = "olivedrab"
-  show Orange               = "orange"
-  show OrangeRed            = "orangered"
-  show Orchid               = "orchid"
-  show PaleGoldenRod        = "palegoldenrod"
-  show PaleGreen            = "palegreen"
-  show PaleTurquoise        = "paleturquoise"
-  show PaleVioletRed        = "palevioletred"
-  show PapayaWhip           = "papayawhip"
-  show PeachPuff            = "peachpuff"
-  show Peru                 = "peru"
-  show Pink                 = "pink"
-  show Plum                 = "plum"
-  show PowderBlue           = "powderblue"
-  show Purple               = "purple"
-  show RebeccaPurple        = "rebeccapurple"
-  show Red                  = "red"
-  show RosyBrown            = "rosybrown"
-  show RoyalBlue            = "royalblue"
-  show SaddleBrown          = "saddlebrown"
-  show Salmon               = "salmon"
-  show SandyBrown           = "sandybrown"
-  show SeaGreen             = "seagreen"
-  show SeaShell             = "seashell"
-  show Sienna               = "sienna"
-  show Silver               = "silver"
-  show SkyBlue              = "skyblue"
-  show SlateBlue            = "slateblue"
-  show SlateGray            = "slategray"
-  show SlateGrey            = "slategrey"
-  show Snow                 = "snow"
-  show SpringGreen          = "springgreen"
-  show SteelBlue            = "steelblue"
-  show Tan                  = "tan"
-  show Teal                 = "teal"
-  show Thistle              = "thistle"
-  show Tomato               = "tomato"
-  show Turquoise            = "turquoise"
-  show Violet               = "violet"
-  show Wheat                = "wheat"
-  show White                = "white"
-  show WhiteSmoke           = "whitesmoke"
-  show Yellow               = "yellow"
-  show YellowGreen          = "yellowgreen"
+newtype Color = Color String
 
 rgb :: Int -> Int -> Int -> Color
-rgb r g b =
-  rgba r g b 1.0
+rgb r g b = Color $ "rgb(" <> show r <> ", " <> show g <> ", " <> show b <> ")"
 
 rgba :: Int -> Int -> Int -> Number -> Color
-rgba r g b a =
-    RGBA r g b a
+rgba r g b a = Color $ "rgba(" <> show r <> ", " <> show g <> ", " <> show b <> ", " <> show a <> ")"
 
-hsl :: Int -> Int -> Int -> Color
-hsl h s l  =
-  hsla h s l 1.0
+rgbi :: Int -> Color
+rgbi i = Color $ "#" <> toStringAs hexadecimal i
 
-hsla :: Int -> Int -> Int -> Number -> Color
-hsla h s l a  =
-  HSLA h s l a
+transparent :: Color
+transparent = Color "transparent"
 
-strColor :: String -> Color
-strColor = Str
+aliceblue :: Color
+aliceblue = Color "aliceblue"
+
+antiquewhite :: Color
+antiquewhite = Color "antiquewhite"
+
+aqua :: Color
+aqua = Color "aqua"
+
+aquamarine :: Color
+aquamarine = Color "aquamarine"
+
+azure :: Color
+azure = Color "azure"
+
+beige :: Color
+beige = Color "beige"
+
+bisque :: Color
+bisque = Color "bisque"
+
+black :: Color
+black = Color "black"
+
+blanchedalmond :: Color
+blanchedalmond = Color "blanchedalmond"
+
+blue :: Color
+blue = Color "blue"
+
+blueviolet :: Color
+blueviolet = Color "blueviolet"
+
+brown :: Color
+brown = Color "brown"
+
+burlywood :: Color
+burlywood = Color "burlywood"
+
+cadetblue :: Color
+cadetblue = Color "cadetblue"
+
+chartreuse :: Color
+chartreuse = Color "chartreuse"
+
+chocolate :: Color
+chocolate = Color "chocolate"
+
+coral :: Color
+coral = Color "coral"
+
+cornflowerblue :: Color
+cornflowerblue = Color "cornflowerblue"
+
+cornsilk :: Color
+cornsilk = Color "cornsilk"
+
+crimson :: Color
+crimson = Color "crimson"
+
+cyan :: Color
+cyan = Color "cyan"
+
+darkblue :: Color
+darkblue = Color "darkblue"
+
+darkcyan :: Color
+darkcyan = Color "darkcyan"
+
+darkgoldenrod :: Color
+darkgoldenrod = Color "darkgoldenrod"
+
+darkgray :: Color
+darkgray = Color "darkgray"
+
+darkgreen :: Color
+darkgreen = Color "darkgreen"
+
+darkgrey :: Color
+darkgrey = Color "darkgrey"
+
+darkkhaki :: Color
+darkkhaki = Color "darkkhaki"
+
+darkmagenta :: Color
+darkmagenta = Color "darkmagenta"
+
+darkolivegreen :: Color
+darkolivegreen = Color "darkolivegreen"
+
+darkorange :: Color
+darkorange = Color "darkorange"
+
+darkorchid :: Color
+darkorchid = Color "darkorchid"
+
+darkred :: Color
+darkred = Color "darkred"
+
+darksalmon :: Color
+darksalmon = Color "darksalmon"
+
+darkseagreen :: Color
+darkseagreen = Color "darkseagreen"
+
+darkslateblue :: Color
+darkslateblue = Color "darkslateblue"
+
+darkslategray :: Color
+darkslategray = Color "darkslategray"
+
+darkslategrey :: Color
+darkslategrey = Color "darkslategrey"
+
+darkturquoise :: Color
+darkturquoise = Color "darkturquoise"
+
+darkviolet :: Color
+darkviolet = Color "darkviolet"
+
+deeppink :: Color
+deeppink = Color "deeppink"
+
+deepskyblue :: Color
+deepskyblue = Color "deepskyblue"
+
+dimgray :: Color
+dimgray = Color "dimgray"
+
+dimgrey :: Color
+dimgrey = Color "dimgrey"
+
+dodgerblue :: Color
+dodgerblue = Color "dodgerblue"
+
+firebrick :: Color
+firebrick = Color "firebrick"
+
+floralwhite :: Color
+floralwhite = Color "floralwhite"
+
+forestgreen :: Color
+forestgreen = Color "forestgreen"
+
+fuchsia :: Color
+fuchsia = Color "fuchsia"
+
+gainsboro :: Color
+gainsboro = Color "gainsboro"
+
+ghostwhite :: Color
+ghostwhite = Color "ghostwhite"
+
+gold :: Color
+gold = Color "gold"
+
+goldenrod :: Color
+goldenrod = Color "goldenrod"
+
+gray :: Color
+gray = Color "gray"
+
+green :: Color
+green = Color "green"
+
+greenyellow :: Color
+greenyellow = Color "greenyellow"
+
+grey :: Color
+grey = Color "grey"
+
+honeydew :: Color
+honeydew = Color "honeydew"
+
+hotpink :: Color
+hotpink = Color "hotpink"
+
+indianred :: Color
+indianred = Color "indianred"
+
+indigo :: Color
+indigo = Color "indigo"
+
+ivory :: Color
+ivory = Color "ivory"
+
+khaki :: Color
+khaki = Color "khaki"
+
+lavender :: Color
+lavender = Color "lavender"
+
+lavenderblush :: Color
+lavenderblush = Color "lavenderblush"
+
+lawngreen :: Color
+lawngreen = Color "lawngreen"
+
+lemonchiffon :: Color
+lemonchiffon = Color "lemonchiffon"
+
+lightblue :: Color
+lightblue = Color "lightblue"
+
+lightcoral :: Color
+lightcoral = Color "lightcoral"
+
+lightcyan :: Color
+lightcyan = Color "lightcyan"
+
+lightgoldenrodyellow :: Color
+lightgoldenrodyellow = Color "lightgoldenrodyellow"
+
+lightgray :: Color
+lightgray = Color "lightgray"
+
+lightgreen :: Color
+lightgreen = Color "lightgreen"
+
+lightgrey :: Color
+lightgrey = Color "lightgrey"
+
+lightpink :: Color
+lightpink = Color "lightpink"
+
+lightsalmon :: Color
+lightsalmon = Color "lightsalmon"
+
+lightseagreen :: Color
+lightseagreen = Color "lightseagreen"
+
+lightskyblue :: Color
+lightskyblue = Color "lightskyblue"
+
+lightslategray :: Color
+lightslategray = Color "lightslategray"
+
+lightslategrey :: Color
+lightslategrey = Color "lightslategrey"
+
+lightsteelblue :: Color
+lightsteelblue = Color "lightsteelblue"
+
+lightyellow :: Color
+lightyellow = Color "lightyellow"
+
+lime :: Color
+lime = Color "lime"
+
+limegreen :: Color
+limegreen = Color "limegreen"
+
+linen :: Color
+linen = Color "linen"
+
+magenta :: Color
+magenta = Color "magenta"
+
+maroon :: Color
+maroon = Color "maroon"
+
+mediumaquamarine :: Color
+mediumaquamarine = Color "mediumaquamarine"
+
+mediumblue :: Color
+mediumblue = Color "mediumblue"
+
+mediumorchid :: Color
+mediumorchid = Color "mediumorchid"
+
+mediumpurple :: Color
+mediumpurple = Color "mediumpurple"
+
+mediumseagreen :: Color
+mediumseagreen = Color "mediumseagreen"
+
+mediumslateblue :: Color
+mediumslateblue = Color "mediumslateblue"
+
+mediumspringgreen :: Color
+mediumspringgreen = Color "mediumspringgreen"
+
+mediumturquoise :: Color
+mediumturquoise = Color "mediumturquoise"
+
+mediumvioletred :: Color
+mediumvioletred = Color "mediumvioletred"
+
+midnightblue :: Color
+midnightblue = Color "midnightblue"
+
+mintcream :: Color
+mintcream = Color "mintcream"
+
+mistyrose :: Color
+mistyrose = Color "mistyrose"
+
+moccasin :: Color
+moccasin = Color "moccasin"
+
+navajowhite :: Color
+navajowhite = Color "navajowhite"
+
+navy :: Color
+navy = Color "navy"
+
+oldlace :: Color
+oldlace = Color "oldlace"
+
+olive :: Color
+olive = Color "olive"
+
+olivedrab :: Color
+olivedrab = Color "olivedrab"
+
+orange :: Color
+orange = Color "orange"
+
+orangered :: Color
+orangered = Color "orangered"
+
+orchid :: Color
+orchid = Color "orchid"
+
+palegoldenrod :: Color
+palegoldenrod = Color "palegoldenrod"
+
+palegreen :: Color
+palegreen = Color "palegreen"
+
+paleturquoise :: Color
+paleturquoise = Color "paleturquoise"
+
+palevioletred :: Color
+palevioletred = Color "palevioletred"
+
+papayawhip :: Color
+papayawhip = Color "papayawhip"
+
+peachpuff :: Color
+peachpuff = Color "peachpuff"
+
+peru :: Color
+peru = Color "peru"
+
+pink :: Color
+pink = Color "pink"
+
+plum :: Color
+plum = Color "plum"
+
+powderblue :: Color
+powderblue = Color "powderblue"
+
+purple :: Color
+purple = Color "purple"
+
+rebeccapurple :: Color
+rebeccapurple = Color "rebeccapurple"
+
+red :: Color
+red = Color "red"
+
+rosybrown :: Color
+rosybrown = Color "rosybrown"
+
+royalblue :: Color
+royalblue = Color "royalblue"
+
+saddlebrown :: Color
+saddlebrown = Color "saddlebrown"
+
+salmon :: Color
+salmon = Color "salmon"
+
+sandybrown :: Color
+sandybrown = Color "sandybrown"
+
+seagreen :: Color
+seagreen = Color "seagreen"
+
+seashell :: Color
+seashell = Color "seashell"
+
+sienna :: Color
+sienna = Color "sienna"
+
+silver :: Color
+silver = Color "silver"
+
+skyblue :: Color
+skyblue = Color "skyblue"
+
+slateblue :: Color
+slateblue = Color "slateblue"
+
+slategray :: Color
+slategray = Color "slategray"
+
+slategrey :: Color
+slategrey = Color "slategrey"
+
+snow :: Color
+snow = Color "snow"
+
+springgreen :: Color
+springgreen = Color "springgreen"
+
+steelblue :: Color
+steelblue = Color "steelblue"
+
+tan :: Color
+tan = Color "tan"
+
+teal :: Color
+teal = Color "teal"
+
+thistle :: Color
+thistle = Color "thistle"
+
+tomato :: Color
+tomato = Color "tomato"
+
+turquoise :: Color
+turquoise = Color "turquoise"
+
+violet :: Color
+violet = Color "violet"
+
+wheat :: Color
+wheat = Color "wheat"
+
+white :: Color
+white = Color "white"
+
+whitesmoke :: Color
+whitesmoke = Color "whitesmoke"
+
+yellow :: Color
+yellow = Color "yellow"
+
+yellowgreen :: Color
+yellowgreen = Color "yellowgreen"
