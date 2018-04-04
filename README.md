@@ -4,4 +4,4 @@ PureScript library for React Native.
 
 *Requirements*
 
-* Purescript 0.10.1 or above
+* Purescript 0.11.7 or above
