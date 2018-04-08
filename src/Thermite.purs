@@ -51,7 +51,7 @@ import Data.Maybe (Maybe(Just), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
 import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
-import RNX.Color (strColor)
+import RNX.Color (white)
 import RNX.Components (view')
 import RNX.Styles (AlignItems(..), JustifyContent(..), Style(..), StyleSheet, alignItems, backgroundColor, createStyleSheet, flex, getStyleId, justifyContent, style)
 import React as React
@@ -395,7 +395,7 @@ styleSheet =
   createStyleSheet
   [ Style "container"
     [ flex 1
-    , backgroundColor $ strColor "#fff"
+    , backgroundColor $ white
     , alignItems AlignItemsCenter
     , justifyContent JustifyContentCenter
     ]

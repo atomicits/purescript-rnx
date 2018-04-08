@@ -84,7 +84,7 @@ animating = unsafeMkProps "animating"
 
 
 pColor :: Color -> Props
-pColor c = unsafeMkProps "color" (show c)
+pColor c = unsafeMkProps "color" c
 
 accessibilityLiveRegion :: AccessibilityLiveRegionProp -> Props
 accessibilityLiveRegion  ALRPNone  = unsafeMkProps "accessibilityLiveRegion" "none"
@@ -177,7 +177,7 @@ timeZoneOffsetInMinutes = unsafeMkProps "timeZoneOffsetInMinutes"
 
 
 drawerBackgroundColor :: Color -> Props
-drawerBackgroundColor c = unsafeMkProps "drawerBackgroundColor" (show c)
+drawerBackgroundColor c = unsafeMkProps "drawerBackgroundColor" c
 
 
 data DLM
@@ -215,7 +215,7 @@ data KDMVA
 
 
 statusBarBackgroundColor :: Color -> Props
-statusBarBackgroundColor c = unsafeMkProps "statusBarBackgroundColor" (show c)
+statusBarBackgroundColor c = unsafeMkProps "statusBarBackgroundColor" c
 
 
 data RSMode
@@ -458,7 +458,7 @@ shadowHidden = unsafeMkProps "shadowHidden"
 
 
 titleTextColor :: Color -> Props
-titleTextColor c = unsafeMkProps "titleTextColor" (show c)
+titleTextColor c = unsafeMkProps "titleTextColor" c
 
 
 
@@ -516,7 +516,7 @@ progress :: Number -> Props
 progress = unsafeMkProps "progress"
 
 progressTintColor :: Color -> Props
-progressTintColor c = unsafeMkProps "progressTintColor" (show c)
+progressTintColor c = unsafeMkProps "progressTintColor" c
 
 
 data PVS
@@ -530,7 +530,7 @@ progressViewStyle PVSBar     = unsafeMkProps "progressViewStyle" "bar"
 
 
 trackTintColor :: Color -> Props
-trackTintColor c = unsafeMkProps "trackTintColor" (show c)
+trackTintColor c = unsafeMkProps "trackTintColor" c
 
 
 refreshing :: Boolean -> Props
@@ -538,11 +538,11 @@ refreshing = unsafeMkProps "refreshing"
 
 
 colors :: Array Color -> Props
-colors cs = unsafeMkProps "colors" (map show cs)
+colors = unsafeMkProps "colors"
 
 
 progressBackgroundColor :: Color -> Props
-progressBackgroundColor c = unsafeMkProps "progressBackgroundColor" (show c)
+progressBackgroundColor c = unsafeMkProps "progressBackgroundColor" c
 
 
 progressViewOffset :: Int -> Props
@@ -600,7 +600,7 @@ showsVerticalScrollIndicator = unsafeMkProps "showsVerticalScrollIndicator"
 
 
 endFillColor :: Color -> Props
-endFillColor c = unsafeMkProps "endFillColor" (show c)
+endFillColor c = unsafeMkProps "endFillColor" c
 
 
 scrollPerfTag :: String -> Props
@@ -778,7 +778,7 @@ valueBool = unsafeMkProps "value"
 
 
 maximumTrackTintColor :: Color -> Props
-maximumTrackTintColor c = unsafeMkProps "maximumTrackTintColor" (show c)
+maximumTrackTintColor c = unsafeMkProps "maximumTrackTintColor" c
 
 
 maximumValue :: Int -> Props
@@ -787,7 +787,7 @@ maximumValue = unsafeMkProps "maximumValue"
 
 
 minimumTrackTintColor :: Color -> Props
-minimumTrackTintColor c = unsafeMkProps "minimumTrackTintColor" (show c)
+minimumTrackTintColor c = unsafeMkProps "minimumTrackTintColor" c
 
 
 minimumValue :: Int -> Props
@@ -802,7 +802,7 @@ hidden = unsafeMkProps "hidden"
 
 
 pBackgroundColor :: Color -> Props
-pBackgroundColor c = unsafeMkProps "backgroundColor" (show c)
+pBackgroundColor c = unsafeMkProps "backgroundColor" c
 
 
 data BarStyle
@@ -839,15 +839,15 @@ testIdentifier = unsafeMkProps "testIdentifier"
 
 
 onTintColor :: Color -> Props
-onTintColor c = unsafeMkProps "onTintColor" (show c)
+onTintColor c = unsafeMkProps "onTintColor" c
 
 
 thumbTintColor :: Color -> Props
-thumbTintColor c = unsafeMkProps "thumbTintColor" (show c)
+thumbTintColor c = unsafeMkProps "thumbTintColor" c
 
 
 barTintColor :: Color -> Props
-barTintColor c = unsafeMkProps "barTintColor" (show c)
+barTintColor c = unsafeMkProps "barTintColor" c
 
 
 data ItemPositioning
@@ -863,7 +863,7 @@ itemPositioning IPAuto   = unsafeMkProps "itemPositioning" "auto"
 
 
 tintColor :: Color -> Props
-tintColor c = unsafeMkProps "tintColor" (show c)
+tintColor c = unsafeMkProps "tintColor" c
 
 
 translucent :: Boolean -> Props
@@ -871,7 +871,7 @@ translucent = unsafeMkProps "translucent"
 
 
 unselectedTintColor :: Color -> Props
-unselectedTintColor c = unsafeMkProps "unselectedTintColor" (show c)
+unselectedTintColor c = unsafeMkProps "unselectedTintColor" c
 
 
 data Badge = BadgeStr String | BadgeNum Int
@@ -1030,7 +1030,7 @@ placeholder = unsafeMkProps "placeholder"
 
 
 placeholderTextColor :: Color -> Props
-placeholderTextColor c = unsafeMkProps "placeholderTextColor" (show c)
+placeholderTextColor c = unsafeMkProps "placeholderTextColor" c
 
 
 data ReturnKeyType
@@ -1075,7 +1075,7 @@ selectTextOnFocus = unsafeMkProps "selectTextOnFocus"
 
 
 selectionColor :: Color -> Props
-selectionColor c = unsafeMkProps "selectionColor" (show c)
+selectionColor c = unsafeMkProps "selectionColor" c
 
 
 
@@ -1100,7 +1100,7 @@ returnKeyLabel = unsafeMkProps "returnKeyLabel"
 
 
 underlineColorAndroid :: Color -> Props
-underlineColorAndroid c = unsafeMkProps "underlineColorAndroid" (show c)
+underlineColorAndroid c = unsafeMkProps "underlineColorAndroid" c
 
 
 data ClearButtonMode
@@ -1178,7 +1178,7 @@ subtitle = unsafeMkProps "subtitle"
 
 
 subtitleColor :: Color -> Props
-subtitleColor c = unsafeMkProps "subtitleColor" (show c)
+subtitleColor c = unsafeMkProps "subtitleColor" c
 
 
 title :: String -> Props
@@ -1186,11 +1186,11 @@ title = unsafeMkProps "title"
 
 
 titleColor :: Color -> Props
-titleColor c = unsafeMkProps "titleColor" (show c)
+titleColor c = unsafeMkProps "titleColor" c
 
 
 underlayColor :: Color -> Props
-underlayColor c = unsafeMkProps "underlayColor" (show c)
+underlayColor c = unsafeMkProps "underlayColor" c
 
 
 -- background backgroundPropsType #

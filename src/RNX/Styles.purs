@@ -71,7 +71,7 @@ backfaceVisibility Visible = unsafeMkStyleProp "backfaceVisibility" "visible"
 backfaceVisibility Hidden  = unsafeMkStyleProp "backfaceVisibility" "hidden"
 
 backgroundColor :: Color -> StyleProp
-backgroundColor c = unsafeMkStyleProp "backgroundColor" (show c)
+backgroundColor c = unsafeMkStyleProp "backgroundColor" c
 
 
 backgroundVisibility :: Visibility -> StyleProp
@@ -79,10 +79,10 @@ backgroundVisibility Visible = unsafeMkStyleProp "backgroundVisibility" "visible
 backgroundVisibility Hidden  = unsafeMkStyleProp "backgroundVisibility" "hidden"
 
 borderBottomColor :: Color -> StyleProp
-borderBottomColor c = unsafeMkStyleProp "borderBottomColor" (show c)
+borderBottomColor c = unsafeMkStyleProp "borderBottomColor" c
 
 borderTopColor :: Color -> StyleProp
-borderTopColor c = unsafeMkStyleProp "borderTopColor" (show c)
+borderTopColor c = unsafeMkStyleProp "borderTopColor" c
 
 borderBottomRightRadius :: Int -> StyleProp
 borderBottomRightRadius = unsafeMkStyleProp "borderBottomRightRadius"
@@ -94,10 +94,10 @@ borderBottomWidth :: Int -> StyleProp
 borderBottomWidth = unsafeMkStyleProp "borderBottomWidth"
 
 borderColor :: Color -> StyleProp
-borderColor c = unsafeMkStyleProp "borderColor" (show c)
+borderColor c = unsafeMkStyleProp "borderColor" c
 
 borderLeftColor :: Color -> StyleProp
-borderLeftColor c = unsafeMkStyleProp "borderLeftColor" (show c)
+borderLeftColor c = unsafeMkStyleProp "borderLeftColor" c
 
 borderLeftWidth :: Int -> StyleProp
 borderLeftWidth = unsafeMkStyleProp "borderLeftWidth"
@@ -106,7 +106,7 @@ borderRadius :: Int -> StyleProp
 borderRadius = unsafeMkStyleProp "borderRadius"
 
 borderRightColor :: Color -> StyleProp
-borderRightColor c = unsafeMkStyleProp "borderRightColor" (show c)
+borderRightColor c = unsafeMkStyleProp "borderRightColor" c
 
 borderRightWidth :: Int -> StyleProp
 borderRightWidth = unsafeMkStyleProp "borderRightWidth"
@@ -139,7 +139,7 @@ bottom = unsafeMkStyleProp "bottom"
 -- C
 
 color :: Color -> StyleProp
-color c = unsafeMkStyleProp "color" (show c)
+color c = unsafeMkStyleProp "color" c
 
 
 -- E
@@ -350,7 +350,7 @@ right = unsafeMkStyleProp "right"
 -- S
 
 shadowColor :: Color -> StyleProp
-shadowColor c = unsafeMkStyleProp "shadowColor" (show c)
+shadowColor c = unsafeMkStyleProp "shadowColor" c
 
 shadowOffset :: {width :: Int, height :: Int} -> StyleProp
 shadowOffset = unsafeMkStyleProp "shadowOffset"
@@ -390,7 +390,7 @@ textAlignVertical TextAlignVerticalBottom = unsafeMkStyleProp "textAlignVertical
 textAlignVertical TextAlignVerticalCenter = unsafeMkStyleProp "textAlignVertical" "center"
 
 textDecorationColor :: Color -> StyleProp
-textDecorationColor c = unsafeMkStyleProp "textDecorationColor" (show c)
+textDecorationColor c = unsafeMkStyleProp "textDecorationColor" c
 
 data TextDecorationLine
   = None
@@ -417,7 +417,7 @@ textDecorationStyle TextDotted = unsafeMkStyleProp "textDecorationStyle" "dotted
 textDecorationStyle TextDashed = unsafeMkStyleProp "textDecorationStyle" "dashed"
 
 textShadowColor :: Color -> StyleProp
-textShadowColor c = unsafeMkStyleProp "textShadowColor" (show c)
+textShadowColor c = unsafeMkStyleProp "textShadowColor" c
 
 textShadowOffset :: {width :: Int, height :: Int} -> StyleProp
 textShadowOffset = unsafeMkStyleProp "textShadowOffset"
