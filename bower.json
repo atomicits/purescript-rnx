@@ -23,7 +23,8 @@
     "purescript-react": "^4.0.0",
     "purescript-aff": "^4.0.2",
     "purescript-coroutines": "^4.0.0",
-    "purescript-profunctor-lenses": "^3.8.0"
+    "purescript-profunctor-lenses": "^3.8.0",
+    "purescript-aff-promise": "^1.0.0"
   },
   "authors": [
     "Sudhir Kumar <s@atomicits.com>"

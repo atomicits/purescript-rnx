@@ -1,12 +1,13 @@
 module RNX.Props where
 
-import RNX.PropsTypes (AccessibilityComponentTypeProp(..), AccessibilityLiveRegionProp(..), ImportantForAccessibilityProp(..))
-import Data.Date (Date)
 import Prelude
+
+import Data.Date (Date)
 import RNX.Color (Color)
-import React.DOM.Props (Props, unsafeMkProps)
-import React (ReactElement)
+import RNX.PropsTypes (AccessibilityComponentTypeProp(..))
 import RNX.Styles (StyleId)
+import React (ReactElement)
+import React.DOM.Props (Props, unsafeMkProps)
 --foreign import unsafeMkProps :: forall val. String -> val -> Props
 
 --foreign import unsafeMkFnPropss :: forall val. String -> val -> Props
@@ -56,19 +57,20 @@ data Size
   | SizeLarge
   | SizeNum Int
 
+newtype PtrEvents = PtrEvents String
 
-pointerEvents :: PtrEvents -> Props
-pointerEvents PtrEventsBoxNone = unsafeMkProps "pointerEvents" "box-none"
-pointerEvents PtrEventsNone    = unsafeMkProps "pointerEvents" "none"
-pointerEvents PtrEventsBoxOnly = unsafeMkProps "pointerEvents" "box-only"
-pointerEvents PtrEventsAuto    = unsafeMkProps "pointerEvents" "auto"
-
-data PtrEvents
-  = PtrEventsBoxNone
-  | PtrEventsNone
-  | PtrEventsBoxOnly
-  | PtrEventsAuto
-
+ptrEvents ::
+  { boxNone :: Props
+  , none :: Props
+  , boxOnly :: Props
+  , auto :: Props
+  }
+ptrEvents =
+  { boxNone : unsafeMkProps "pointerEvents" "box-none"
+  , none : unsafeMkProps "pointerEvents" "none"
+  , boxOnly : unsafeMkProps "pointerEvents" "boxOnly"
+  , auto : unsafeMkProps "pointerEvents" "auto"
+  }
 
 testID :: String -> Props
 testID = unsafeMkProps "testID"
@@ -76,61 +78,80 @@ testID = unsafeMkProps "testID"
 key :: String -> Props
 key = unsafeMkProps "key"
 
-
 -- Animating
 
 animating :: Boolean -> Props
 animating = unsafeMkProps "animating"
 
-
 pColor :: Color -> Props
-pColor c = unsafeMkProps "color" c
+pColor = unsafeMkProps "color"
 
-accessibilityLiveRegion :: AccessibilityLiveRegionProp -> Props
-accessibilityLiveRegion  ALRPNone  = unsafeMkProps "accessibilityLiveRegion" "none"
-accessibilityLiveRegion  Polite    = unsafeMkProps "accessibilityLiveRegion" "none"
-accessibilityLiveRegion  Assertive = unsafeMkProps "accessibilityLiveRegion" "none"
-
+accessibilityLiveRegion ::
+  { none :: Props
+  , polite :: Props
+  , assertive :: Props
+  }
+accessibilityLiveRegion =
+  { none : unsafeMkProps "accessibilityLiveRegion" "none"
+  , polite : unsafeMkProps "accessibilityLiveRegion" "polite"
+  , assertive : unsafeMkProps "accessibilityLiveRegion" "assertive"
+  }
 
 collapsable :: Boolean -> Props
 collapsable = unsafeMkProps "collapsable"
 
+data AccessibilityTraitsProp
+  = ATPNone
+  | ATPButton
+  | Link
+  | Header
+  | Search
+  | Image
+  | Selected
+  | Plays
+  | Key
+  | Text
+  | Summary
+  | Disabled
+  | FrequentUpdates
+  | StartsMedia
+  | Adjustable
+  | AllowsDirectInteraction
+  | PageTurn
 
-importantForAccessibility :: ImportantForAccessibilityProp -> Props
-importantForAccessibility IAPAuto           = unsafeMkProps "importantForAccessibility" "auto"
-importantForAccessibility Yes               = unsafeMkProps "importantForAccessibility" "yes"
-importantForAccessibility No                = unsafeMkProps "importantForAccessibility" "no"
-importantForAccessibility NoHideDescenDants = unsafeMkProps "importantForAccessibility" "no-hide-descendents"
-
+importantForAccessibility ::
+  { auto :: Props
+  , yes :: Props
+  , no :: Props
+  , noHideDescendents :: Props
+  }
+importantForAccessibility =
+  { auto : unsafeMkProps "importantForAccessibility" "auto"
+  , yes : unsafeMkProps "importantForAccessibility" "yes"
+  , no : unsafeMkProps "importantForAccessibility" "no"
+  , noHideDescendents : unsafeMkProps "importantForAccessibility" "no-hide-descendents"
+  }
 
 needsOffscreenAlphaCompositing :: Boolean -> Props
 needsOffscreenAlphaCompositing = unsafeMkProps "needsOffscreenAlphaCompositing"
 
-
 renderToHardwareTextureAndroid :: Boolean -> Props
 renderToHardwareTextureAndroid = unsafeMkProps "renderToHardwareTextureAndroid"
-
 
 shouldRasterizeIOS :: Boolean -> Props
 shouldRasterizeIOS = unsafeMkProps "shouldRasterizeIOS"
 
-
-
 hidesWhenStopped :: Boolean -> Props
 hidesWhenStopped = unsafeMkProps "hidesWhenStopped"
-
 
 date :: Date -> Props
 date = unsafeMkProps "date"
 
-
 maximumDate :: Date -> Props
 maximumDate = unsafeMkProps "maximumDate"
 
-
 minimumDate :: Date -> Props
 minimumDate = unsafeMkProps "minimumDate"
-
 
 data MIType
   = MI1
@@ -159,18 +180,16 @@ minuteInterval MI15 = unsafeMkProps "minuteInterval" 15
 minuteInterval MI20 = unsafeMkProps "minuteInterval" 20
 minuteInterval MI30 = unsafeMkProps "minuteInterval" 30
 
-
-data DateMode
-  = DMDate
-  | DMTime
-  | DMDateTime
-
-
-modeDate :: DateMode -> Props
-modeDate DMDate     = unsafeMkProps "mode" "date"
-modeDate DMTime     = unsafeMkProps "mode" "time"
-modeDate DMDateTime = unsafeMkProps "mode" "datetime"
-
+dateMode ::
+  { date :: Props
+  , time :: Props
+  , datetime :: Props
+  }
+dateMode =
+  { date : unsafeMkProps "mode" "date"
+  , time : unsafeMkProps "mode" "time"
+  , datetime : unsafeMkProps "mode" "datetime"
+  }
 
 timeZoneOffsetInMinutes :: Int -> Props
 timeZoneOffsetInMinutes = unsafeMkProps "timeZoneOffsetInMinutes"
