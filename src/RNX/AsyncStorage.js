@@ -6,6 +6,9 @@ exports._getItem = function(key){
     return function(){
         return asyncStorage.getItem(key).then(
             function(val){
+                if (val === null) {
+                    throw new Error(key + ": Item not in storage");
+                }
                 console.log(val);
                 return val;
             }
