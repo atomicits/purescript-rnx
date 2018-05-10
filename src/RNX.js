@@ -6,10 +6,10 @@ var ReactNative = require("react-native");
 
 if (ReactNative.Platform !== "ios") {
     console.log('adding back button event listener');
-    ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
-        console.log('back button pressed');
-        return true;
-    } );
+    // ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
+    //     console.log('back button pressed');
+    //     return true;
+    // } );
 }
 
 

@@ -40,10 +40,10 @@ exports.createNavSignal = function(constant) {
     navSignal = constant({});
 
     if (ReactNative.Platform !== "ios"){
-        ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
-            navSignal.set({action: 'pop', route: {key: "emptykey", route: "emptyroute"}});
-            return true;
-        });
+        // ReactNative.BackAndroid.addEventListener('hardwareBackPress', function(){
+        //     navSignal.set({action: 'pop', route: {key: "emptykey", route: "emptyroute"}});
+        //     return true;
+        // });
     }
 
     return function () {
