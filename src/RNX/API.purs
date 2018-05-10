@@ -96,9 +96,9 @@ foreign import asyncStorage_multiSet         :: forall e callback. Array (Array 
 foreign import asyncStorage_multiRemove      :: forall e callback. Array String -> callback ->Eff e Unit
 foreign import asyncStorage_multiMerge       :: forall e callback. Array (Array String) -> callback ->Eff e Unit
 
-foreign import backAndroid_exitApp             :: forall e.Eff e Unit
-foreign import backAndroid_addEventListener    ::forall e eventName handler . eventName -> handler -> Eff e Unit
-foreign import backAndroid_removeEventListener ::forall e eventName handler . eventName -> handler -> Eff e Unit
+-- foreign import backAndroid_exitApp             :: forall e.Eff e Unit
+-- foreign import backAndroid_addEventListener    ::forall e eventName handler . eventName -> handler -> Eff e Unit
+-- foreign import backAndroid_removeEventListener ::forall e eventName handler . eventName -> handler -> Eff e Unit
 
 
 foreign import cameraRoll_saveImageWithTag :: forall e tag. tag -> Eff e Unit

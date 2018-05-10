@@ -410,31 +410,31 @@ exports.asyncStorage_multiMerge = function(keyValuePairs){
     };
 };
 
-var backAndroid = require('react-native').BackAndroid;
-var backAndroid_exitApp = backAndroid.exitApp;
-exports.backAndroid_exitApp = function(o){
-    return function(){
-        return backAndroid_exitApp();
-    };
-};
+// var backAndroid = require('react-native').BackAndroid;
+// var backAndroid_exitApp = backAndroid.exitApp;
+// exports.backAndroid_exitApp = function(o){
+//     return function(){
+//         return backAndroid_exitApp();
+//     };
+// };
 
-var backAndroid_addEventListener = backAndroid.addEventListener;
-exports.backAndroid_addEventListener = function(eventName){
-    return function(handler){
-        return function(){
-            return backAndroid_addEventListener(eventName, handler);
-        };
-    };
-};
+// var backAndroid_addEventListener = backAndroid.addEventListener;
+// exports.backAndroid_addEventListener = function(eventName){
+//     return function(handler){
+//         return function(){
+//             return backAndroid_addEventListener(eventName, handler);
+//         };
+//     };
+// };
 
-var backAndroid_removeEventListener = backAndroid.removeEventListener;
-exports.backAndroid_removeEventListener = function(eventName){
-    return function(handler){
-        return function(){
-            return backAndroid_removeEventListener(eventName, handler);
-        };
-    };
-};
+// var backAndroid_removeEventListener = backAndroid.removeEventListener;
+// exports.backAndroid_removeEventListener = function(eventName){
+//     return function(handler){
+//         return function(){
+//             return backAndroid_removeEventListener(eventName, handler);
+//         };
+//     };
+// };
 
 
 var cameraRoll = require('react-native').CameraRoll;
