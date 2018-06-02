@@ -35,6 +35,8 @@ module Thermite
   , module T
   ) where
 
+import Prelude
+
 import Control.Coroutine (CoTransform(CoTransform), CoTransformer, cotransform, transform, transformCoTransformL, transformCoTransformR)
 import Control.Coroutine (CoTransformer, cotransform) as T
 import Control.Monad.Aff (Aff, launchAff, makeAff, nonCanceler)
@@ -50,10 +52,9 @@ import Data.List (List(..), (!!), modifyAt)
 import Data.Maybe (Maybe(Just), fromMaybe)
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
-import Prelude (class Semigroup, Unit, bind, const, discard, id, map, pure, unit, void, ($), (+), (<$>), (<*>), (<<<), (<>), (>>=))
 import RNX.Color (white)
 import RNX.Components (view')
-import RNX.Styles (AlignItems(..), JustifyContent(..), Style(..), StyleSheet, alignItems, backgroundColor, createStyleSheet, flex, getStyleId, justifyContent, style)
+import RNX.Styles (Style, alignItems, createStyle, justifyContent, style)
 import React as React
 
 -- | A type synonym for an action handler, which takes an action, the current props
@@ -207,7 +208,7 @@ createReactSpec
   -> { spec :: React.ReactSpec props state eff
      , dispatcher :: React.ReactThis props state -> action -> EventHandler
      }
-createReactSpec = createReactSpec' (view' [style $ getStyleId styleSheet "container"])
+createReactSpec = createReactSpec' (view' [style styleSheet.container ])
 
 -- | Create a React component spec from a Thermite component `Spec` with an additional
 -- | function for converting the rendered Array of ReactElement's into a single ReactElement
@@ -390,13 +391,13 @@ foreach f = Spec
 
 
 
-styleSheet ::  StyleSheet
-styleSheet =
-  createStyleSheet
-  [ Style "container"
-    [ flex 1
-    , backgroundColor $ white
-    , alignItems AlignItemsCenter
-    , justifyContent JustifyContentCenter
-    ]
-  ]
+styleSheet :: { container :: Style
+}
+styleSheet = {
+  container : createStyle
+    { flex : 1
+    , backgroundColor : white
+    , alignItems : alignItems.center
+    , justifyContent : justifyContent.center
+    }
+  }

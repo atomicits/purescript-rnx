@@ -1,452 +1,325 @@
 module RNX.Styles where
 
 import RNX.Color (Color)
-import Prelude
-import React.DOM.Props (Props)
+import React.DOM.Props (Props, unsafeMkProps)
 
-foreign import data StyleSheet :: Type
-foreign import data StyleProp :: Type
+-- | Proof that row `r` is a subset of row `s`
+class Optional (r :: # Type) (s :: # Type)
+instance srInst :: Union r t s => Optional r s
 
-type StyleId = Int
-data Style = Style String (Array StyleProp)
-type StyleSheet' = Array {name:: String, styles:: Array StyleProp}
+foreign import data Style :: Type
 
-foreign import _createStyleSheet :: StyleSheet' -> StyleSheet
+type StyleProps =
+  ( alignItems :: AlignItem
+  , alignSelf :: AlignSelf
+  , backfaceVisibility :: Visibility
+  , backgroundColor :: Color
+  , backgroundVisibility :: Visibility
+  , borderBottomColor :: Color
+  , borderBottomLeftRadius :: Int
+  , borderBottomRightRadius :: Int
+  , borderBottomWidth :: Int
+  , borderColor :: Color
+  , borderLeftColor :: Color
+  , borderLeftWidth :: Int
+  , borderRadius :: Int
+  , borderRightColor :: Color
+  , borderRightWidth :: Int
+  , borderStyle :: BorderStyle
+  , borderTopColor :: Color
+  , borderTopLeftRadius :: Int
+  , borderTopRightRadius :: Int
+  , borderTopWidth :: Int
+  , borderWidth :: Int
+  , bottom :: Int
+  , color :: Color
+  , elevation :: Int
+  , flex :: Int
+  , flexBasis :: Int
+  , flexDirection :: FlexDirection
+  , flexGrow :: Int
+  , flexShrink :: Int
+  , fontFamily :: FontFamily
+  , fontSize :: Int
+  , height :: Int
+  , width :: Int
+  , zIndex :: Int
+  , top :: Int
+  , textShadowRadius :: Int
+  , textShadowColor :: Color
+  , right :: Int
+  , shadowColor :: Color
+  , shadowOpacity :: Int
+  , shadowRadius :: Int
+  , left :: Int
+  , letterSpacing :: Int
+  , lineHeight :: Int
+  , margin :: Int
+  , marginBottom :: Int
+  , marginHorizontal :: Int
+  , marginLeft :: Int
+  , marginRight :: Int
+  , marginTop :: Int
+  , marginVertical :: Int
+  , maxHeight :: Int
+  , maxWidth :: Int
+  , minHeight :: Int
+  , minWidth :: Int
+  , opacity :: Int
+  , overflow :: Visibility
+  , overlayColor :: Color
+  , padding :: Int
+  , paddingBottom :: Int
+  , paddingHorizontal :: Int
+  , paddingLeft :: Int
+  , paddingRight :: Int
+  , paddingTop :: Int
+  , paddingVertical :: Int
+  , textDecorationColor :: Color
+  , flexWrap :: Wrap
+  , fontStyle :: FontStyle
+  , fontWeight :: FontWeight
+  , justifyContent :: JustifyContent
+  , position :: Position
+  , shadowOffset :: WidthHeight
+  , textAlign :: TextAlign
+  , textAlignVertical :: TextAlignVertical
+  , textDecorationLine :: TextDecorationLine
+  , textDecorationStyle :: TextDecorationStyle
+  , textShadowOffset :: WidthHeight
+  , writingDirection :: WritingDirection
+  )
 
-createStyleSheet :: Array Style -> StyleSheet
-createStyleSheet s =
- _createStyleSheet $ map getStyle s
- where
-   getStyle (Style name styleProps) = {name: name, styles: styleProps}
+foreign import createStyle :: forall o. Optional o StyleProps => { | o} -> Style
 
+style :: Style -> Props
+style = unsafeMkProps"style"
 
--- TODO: make this type safe!
-foreign import getStyleId :: StyleSheet -> String -> StyleId
-foreign import unsafeMkStyleProp :: forall val. String -> val -> StyleProp
-foreign import unsafeMkStyleSheet :: forall val. String -> val -> Props
-
-
-style :: StyleId -> Props
-style = unsafeMkStyleSheet "style"
-
-styles :: Array StyleId -> Props
-styles = unsafeMkStyleSheet "style"
+styles :: Array Style -> Props
+styles = unsafeMkProps "style"
 
 --------- Styles ---------------
 
-data Visibility = Visible | Hidden
+newtype AlignItem = AlignItem String
 
--- A
+alignItems :: { flexStart :: AlignItem
+, flexEnd :: AlignItem
+, center :: AlignItem
+, stretch :: AlignItem
+}
+alignItems =
+  { flexStart : AlignItem "flex-start"
+  , flexEnd : AlignItem "flex-end"
+  , center : AlignItem "center"
+  , stretch : AlignItem "stretch"
+  }
 
-data AlignItems
-  = AlignItemsFlexStart
-  | AlignItemsFlexEnd
-  | AlignItemsCenter
-  | AlignItemsStretch
+newtype AlignSelf = AlignSelf String
 
-alignItems :: AlignItems -> StyleProp
-alignItems AlignItemsFlexStart = unsafeMkStyleProp "alignItems" "flex-start"
-alignItems AlignItemsFlexEnd   = unsafeMkStyleProp "alignItems" "flex-end"
-alignItems AlignItemsCenter    = unsafeMkStyleProp "alignItems" "center"
-alignItems AlignItemsStretch   = unsafeMkStyleProp "alignItems" "stretch"
+alignSelf :: { auto :: AlignSelf
+, flexStart :: AlignSelf
+, flexEnd :: AlignSelf
+, center :: AlignSelf
+, stretch :: AlignSelf
+}
+alignSelf =
+  { auto : AlignSelf "auto"
+  , flexStart : AlignSelf "flex-start"
+  , flexEnd : AlignSelf "flex-end"
+  , center : AlignSelf "center"
+  , stretch : AlignSelf "stretch"
+  }
 
-data AlignSelf
-  = AlignSelfAuto
-  | AlignSelfFlexStart
-  | AlignSelfFlexEnd
-  | AlignSelfCenter
-  | AlignSelfStretch
+newtype FontFamily = FontFamily String
 
-alignSelf :: AlignSelf -> StyleProp
-alignSelf AlignSelfAuto      = unsafeMkStyleProp "alignSelf" "auto"
-alignSelf AlignSelfFlexStart = unsafeMkStyleProp "alignSelf" "flex-start"
-alignSelf AlignSelfFlexEnd   = unsafeMkStyleProp "alignSelf" "flex-end"
-alignSelf AlignSelfCenter    = unsafeMkStyleProp "alignSelf" "center"
-alignSelf AlignSelfStretch   = unsafeMkStyleProp "alignSelf" "stretch"
+newtype Visibility = Visibility String
+
+hidden :: Visibility
+hidden = Visibility "hidden"
+
+visible :: Visibility
+visible = Visibility "visible"
 
 -- B
 
-backfaceVisibility :: Visibility -> StyleProp
-backfaceVisibility Visible = unsafeMkStyleProp "backfaceVisibility" "visible"
-backfaceVisibility Hidden  = unsafeMkStyleProp "backfaceVisibility" "hidden"
+newtype BorderStyle = BorderStyle String
+
+borderStyle :: { solid :: BorderStyle
+, dotted :: BorderStyle
+, dashed :: BorderStyle
+}
+borderStyle =
+  { solid : BorderStyle "solid"
+  , dotted : BorderStyle "dotted"
+  , dashed : BorderStyle "dashed"
+  }
+
+newtype FlexDirection = FlexDirection String
+
+flexDirection :: { row :: FlexDirection
+, column :: FlexDirection
+, columnReverse :: FlexDirection
+, rowReverse :: FlexDirection
+}
+flexDirection =
+  { row : FlexDirection "row"
+  , column : FlexDirection "column"
+  , columnReverse : FlexDirection "column-reverse"
+  , rowReverse : FlexDirection "row-reverse"
+  }
+
+
+newtype Wrap = Wrap String
+
+wrap :: Wrap
+wrap = Wrap "wrap"
+
+nowrap :: Wrap
+nowrap = Wrap "nowrap"
+
+data FontStyle = FontStyle String
+
+normal :: FontStyle
+normal = FontStyle "normal"
+
+italic :: FontStyle
+italic = FontStyle "italic"
+
+-- fontVariant :: Array FontVariant -> StyleProp
+-- fontVariant ary = unsafeMkStyleProp "fontVariant" (map fontVariantNum ary)
+
+-- fontVariantNum :: FontVariant -> String
+-- fontVariantNum SmallCap        = "small-caps"
+-- fontVariantNum OldStyleNum     = "oldstyle-nums"
+-- fontVariantNum LiningNum       = "lining-nums"
+-- fontVariantNum TabularNum      = "tabular-nums"
+-- fontVariantNum ProportionalNum = "proportional-nums"
+
+newtype FontWeight = FontWeight String
+
+fontWeight :: { normal :: FontWeight
+, bold :: FontWeight
+, w100 :: FontWeight
+, w200 :: FontWeight
+, w300 :: FontWeight
+, w400 :: FontWeight
+, w500 :: FontWeight
+, w600 :: FontWeight
+, w700 :: FontWeight
+, w800 :: FontWeight
+, w900 :: FontWeight
+}
+fontWeight =
+  { normal : FontWeight "normal"
+  , bold : FontWeight "bold"
+  , w100 : FontWeight "100"
+  , w200 : FontWeight "200"
+  , w300 : FontWeight "300"
+  , w400 : FontWeight "400"
+  , w500 : FontWeight "500"
+  , w600 : FontWeight "600"
+  , w700 : FontWeight "700"
+  , w800 : FontWeight "800"
+  , w900 : FontWeight "900"
+  }
+
+newtype JustifyContent = JustifyContent String
+
+justifyContent :: { flexStart :: JustifyContent
+, flexEnd :: JustifyContent
+, center :: JustifyContent
+, spaceBetween :: JustifyContent
+, spaceAround :: JustifyContent
+}
+justifyContent =
+  { flexStart : JustifyContent "flex-start"
+  , flexEnd : JustifyContent "flex-end"
+  , center : JustifyContent "center"
+  , spaceBetween : JustifyContent "space-between"
+  , spaceAround : JustifyContent "space-around"
+  }
+
+newtype Position = Position String
+
+absolute :: Position
+absolute = Position "absolute"
 
-backgroundColor :: Color -> StyleProp
-backgroundColor c = unsafeMkStyleProp "backgroundColor" c
+relative :: Position
+relative = Position "relative"
 
-
-backgroundVisibility :: Visibility -> StyleProp
-backgroundVisibility Visible = unsafeMkStyleProp "backgroundVisibility" "visible"
-backgroundVisibility Hidden  = unsafeMkStyleProp "backgroundVisibility" "hidden"
-
-borderBottomColor :: Color -> StyleProp
-borderBottomColor c = unsafeMkStyleProp "borderBottomColor" c
-
-borderTopColor :: Color -> StyleProp
-borderTopColor c = unsafeMkStyleProp "borderTopColor" c
-
-borderBottomRightRadius :: Int -> StyleProp
-borderBottomRightRadius = unsafeMkStyleProp "borderBottomRightRadius"
-
-borderBottomLeftRadius :: Int -> StyleProp
-borderBottomLeftRadius = unsafeMkStyleProp "borderBottomLeftRadius"
-
-borderBottomWidth :: Int -> StyleProp
-borderBottomWidth = unsafeMkStyleProp "borderBottomWidth"
-
-borderColor :: Color -> StyleProp
-borderColor c = unsafeMkStyleProp "borderColor" c
-
-borderLeftColor :: Color -> StyleProp
-borderLeftColor c = unsafeMkStyleProp "borderLeftColor" c
-
-borderLeftWidth :: Int -> StyleProp
-borderLeftWidth = unsafeMkStyleProp "borderLeftWidth"
-
-borderRadius :: Int -> StyleProp
-borderRadius = unsafeMkStyleProp "borderRadius"
-
-borderRightColor :: Color -> StyleProp
-borderRightColor c = unsafeMkStyleProp "borderRightColor" c
-
-borderRightWidth :: Int -> StyleProp
-borderRightWidth = unsafeMkStyleProp "borderRightWidth"
-
-data BorderStyle
-  = BorderSolid
-  | BorderDotted
-  | BorderDashed
-
-borderStyle :: BorderStyle -> StyleProp
-borderStyle BorderSolid  = unsafeMkStyleProp "borderStyle" "solid"
-borderStyle BorderDotted = unsafeMkStyleProp "borderStyle" "dotted"
-borderStyle BorderDashed = unsafeMkStyleProp "borderStyle" "dashed"
-
-borderTopLeftRadius :: Int -> StyleProp
-borderTopLeftRadius = unsafeMkStyleProp "borderTopLeftRadius"
-
-borderTopRightRadius :: Int -> StyleProp
-borderTopRightRadius = unsafeMkStyleProp "borderTopRightRadius"
-
-borderTopWidth :: Int -> StyleProp
-borderTopWidth = unsafeMkStyleProp "borderTopWidth"
-
-borderWidth :: Int -> StyleProp
-borderWidth = unsafeMkStyleProp "borderWidth"
-
-bottom :: Int -> StyleProp
-bottom = unsafeMkStyleProp "bottom"
-
--- C
-
-color :: Color -> StyleProp
-color c = unsafeMkStyleProp "color" c
-
-
--- E
-
-elevation :: Int -> StyleProp
-elevation = unsafeMkStyleProp "elevation"
-
--- F
-
-flex :: Int -> StyleProp
-flex = unsafeMkStyleProp "flex"
-
-flexBasis :: Int -> StyleProp
-flexBasis = unsafeMkStyleProp "flexBasis"
-
-data FlexDirection
-  = Row
-  | Column
-  | RowReverse
-  | ColumnReverse
-
-flexDirection :: FlexDirection -> StyleProp
-flexDirection Row           = unsafeMkStyleProp "flexDirection" "row"
-flexDirection Column        = unsafeMkStyleProp "flexDirection" "column"
-flexDirection ColumnReverse = unsafeMkStyleProp "flexDirection" "column-reverse"
-flexDirection RowReverse    = unsafeMkStyleProp "flexDirection" "row-reverse"
-
-flexGrow :: Int -> StyleProp
-flexGrow = unsafeMkStyleProp "flexGrow"
-
-flexShrink :: Int -> StyleProp
-flexShrink = unsafeMkStyleProp "flexShrink"
-
-data WrapProp = Wrap | NoWrap
-
-flexWrap :: WrapProp -> StyleProp
-flexWrap Wrap   = unsafeMkStyleProp "flexWrap" "wrap"
-flexWrap NoWrap = unsafeMkStyleProp "flexWrap" "nowrap"
-
-fontFamily :: String -> StyleProp
-fontFamily = unsafeMkStyleProp "fontFamily"
-
-fontSize :: Int -> StyleProp
-fontSize = unsafeMkStyleProp "fontSize"
-
-data FontStyle = FontNormal | FontItalic
-
-fontStyle :: FontStyle -> StyleProp
-fontStyle FontNormal = unsafeMkStyleProp "fontStyle" "normal"
-fontStyle FontItalic = unsafeMkStyleProp "fontStyle" "italic"
-
-data FontVariant
-  = SmallCap
-  | OldStyleNum
-  | LiningNum
-  | TabularNum
-  | ProportionalNum
-
-fontVariant :: Array FontVariant -> StyleProp
-fontVariant ary = unsafeMkStyleProp "fontVariant" (map fontVariantNum ary)
-
-fontVariantNum :: FontVariant -> String
-fontVariantNum SmallCap        = "small-caps"
-fontVariantNum OldStyleNum     = "oldstyle-nums"
-fontVariantNum LiningNum       = "lining-nums"
-fontVariantNum TabularNum      = "tabular-nums"
-fontVariantNum ProportionalNum = "proportional-nums"
-
-data FontWeight
-  = WeightNormal
-  | WeightBold
-  | Weight100
-  | Weight200
-  | Weight300
-  | Weight400
-  | Weight500
-  | Weight600
-  | Weight700
-  | Weight800
-  | Weight900
-
-fontWeight :: FontWeight -> StyleProp
-fontWeight WeightNormal = unsafeMkStyleProp "fontWeight" "normal"
-fontWeight WeightBold   = unsafeMkStyleProp "fontWeight" "bold"
-fontWeight Weight100    = unsafeMkStyleProp "fontWeight" "100"
-fontWeight Weight200    = unsafeMkStyleProp "fontWeight" "200"
-fontWeight Weight300    = unsafeMkStyleProp "fontWeight" "300"
-fontWeight Weight400    = unsafeMkStyleProp "fontWeight" "400"
-fontWeight Weight500    = unsafeMkStyleProp "fontWeight" "500"
-fontWeight Weight600    = unsafeMkStyleProp "fontWeight" "600"
-fontWeight Weight700    = unsafeMkStyleProp "fontWeight" "700"
-fontWeight Weight800    = unsafeMkStyleProp "fontWeight" "800"
-fontWeight Weight900    = unsafeMkStyleProp "fontWeight" "900"
-
--- H
-
-height :: Int -> StyleProp
-height = unsafeMkStyleProp "height"
-
---J
-
-data JustifyContent
-  = JustifyContentFlexStart
-  | JustifyContentFlexEnd
-  | JustifyContentCenter
-  | JustifyContentSpaceBetween
-  | JustifyContentSpaceAround
-
-justifyContent :: JustifyContent -> StyleProp
-justifyContent JustifyContentFlexStart    = unsafeMkStyleProp "justifyContent" "flex-start"
-justifyContent JustifyContentFlexEnd      = unsafeMkStyleProp "justifyContent" "flex-end"
-justifyContent JustifyContentCenter       = unsafeMkStyleProp "justifyContent" "center"
-justifyContent JustifyContentSpaceBetween = unsafeMkStyleProp "justifyContent" "space-between"
-justifyContent JustifyContentSpaceAround  = unsafeMkStyleProp "justifyContent" "space-around"
-
--- L
-
-left :: Int -> StyleProp
-left = unsafeMkStyleProp "left"
-
-letterSpacing :: Int -> StyleProp
-letterSpacing = unsafeMkStyleProp "letterSpacing"
-
-lineHeight :: Int -> StyleProp
-lineHeight = unsafeMkStyleProp "lineHeight"
-
--- M
-
-margin :: Int -> StyleProp
-margin = unsafeMkStyleProp "margin"
-
-marginBottom :: Int -> StyleProp
-marginBottom = unsafeMkStyleProp "marginBottom"
-
-marginHorizontal :: Int -> StyleProp
-marginHorizontal = unsafeMkStyleProp "marginHorizontal"
-
-marginLeft :: Int -> StyleProp
-marginLeft = unsafeMkStyleProp "marginLeft"
-
-marginRight :: Int -> StyleProp
-marginRight = unsafeMkStyleProp "marginRight"
-
-marginTop :: Int -> StyleProp
-marginTop = unsafeMkStyleProp "marginTop"
-
-marginVertical :: Int -> StyleProp
-marginVertical = unsafeMkStyleProp "marginVertical"
-
-maxHeight :: Int -> StyleProp
-maxHeight = unsafeMkStyleProp "maxHeight"
-
-maxWidth :: Int -> StyleProp
-maxWidth = unsafeMkStyleProp "maxWidth"
-
-minHeight :: Int -> StyleProp
-minHeight = unsafeMkStyleProp "minHeight"
-
-minWidth :: Int -> StyleProp
-minWidth = unsafeMkStyleProp "minWidth"
-
--- O
-
-opacity :: Int -> StyleProp
-opacity = unsafeMkStyleProp "opacity"
-
-overflow :: Visibility -> StyleProp
-overflow Visible = unsafeMkStyleProp "overflow" "visible"
-overflow Hidden  = unsafeMkStyleProp "overflow" "hidden"
-
-overlayColor :: String -> StyleProp
-overlayColor = unsafeMkStyleProp "overlayColor"
-
--- P
-
-padding :: Int -> StyleProp
-padding = unsafeMkStyleProp "padding"
-
-paddingBottom :: Int -> StyleProp
-paddingBottom = unsafeMkStyleProp "paddingBottom"
-
-paddingHorizontal :: Int -> StyleProp
-paddingHorizontal = unsafeMkStyleProp "paddingHorizontal"
-
-paddingLeft :: Int -> StyleProp
-paddingLeft = unsafeMkStyleProp "paddingLeft"
-
-paddingRight :: Int -> StyleProp
-paddingRight = unsafeMkStyleProp "paddingRight"
-
-paddingTop :: Int -> StyleProp
-paddingTop = unsafeMkStyleProp "paddingTop"
-
-paddingVertical :: Int -> StyleProp
-paddingVertical = unsafeMkStyleProp "paddingVertical"
-
-data Position = Absolute | Relative
-
-position :: Position -> StyleProp
-position Absolute = unsafeMkStyleProp "position" "absolute"
-position Relative = unsafeMkStyleProp "position" "relative"
-
--- R
-
-right :: Int -> StyleProp
-right = unsafeMkStyleProp "right"
-
--- S
-
-shadowColor :: Color -> StyleProp
-shadowColor c = unsafeMkStyleProp "shadowColor" c
-
-shadowOffset :: {width :: Int, height :: Int} -> StyleProp
-shadowOffset = unsafeMkStyleProp "shadowOffset"
-
-shadowOpacity :: Int -> StyleProp
-shadowOpacity = unsafeMkStyleProp "shadowOpacity"
-
-shadowRadius :: Int -> StyleProp
-shadowRadius = unsafeMkStyleProp "shadowRadius"
+newtype WidthHeight = WidthHeight {width :: Int, height :: Int}
 
 -- T
+newtype TextAlign = TextAlign String
 
-data TextAlign
-  = TextAlignAuto
-  | TextAlignLeft
-  | TextAlignRight
-  | TextAlignCenter
-  | TextAlignJustify
+textAlign :: { auto :: TextAlign
+, left :: TextAlign
+, right :: TextAlign
+, center :: TextAlign
+, justify :: TextAlign
+}
+textAlign =
+  { auto : TextAlign "auto"
+  , left : TextAlign "left"
+  , right : TextAlign "right"
+  , center : TextAlign "center"
+  , justify : TextAlign "justify"
+  }
 
-textAlign :: TextAlign -> StyleProp
-textAlign TextAlignAuto    = unsafeMkStyleProp "textAlign" "auto"
-textAlign TextAlignLeft    = unsafeMkStyleProp "textAlign" "left"
-textAlign TextAlignRight   = unsafeMkStyleProp "textAlign" "right"
-textAlign TextAlignCenter  = unsafeMkStyleProp "textAlign" "center"
-textAlign TextAlignJustify = unsafeMkStyleProp "textAlign" "justify"
+newtype TextAlignVertical = TextAlignVertical String
 
-data TextAlignVertical
-  = TextAlignVerticalAuto
-  | TextAlignVerticalTop
-  | TextAlignVerticalBottom
-  | TextAlignVerticalCenter
+textAlignVertical :: { auto :: TextAlignVertical
+, top :: TextAlignVertical
+, bottom :: TextAlignVertical
+, center :: TextAlignVertical
+}
+textAlignVertical =
+  { auto : TextAlignVertical "auto"
+  , top : TextAlignVertical "top"
+  , bottom : TextAlignVertical "bottom"
+  , center : TextAlignVertical "center"
+  }
 
-textAlignVertical :: TextAlignVertical -> StyleProp
-textAlignVertical TextAlignVerticalAuto   = unsafeMkStyleProp "textAlignVertical" "auto"
-textAlignVertical TextAlignVerticalTop    = unsafeMkStyleProp "textAlignVertical" "top"
-textAlignVertical TextAlignVerticalBottom = unsafeMkStyleProp "textAlignVertical" "bottom"
-textAlignVertical TextAlignVerticalCenter = unsafeMkStyleProp "textAlignVertical" "center"
+newtype TextDecorationLine = TextDecorationLine String
 
-textDecorationColor :: Color -> StyleProp
-textDecorationColor c = unsafeMkStyleProp "textDecorationColor" c
+textDecorationLine :: { none :: TextDecorationLine
+, underline :: TextDecorationLine
+, lineThrough :: TextDecorationLine
+, underlineLineThrough :: TextDecorationLine
+}
+textDecorationLine =
+  { none : TextDecorationLine "none"
+  , underline : TextDecorationLine "underline"
+  , lineThrough : TextDecorationLine "line-through"
+  , underlineLineThrough : TextDecorationLine "underline line-through"
+  }
 
-data TextDecorationLine
-  = None
-  | Underline
-  | LineThrough
-  | UnderlineLineThrough
+newtype TextDecorationStyle = TextDecorationStyle String
 
-textDecorationLine :: TextDecorationLine -> StyleProp
-textDecorationLine None                 = unsafeMkStyleProp "textDecorationLine" "none"
-textDecorationLine Underline            = unsafeMkStyleProp "textDecorationLine" "underline"
-textDecorationLine LineThrough          = unsafeMkStyleProp "textDecorationLine" "line-through"
-textDecorationLine UnderlineLineThrough = unsafeMkStyleProp "textDecorationLine" "underline line-through"
+textDecorationStyle :: { solid :: TextDecorationStyle
+, double :: TextDecorationStyle
+, dotted :: TextDecorationStyle
+, dashed :: TextDecorationStyle
+}
+textDecorationStyle =
+  { solid : TextDecorationStyle "solid"
+  , double : TextDecorationStyle "double"
+  , dotted : TextDecorationStyle "dotted"
+  , dashed : TextDecorationStyle "dashed"
+  }
 
-data TextDecorationStyle
-  = TextSolid
-  | TextDouble
-  | TextDotted
-  | TextDashed
+newtype WritingDirection = WritingDirection String
 
-textDecorationStyle :: TextDecorationStyle -> StyleProp
-textDecorationStyle TextSolid  = unsafeMkStyleProp "textDecorationStyle" "solid"
-textDecorationStyle TextDouble = unsafeMkStyleProp "textDecorationStyle" "double"
-textDecorationStyle TextDotted = unsafeMkStyleProp "textDecorationStyle" "dotted"
-textDecorationStyle TextDashed = unsafeMkStyleProp "textDecorationStyle" "dashed"
+writingDirection :: { auto :: WritingDirection
+, ltr :: WritingDirection
+, rtl :: WritingDirection
+}
+writingDirection =
+  { auto : WritingDirection "auto"
+  , ltr : WritingDirection "ltr"
+  , rtl : WritingDirection "rtl"
 
-textShadowColor :: Color -> StyleProp
-textShadowColor c = unsafeMkStyleProp "textShadowColor" c
-
-textShadowOffset :: {width :: Int, height :: Int} -> StyleProp
-textShadowOffset = unsafeMkStyleProp "textShadowOffset"
-
-textShadowRadius :: Int -> StyleProp
-textShadowRadius = unsafeMkStyleProp "textShadowRadius"
-
-top :: Int -> StyleProp
-top = unsafeMkStyleProp "top"
-
--- W
-
-width :: Int -> StyleProp
-width = unsafeMkStyleProp "width"
-
-data WritingDirection
-  = WritingDirectionAuto
-  | WritingDirectionLtr
-  | WritingDirectionRtl
-
-writingDirection :: WritingDirection -> StyleProp
-writingDirection WritingDirectionAuto = unsafeMkStyleProp "writingDirection" "auto"
-writingDirection WritingDirectionLtr  = unsafeMkStyleProp "writingDirection" "ltr"
-writingDirection WritingDirectionRtl  = unsafeMkStyleProp "writingDirection" "rtl"
-
--- Z
-
-zIndex :: Int -> StyleProp
-zIndex = unsafeMkStyleProp "zIndex"
+  }
 
 -- TODO: Transform StyleProp
 -- TODO: resizeMode

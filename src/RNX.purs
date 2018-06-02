@@ -19,14 +19,5 @@ import Prelude
 
 import Thermite as T
 import Control.Monad.Eff (Eff)
-import RNX.Styles (Style(Style), StyleSheet, createStyleSheet, flex)
 
 foreign import registerComponent :: forall eff component. String -> component -> Eff eff Unit
-
-styleSheet :: StyleSheet
-styleSheet =
-  createStyleSheet
-  [ Style "wrapper"
-    [ flex 1
-    ]
-  ]
