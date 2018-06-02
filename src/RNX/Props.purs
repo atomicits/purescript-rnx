@@ -5,7 +5,7 @@ import Prelude
 import Data.Date (Date)
 import RNX.Color (Color)
 import RNX.PropsTypes (AccessibilityComponentTypeProp(..))
-import RNX.Styles (StyleId)
+import RNX.Styles (Style)
 import React (ReactElement)
 import React.DOM.Props (Props, unsafeMkProps)
 --foreign import unsafeMkProps :: forall val. String -> val -> Props
@@ -582,7 +582,7 @@ data RefreshControlSize = RCDefault | RCLarge
 
 
 -- contentContainerStyle StyleSheetPropsType(ViewStylePropsTypes) #
-contentContainerStyle :: StyleId -> Props
+contentContainerStyle :: Style -> Props
 contentContainerStyle = unsafeMkProps "contentContainerStyle"
 
 
