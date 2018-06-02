@@ -5,7 +5,7 @@ import React.DOM.Props (Props, unsafeMkProps)
 
 -- | Proof that row `r` is a subset of row `s`
 class Optional (r :: # Type) (s :: # Type)
-instance srInst :: Union r t s => Optional r s
+instance srInstance :: Union r t s => Optional r s
 
 foreign import data Style :: Type
 
@@ -90,7 +90,7 @@ type StyleProps =
   , writingDirection :: WritingDirection
   )
 
-foreign import createStyle :: forall o. Optional o StyleProps => { | o} -> Style
+foreign import createStyle :: forall o. Optional o StyleProps => { | o } -> Style
 
 style :: Style -> Props
 style = unsafeMkProps"style"
