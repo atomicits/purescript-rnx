@@ -90,7 +90,10 @@ type StyleProps =
   , writingDirection :: WritingDirection
   )
 
-foreign import createStyle :: forall o. Optional o StyleProps => { | o } -> Style
+foreign import createStyle_ :: forall props. props -> Style
+
+createStyle :: forall o. Optional o StyleProps => { | o } -> Style
+createStyle = createStyle_
 
 style :: Style -> Props
 style = unsafeMkProps"style"
