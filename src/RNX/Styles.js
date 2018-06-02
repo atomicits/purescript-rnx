@@ -3,6 +3,7 @@
 // module ReactNative.Styles
 const RN = require('react-native');
 
-exports.createStyle = function(obj) {
-    return RN.StyleSheet.create({s:obj}).s;
+exports.createStyle = function(o) {
+    const ss = RN.StyleSheet.create({s : o});
+    return ss.s;
 };
