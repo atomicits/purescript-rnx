@@ -1,13 +1,18 @@
 module RNX.Styles where
 
+import Prelude
+
 import RNX.Color (Color)
 import React.DOM.Props (Props, unsafeMkProps)
+import Unsafe.Coerce (unsafeCoerce)
 
 -- | Proof that row `r` is a subset of row `s`
 class Optional (r :: # Type) (s :: # Type)
 instance srInstance :: Union r t s => Optional r s
 
 foreign import data Style :: Type
+foreign import data LetterSpacing :: Type
+
 
 type StyleProps =
   ( alignItems :: AlignItem
@@ -39,20 +44,15 @@ type StyleProps =
   , flexDirection :: FlexDirection
   , flexGrow :: Int
   , flexShrink :: Int
+  , flexWrap :: Wrap
   , fontFamily :: FontFamily
   , fontSize :: Int
+  , fontStyle :: FontStyle
+  , fontWeight :: FontWeight
   , height :: Int
-  , width :: Int
-  , zIndex :: Int
-  , top :: Int
-  , textShadowRadius :: Int
-  , textShadowColor :: Color
-  , right :: Int
-  , shadowColor :: Color
-  , shadowOpacity :: Int
-  , shadowRadius :: Int
+  , justifyContent :: JustifyContent
   , left :: Int
-  , letterSpacing :: Int
+  , letterSpacing :: LetterSpacing
   , lineHeight :: Int
   , margin :: Int
   , marginBottom :: Int
@@ -75,22 +75,49 @@ type StyleProps =
   , paddingRight :: Int
   , paddingTop :: Int
   , paddingVertical :: Int
-  , textDecorationColor :: Color
-  , flexWrap :: Wrap
-  , fontStyle :: FontStyle
-  , fontWeight :: FontWeight
-  , justifyContent :: JustifyContent
   , position :: Position
+  , right :: Int
+  , shadowColor :: Color
   , shadowOffset :: WidthHeight
+  , shadowOpacity :: Int
+  , shadowRadius :: Int
   , textAlign :: TextAlign
   , textAlignVertical :: TextAlignVertical
+  , textDecorationColor :: Color
   , textDecorationLine :: TextDecorationLine
   , textDecorationStyle :: TextDecorationStyle
+  , textShadowColor :: Color
   , textShadowOffset :: WidthHeight
+  , textShadowRadius :: Int
+  , top :: Int
+  , width :: Int
   , writingDirection :: WritingDirection
+  , zIndex :: Int
   )
 
 foreign import createStyle_ :: forall props. props -> Style
+
+letterSpacing_ :: Number -> String -> LetterSpacing
+letterSpacing_ n s = unsafeCoerce ( show n <> s)
+
+letterSpacing_s :: String -> LetterSpacing
+letterSpacing_s = unsafeCoerce
+
+letterSpacing :: { num :: Number -> LetterSpacing
+, em :: Number -> LetterSpacing
+, px :: Number -> LetterSpacing
+, normal :: LetterSpacing
+, inherit :: LetterSpacing
+, initial :: LetterSpacing
+}
+letterSpacing =
+  { num : \n -> letterSpacing_ n ""
+  , em : \n -> letterSpacing_ n "em"
+  , px : \n -> letterSpacing_ n "px"
+  , normal : letterSpacing_s "normal"
+  , inherit : letterSpacing_s "inherit"
+  , initial : letterSpacing_s "initial"
+  }
 
 createStyle :: forall o. Optional o StyleProps => { | o } -> Style
 createStyle = createStyle_
