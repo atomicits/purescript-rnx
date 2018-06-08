@@ -11,8 +11,6 @@ class Optional (r :: # Type) (s :: # Type)
 instance srInstance :: Union r t s => Optional r s
 
 foreign import data Style :: Type
-foreign import data LetterSpacing :: Type
-
 
 type StyleProps =
   ( alignItems :: AlignItem
@@ -52,7 +50,7 @@ type StyleProps =
   , height :: Int
   , justifyContent :: JustifyContent
   , left :: Int
-  , letterSpacing :: LetterSpacing
+  , letterSpacing :: Number
   , lineHeight :: Int
   , margin :: Int
   , marginBottom :: Int
@@ -96,28 +94,6 @@ type StyleProps =
   )
 
 foreign import createStyle_ :: forall props. props -> Style
-
-letterSpacing_ :: Number -> String -> LetterSpacing
-letterSpacing_ n s = unsafeCoerce ( show n <> s)
-
-letterSpacing_s :: String -> LetterSpacing
-letterSpacing_s = unsafeCoerce
-
-letterSpacing :: { num :: Number -> LetterSpacing
-, em :: Number -> LetterSpacing
-, px :: Number -> LetterSpacing
-, normal :: LetterSpacing
-, inherit :: LetterSpacing
-, initial :: LetterSpacing
-}
-letterSpacing =
-  { num : \n -> letterSpacing_ n ""
-  , em : \n -> letterSpacing_ n "em"
-  , px : \n -> letterSpacing_ n "px"
-  , normal : letterSpacing_s "normal"
-  , inherit : letterSpacing_s "inherit"
-  , initial : letterSpacing_s "initial"
-  }
 
 createStyle :: forall o. Optional o StyleProps => { | o } -> Style
 createStyle = createStyle_
