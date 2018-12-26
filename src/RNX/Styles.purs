@@ -1,10 +1,8 @@
 module RNX.Styles where
 
-import Prelude
-
 import RNX.Color (Color)
 import React.DOM.Props (Props, unsafeMkProps)
-import Unsafe.Coerce (unsafeCoerce)
+import Prim.Row (class Union)
 
 -- | Proof that row `r` is a subset of row `s`
 class Optional (r :: # Type) (s :: # Type)

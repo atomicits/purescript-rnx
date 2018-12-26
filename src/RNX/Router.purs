@@ -12,7 +12,7 @@ module RNX.Router
 
 import Prelude
 import Signal (Signal)
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 
 data RouterAction = Push | Pop
 
@@ -40,13 +40,13 @@ type RouterS route =
   }
 
 
-foreign import createNavSignal :: forall eff route.
+foreign import createNavSignal :: forall route.
                                   (route -> Signal route) ->
-                                  Eff eff (Signal route)
+                                  Effect (Signal route)
 
-foreign import navigateTo :: forall route eff. route -> Eff eff Unit
+foreign import navigateTo :: forall route. route -> Effect Unit
 
-foreign import goBack :: forall eff. Eff eff Unit
+foreign import goBack :: Effect Unit
 
 foreign import stateUtils_push :: forall a b. a -> b -> a
 foreign import stateUtils_pop :: forall a. a -> a

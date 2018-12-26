@@ -12,12 +12,10 @@
 
 module RNX
   ( registerComponent
-  , module T
   ) where
 
 import Prelude
 
-import Thermite as T
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 
-foreign import registerComponent :: forall eff component. String -> component -> Eff eff Unit
+foreign import registerComponent :: forall component. String -> component -> Effect Unit

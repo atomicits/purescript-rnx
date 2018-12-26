@@ -2,13 +2,9 @@ module RNX.API where
 
 import Prelude
 
-import Control.Monad.Eff (Eff, kind Effect)
-import Control.Monad.Eff.Exception (Error)
+import Effect (Effect)
 
--- Geolocation API with Aff
-foreign import data GEOLOCATION :: Effect
-
-foreign import _getCurrentPosition :: forall geodata options e. (geodata -> Eff e Unit) -> (Error -> Eff e Unit) -> options -> Eff e Unit
+foreign import _getCurrentPosition :: forall error geodata options. (geodata -> Effect Unit) -> (error -> Effect Unit) -> options -> Effect Unit
 
 -- _getCurrentPosition' :: forall e options geodata. options -> Aff e geodata
 -- _getCurrentPosition' options = makeAff (\error success -> _getCurrentPosition success error options)
@@ -20,99 +16,97 @@ foreign import _getCurrentPosition :: forall geodata options e. (geodata -> Eff 
 --   res <- attempt $ _getCurrentPosition' options
 --   pure $ either Left Right res
 
-
 -- / Geolocation API
 
 type ButtonIndex = Int
 newtype ActionSheetOptions = ActionSheetOptions {options :: Array String, cancelButtonIndex :: ButtonIndex, destructiveuttonIndex :: ButtonIndex, title :: String, message :: String}
 
 
-foreign import actionSheetIOS_showActionSheetWithOptions :: forall e action. ActionSheetOptions -> (ButtonIndex -> action) -> Eff e Unit
+foreign import actionSheetIOS_showActionSheetWithOptions :: forall action. ActionSheetOptions -> (ButtonIndex -> action) -> Effect Unit
 
 
-foreign import actionSheetIOS_showShareActionSheetWithOptions :: forall e options action. options -> (String -> action) -> (Boolean -> String -> action) -> Eff e Unit
+foreign import actionSheetIOS_showShareActionSheetWithOptions :: forall options action. options -> (String -> action) -> (Boolean -> String -> action) -> Effect Unit
 
 type DeviceID = String
 
-foreign import adSupportIOS_getAdvertisingId :: forall e action. (DeviceID -> action) -> (String -> action) -> Eff e Unit
+foreign import adSupportIOS_getAdvertisingId :: forall action. (DeviceID -> action) -> (String -> action) -> Effect Unit
 
 type HasTracking = Boolean
 
-foreign import adSupportIOS_getAdvertisingTrackingEnabled :: forall e action. (HasTracking -> action) -> (String -> action) -> Eff e Unit
+foreign import adSupportIOS_getAdvertisingTrackingEnabled :: forall action. (HasTracking -> action) -> (String -> action) -> Effect Unit
 
 data AlertButtonStyle = ABSLater | ABSCancel | ABSOK
 
 newtype AlertButton = AlertButton {text :: String, onPress :: forall action. (Unit -> action), style :: AlertButtonStyle}
 
-foreign import alert_alert :: forall e options type'. String -> String  -> Array AlertButton -> options -> type' -> Eff e Unit
+foreign import alert_alert :: forall options type'. String -> String  -> Array AlertButton -> options -> type' -> Effect Unit
 
 
-foreign import alertIOS_alert :: forall e callBackOrButton type'. String -> String -> Array callBackOrButton -> type'  -> Eff e Unit
+foreign import alertIOS_alert :: forall callBackOrButton type'. String -> String -> Array callBackOrButton -> type'  -> Effect Unit
 
 
-foreign import alertIOS_prompt :: forall e  callBackOrButtons type'. String -> String -> Array callBackOrButtons -> type' -> String -> Eff e Unit
+foreign import alertIOS_prompt :: forall callBackOrButtons type'. String -> String -> Array callBackOrButtons -> type' -> String -> Effect Unit
 
 --Animated {value: AnimatedValue | AnimatedValueXY,config: DecayAnimationConfig,} https://github.com/facebook/react-native/search?utf8=%E2%9C%93&q=Animated.decay&type=Code
 
-foreign import animated_decay                   :: forall e value config. value -> config -> Eff e Unit
-foreign import animated_timing                  :: forall e value config. value -> config -> Eff e Unit
-foreign import animated_spring                  :: forall e value config. value -> config -> Eff e Unit
-foreign import animated_add                     :: forall e a b. a -> b -> Eff e Unit
-foreign import animated_divide                  :: forall e a b. a -> b -> Eff e Unit
-foreign import animated_multiply                :: forall e a b. a -> b -> Eff e Unit
-foreign import animated_modulo                  :: forall e a modulus. a -> modulus -> Eff e Unit
-foreign import animated_diffClamp               :: forall e a min max. a -> min -> max ->  Eff e Unit
-foreign import animated_delay                   :: forall e  time.  time -> Eff e Unit
-foreign import animated_sequence                :: forall e  animations.  animations -> Eff e Unit
-foreign import animated_parallel                :: forall e animations config. animations -> config -> Eff e Unit
-foreign import animated_stagger                 :: forall e time animations . time -> animations -> Eff e Unit
-foreign import animated_event                   :: forall e argMapping config . argMapping -> config -> Eff e Unit
-foreign import animated_createAnimatedComponent :: forall e component'. component' -> Eff e Unit
+foreign import animated_decay                   :: forall value config. value -> config -> Effect Unit
+foreign import animated_timing                  :: forall value config. value -> config -> Effect Unit
+foreign import animated_spring                  :: forall value config. value -> config -> Effect Unit
+foreign import animated_add                     :: forall a b. a -> b -> Effect Unit
+foreign import animated_divide                  :: forall a b. a -> b -> Effect Unit
+foreign import animated_multiply                :: forall a b. a -> b -> Effect Unit
+foreign import animated_modulo                  :: forall a modulus. a -> modulus -> Effect Unit
+foreign import animated_diffClamp               :: forall a min max. a -> min -> max ->  Effect Unit
+foreign import animated_delay                   :: forall time.  time -> Effect Unit
+foreign import animated_sequence                :: forall animations.  animations -> Effect Unit
+foreign import animated_parallel                :: forall animations config. animations -> config -> Effect Unit
+foreign import animated_stagger                 :: forall time animations . time -> animations -> Effect Unit
+foreign import animated_event                   :: forall argMapping config . argMapping -> config -> Effect Unit
+foreign import animated_createAnimatedComponent :: forall component'. component' -> Effect Unit
 
 
-foreign import appRegistry_registerConfig                       :: forall e config. config -> Eff e Unit
-foreign import appRegistry_registerComponent                    :: forall e appKey getComponentFunc . appKey -> getComponentFunc -> Eff e Unit
-foreign import appRegistry_registerRunnable                     :: forall e appKey func . appKey -> func -> Eff e Unit
-foreign import appRegistry_getAppKeys                           :: forall e. Eff e Unit
-foreign import appRegistry_runApplication                       :: forall e appKey appParameters . appKey -> appParameters -> Eff e Unit
-foreign import appRegistry_unmountApplicationComponentAtRootTag :: forall e rootTag. rootTag -> Eff e Unit
-foreign import appRegistry_registerHeadlessTask                 :: forall e taskKey task . taskKey -> task -> Eff e Unit
-foreign import appRegistry_startHeadlessTask                    :: forall e taskId taskKey data'. taskId -> taskKey -> data' ->  Eff e Unit
+foreign import appRegistry_registerConfig                       :: forall config. config -> Effect Unit
+foreign import appRegistry_registerComponent                    :: forall appKey getComponentFunc . appKey -> getComponentFunc -> Effect Unit
+foreign import appRegistry_registerRunnable                     :: forall appKey func . appKey -> func -> Effect Unit
+foreign import appRegistry_getAppKeys                           :: Effect Unit
+foreign import appRegistry_runApplication                       :: forall appKey appParameters . appKey -> appParameters -> Effect Unit
+foreign import appRegistry_unmountApplicationComponentAtRootTag :: forall rootTag. rootTag -> Effect Unit
+foreign import appRegistry_registerHeadlessTask                 :: forall taskKey task . taskKey -> task -> Effect Unit
+foreign import appRegistry_startHeadlessTask                    :: forall taskId taskKey data'. taskId -> taskKey -> data' ->  Effect Unit
 
 
-foreign import appState_addEventListener    :: forall e type' handler . type' -> handler -> Eff e Unit
-foreign import appState_removeEventListener :: forall e type' handler . type' -> handler -> Eff e Unit
+foreign import appState_addEventListener    :: forall type' handler . type' -> handler -> Effect Unit
+foreign import appState_removeEventListener :: forall type' handler . type' -> handler -> Effect Unit
+
+foreign import asyncStorage_getItem          :: forall callback . String -> callback -> Effect Unit
+foreign import asyncStorage_setItem          :: forall callback. String -> String -> callback ->  Effect Unit
+foreign import asyncStorage_removeItem       :: forall callback . String -> callback -> Effect Unit
+foreign import asyncStorage_mergeItem        :: forall callback. String -> String -> callback ->  Effect Unit
+foreign import asyncStorage_clear            :: forall callback. callback -> Effect Unit
+foreign import asyncStorage_getAllKeys       :: forall callback. callback -> Effect Unit
+foreign import asyncStorage_flushGetRequests :: Effect Unit
+foreign import asyncStorage_multiGet         :: forall callback. Array String -> callback ->Effect Unit
+foreign import asyncStorage_multiSet         :: forall callback. Array (Array String) -> callback ->Effect Unit
+foreign import asyncStorage_multiRemove      :: forall callback. Array String -> callback ->Effect Unit
+foreign import asyncStorage_multiMerge       :: forall callback. Array (Array String) -> callback ->Effect Unit
+
+-- foreign import backAndroid_exitApp             :: forall e.Effect Unit
+-- foreign import backAndroid_addEventListener    ::forall e eventName handler . eventName -> handler -> Effect Unit
+-- foreign import backAndroid_removeEventListener ::forall e eventName handler . eventName -> handler -> Effect Unit
 
 
-foreign import asyncStorage_getItem          :: forall e callback . String -> callback -> Eff e Unit
-foreign import asyncStorage_setItem          :: forall e callback. String -> String -> callback ->  Eff e Unit
-foreign import asyncStorage_removeItem       :: forall e callback . String -> callback -> Eff e Unit
-foreign import asyncStorage_mergeItem        :: forall e callback. String -> String -> callback ->  Eff e Unit
-foreign import asyncStorage_clear            :: forall e callback. callback -> Eff e Unit
-foreign import asyncStorage_getAllKeys       :: forall e callback. callback -> Eff e Unit
-foreign import asyncStorage_flushGetRequests :: forall e. Eff e Unit
-foreign import asyncStorage_multiGet         :: forall e callback. Array String -> callback ->Eff e Unit
-foreign import asyncStorage_multiSet         :: forall e callback. Array (Array String) -> callback ->Eff e Unit
-foreign import asyncStorage_multiRemove      :: forall e callback. Array String -> callback ->Eff e Unit
-foreign import asyncStorage_multiMerge       :: forall e callback. Array (Array String) -> callback ->Eff e Unit
-
--- foreign import backAndroid_exitApp             :: forall e.Eff e Unit
--- foreign import backAndroid_addEventListener    ::forall e eventName handler . eventName -> handler -> Eff e Unit
--- foreign import backAndroid_removeEventListener ::forall e eventName handler . eventName -> handler -> Eff e Unit
+foreign import cameraRoll_saveImageWithTag :: forall tag. tag -> Effect Unit
+foreign import cameraRoll_saveToCameraRoll :: forall tag type'. tag -> type' -> Effect Unit
+foreign import cameraRoll_getPhotos        :: forall params. params -> Effect Unit
 
 
-foreign import cameraRoll_saveImageWithTag :: forall e tag. tag -> Eff e Unit
-foreign import cameraRoll_saveToCameraRoll :: forall e tag type'. tag -> type' -> Eff e Unit
-foreign import cameraRoll_getPhotos        :: forall e params. params -> Eff e Unit
+foreign import clipboard_getString :: Effect Unit
+foreign import clipboard_setString :: forall content. content -> Effect Unit
 
 
-foreign import clipboard_getString :: forall e. Eff e Unit
-foreign import clipboard_setString :: forall e content. content -> Eff e Unit
-
-
-foreign import datePickerAndroid_open            :: forall e options. options -> Eff e Unit
-foreign import datePickerAndroid_dateSetAction   :: forall e. Eff e Unit
-foreign import datePickerAndroid_dismissedAction :: forall e. Eff e Unit
+foreign import datePickerAndroid_open            :: forall options. options -> Effect Unit
+foreign import datePickerAndroid_dateSetAction   :: Effect Unit
+foreign import datePickerAndroid_dismissedAction :: Effect Unit
 
 type Dimensions =
   { width :: Int
@@ -121,104 +115,104 @@ type Dimensions =
   , fontScale :: Int
   }
 
-foreign import dimensions_set :: forall e dims. dims -> Eff e Unit
+foreign import dimensions_set :: forall dims. dims -> Effect Unit
 foreign import dimensions_get :: String -> Dimensions
 
 
-foreign import easing_step0   :: forall e a. a -> Eff e Unit
-foreign import easing_step1   :: forall e a. a -> Eff e Unit
-foreign import easing_linear  :: forall e a. a -> Eff e Unit
-foreign import easing_ease    :: forall e a. a -> Eff e Unit
-foreign import easing_quad    :: forall e a. a -> Eff e Unit
-foreign import easing_cubic   :: forall e a. a -> Eff e Unit
-foreign import easing_poly    :: forall e a. a -> Eff e Unit
-foreign import easing_sin     :: forall e a. a -> Eff e Unit
-foreign import easing_circle  :: forall e a. a -> Eff e Unit
-foreign import easing_exp     :: forall e a. a -> Eff e Unit
-foreign import easing_elastic :: forall e bounciness. bounciness -> Eff e Unit
-foreign import easing_back    :: forall e a. a -> Eff e Unit
-foreign import easing_bounce  :: forall e a. a -> Eff e Unit
-foreign import easing_bezier  :: forall e x1 y1 x2 y2. x1 -> y1 -> x2 -> y2 -> Eff e Unit
-foreign import easing_in      :: forall e easing. easing -> Eff e Unit
-foreign import easing_out     :: forall e easing. easing -> Eff e Unit
-foreign import easing_inOut   :: forall e easing. easing -> Eff e Unit
+foreign import easing_step0   :: forall a. a -> Effect Unit
+foreign import easing_step1   :: forall a. a -> Effect Unit
+foreign import easing_linear  :: forall a. a -> Effect Unit
+foreign import easing_ease    :: forall a. a -> Effect Unit
+foreign import easing_quad    :: forall a. a -> Effect Unit
+foreign import easing_cubic   :: forall a. a -> Effect Unit
+foreign import easing_poly    :: forall a. a -> Effect Unit
+foreign import easing_sin     :: forall a. a -> Effect Unit
+foreign import easing_circle  :: forall a. a -> Effect Unit
+foreign import easing_exp     :: forall a. a -> Effect Unit
+foreign import easing_elastic :: forall bounciness. bounciness -> Effect Unit
+foreign import easing_back    :: forall a. a -> Effect Unit
+foreign import easing_bounce  :: forall a. a -> Effect Unit
+foreign import easing_bezier  :: forall x1 y1 x2 y2. x1 -> y1 -> x2 -> y2 -> Effect Unit
+foreign import easing_in      :: forall easing. easing -> Effect Unit
+foreign import easing_out     :: forall easing. easing -> Effect Unit
+foreign import easing_inOut   :: forall easing. easing -> Effect Unit
 
 
-foreign import geolocation_getCurrentPosition :: forall e geo_success geo_error geo_options. geo_success -> geo_error -> geo_options -> Eff e Unit
-foreign import geolocation_watchPosition      :: forall e success error options. success -> error -> options -> Eff e Unit
-foreign import geolocation_clearWatch         :: forall e watchID. watchID -> Eff e Unit
-foreign import geolocation_stopObserving      :: forall e. Eff e Unit
+foreign import geolocation_getCurrentPosition :: forall geo_success geo_error geo_options. geo_success -> geo_error -> geo_options -> Effect Unit
+foreign import geolocation_watchPosition      :: forall success error options. success -> error -> options -> Effect Unit
+foreign import geolocation_clearWatch         :: forall watchID. watchID -> Effect Unit
+foreign import geolocation_stopObserving      :: Effect Unit
 
 
-foreign import imageEditor_cropImage :: forall e uri cropData success failure.uri ->  cropData -> success ->  failure -> Eff e Unit
+foreign import imageEditor_cropImage :: forall uri cropData success failure.uri ->  cropData -> success ->  failure -> Effect Unit
 
 
-foreign import imagePickerIOS_canRecordVideos  :: forall e callback. callback -> Eff e Unit
-foreign import imagePickerIOS_canUseCamera     ::forall e callback. callback -> Eff e Unit
-foreign import imagePickerIOS_openCameraDialog ::forall e config successCallback cancelCallback .config ->  successCallback -> cancelCallback-> Eff e Unit
-foreign import imagePickerIOS_openSelectDialog ::forall e config successCallback cancelCallback .config ->  successCallback -> cancelCallback-> Eff e Unit
+foreign import imagePickerIOS_canRecordVideos  :: forall callback. callback -> Effect Unit
+foreign import imagePickerIOS_canUseCamera     ::forall callback. callback -> Effect Unit
+foreign import imagePickerIOS_openCameraDialog ::forall config successCallback cancelCallback .config ->  successCallback -> cancelCallback-> Effect Unit
+foreign import imagePickerIOS_openSelectDialog ::forall config successCallback cancelCallback .config ->  successCallback -> cancelCallback-> Effect Unit
 
 
-foreign import imageStore_hasImageForTag     :: forall e uri callback. uri -> callback -> Eff e Unit
-foreign import imageStore_removeImageForTag  :: forall e uri. uri -> Eff e Unit
-foreign import imageStore_addImageFromBase64 ::forall e base64ImageData success failure. base64ImageData -> success -> failure -> Eff e Unit
-foreign import imageStore_getBase64ForTag    :: forall e uri success failure. uri -> success -> failure -> Eff e Unit
+foreign import imageStore_hasImageForTag     :: forall uri callback. uri -> callback -> Effect Unit
+foreign import imageStore_removeImageForTag  :: forall uri. uri -> Effect Unit
+foreign import imageStore_addImageFromBase64 ::forall base64ImageData success failure. base64ImageData -> success -> failure -> Effect Unit
+foreign import imageStore_getBase64ForTag    :: forall uri success failure. uri -> success -> failure -> Effect Unit
 
 
-foreign import interactionManager_runAfterInteractions    :: forall e task. task -> Eff e Unit
-foreign import interactionManager_createInteractionHandle :: forall e. Eff e Unit
-foreign import interactionManager_clearInteractionHandle  :: forall e handle. handle -> Eff e Unit
-foreign import interactionManager_setDeadline             :: forall e deadline. deadline -> Eff e Unit
+foreign import interactionManager_runAfterInteractions    :: forall task. task -> Effect Unit
+foreign import interactionManager_createInteractionHandle :: Effect Unit
+foreign import interactionManager_clearInteractionHandle  :: forall handle. handle -> Effect Unit
+foreign import interactionManager_setDeadline             :: forall deadline. deadline -> Effect Unit
 
 
-foreign import keyboard_addListener        :: forall e eventName callback. eventName -> callback -> Eff e Unit
-foreign import keyboard_removeListener     :: forall e eventName callback. eventName -> callback -> Eff e Unit
-foreign import keyboard_removeAllListeners :: forall e eventName. eventName -> Eff e Unit
-foreign import keyboard_dismiss            :: forall e. Eff e Unit
+foreign import keyboard_addListener        :: forall eventName callback. eventName -> callback -> Effect Unit
+foreign import keyboard_removeListener     :: forall eventName callback. eventName -> callback -> Effect Unit
+foreign import keyboard_removeAllListeners :: forall eventName. eventName -> Effect Unit
+foreign import keyboard_dismiss            :: Effect Unit
 
 
-foreign import layoutAnimation_configureNext :: forall e config onAnimationDidEnd. config -> onAnimationDidEnd -> Eff e Unit
-foreign import layoutAnimation_create        :: forall e duration type' creationProp. duration -> type' -> creationProp -> Eff e Unit
+foreign import layoutAnimation_configureNext :: forall config onAnimationDidEnd. config -> onAnimationDidEnd -> Effect Unit
+foreign import layoutAnimation_create        :: forall duration type' creationProp. duration -> type' -> creationProp -> Effect Unit
 
 -- Linking
-foreign import linking_addEventListener    :: forall e type' handler. type' -> handler -> Eff e Unit
-foreign import linking_removeEventListener :: forall e type' handler. type' -> handler -> Eff e Unit
-foreign import linking_openURL             :: forall e uri. uri -> Eff e Unit
-foreign import linking_canOpenURL          :: forall e uri. uri -> Eff e Unit
-foreign import linking_getInitialURL       :: forall e. Eff e Unit
+foreign import linking_addEventListener    :: forall type' handler. type' -> handler -> Effect Unit
+foreign import linking_removeEventListener :: forall type' handler. type' -> handler -> Effect Unit
+foreign import linking_openURL             :: forall uri. uri -> Effect Unit
+foreign import linking_canOpenURL          :: forall uri. uri -> Effect Unit
+foreign import linking_getInitialURL       :: Effect Unit
 
 -- NativeMethodsMixin
-foreign import nativeMethodsMixin_measure         :: forall e event action. (event -> action) -> Eff e Unit
-foreign import nativeMethodsMixin_measureInWindow :: forall e event action. (event -> action) -> Eff e Unit
-foreign import nativeMethodsMixin_measureLayout   :: forall e relativeToNativeNode onSuccess onFail. relativeToNativeNode -> onSuccess -> onFail -> Eff e Unit
-foreign import nativeMethodsMixin_focus           :: forall e. Eff e Unit
-foreign import nativeMethodsMixin_blur            :: forall e. Eff e Unit
+foreign import nativeMethodsMixin_measure         :: forall event action. (event -> action) -> Effect Unit
+foreign import nativeMethodsMixin_measureInWindow :: forall event action. (event -> action) -> Effect Unit
+foreign import nativeMethodsMixin_measureLayout   :: forall relativeToNativeNode onSuccess onFail. relativeToNativeNode -> onSuccess -> onFail -> Effect Unit
+foreign import nativeMethodsMixin_focus           :: Effect Unit
+foreign import nativeMethodsMixin_blur            :: Effect Unit
 
 -- NetInfo
-foreign import netInfo_isConnectionExpensive :: forall e. Eff e Unit
-foreign import netInfo_isConnected           :: forall e. Eff e Unit
-foreign import netInfo_addEventListener      :: forall e eventName handler. eventName -> handler -> Eff e Unit
-foreign import netInfo_removeEventListener   :: forall e eventName handler. eventName -> handler -> Eff e Unit
-foreign import netInfo_fetch                 :: forall e. Eff e Unit
+foreign import netInfo_isConnectionExpensive :: Effect Unit
+foreign import netInfo_isConnected           :: Effect Unit
+foreign import netInfo_addEventListener      :: forall eventName handler. eventName -> handler -> Effect Unit
+foreign import netInfo_removeEventListener   :: forall eventName handler. eventName -> handler -> Effect Unit
+foreign import netInfo_fetch                 :: Effect Unit
 
 
 -- //-- isConnected
 
 -- PanResponder
-foreign import panResponder_create :: forall e config. config -> Eff e Unit
+foreign import panResponder_create :: forall config. config -> Effect Unit
 
 
 -- PermissionsAndroid
-foreign import permissionsAndroid_checkPermission   :: forall e permission. permission -> Eff e Unit
-foreign import permissionsAndroid_requestPermission :: forall e permission rationale. permission -> rationale -> Eff e Unit
+foreign import permissionsAndroid_checkPermission   :: forall permission. permission -> Effect Unit
+foreign import permissionsAndroid_requestPermission :: forall permission rationale. permission -> rationale -> Effect Unit
 
 
 -- PixelRatio
-foreign import pixelRatio_get :: forall e. Eff e Unit
-foreign import pixelRatio_getFontScale              :: forall e. Eff e Unit
-foreign import pixelRatio_getPixelSizeForLayoutSize :: forall e layoutSize. layoutSize -> Eff e Unit
-foreign import pixelRatio_roundToNearestPixel       :: forall e layoutSize. layoutSize -> Eff e Unit
-foreign import pixelRatio_startDetecting            :: forall e. Eff e Unit
+foreign import pixelRatio_get :: Effect Unit
+foreign import pixelRatio_getFontScale              :: Effect Unit
+foreign import pixelRatio_getPixelSizeForLayoutSize :: forall layoutSize. layoutSize -> Effect Unit
+foreign import pixelRatio_roundToNearestPixel       :: forall layoutSize. layoutSize -> Effect Unit
+foreign import pixelRatio_startDetecting            :: Effect Unit
 
 
 --PushNotificationIOS
@@ -242,64 +236,64 @@ newtype SLNDetails = SNLDetails
  , applicationIconBadgeNumber :: Number
  }
 
-foreign import pushNotificationIOS_presentLocalNotification       :: forall e. PNLDetails ->  Eff e Unit
-foreign import pushNotificationIOS_scheduleLocalNotification      :: forall e. SLNDetails -> Eff e Unit
-foreign import pushNotificationIOS_cancelAllLocalNotifications    :: forall e. Eff e Unit
-foreign import pushNotificationIOS_setApplicationIconBadgeNumber  :: forall e. Number ->  Eff e Unit
-foreign import pushNotificationIOS_getApplicationIconBadgeNumber  :: forall e event action. (event -> action) -> Eff e Unit
-foreign import pushNotificationIOS_cancelLocalNotifications       :: forall e userInfo. userInfo -> Eff e Unit
-foreign import pushNotificationIOS_getScheduledLocalNotifications :: forall e event action. (event -> action) ->  Eff e Unit
-foreign import pushNotificationIOS_addEventListener               :: forall e type' handler. type' -> handler -> Eff e Unit
-foreign import pushNotificationIOS_removeEventListener            :: forall e type' handler. type' -> handler -> Eff e Unit
-foreign import pushNotificationIOS_requestPermissions             :: forall e permissions. permissions -> Eff e Unit
-foreign import pushNotificationIOS_abandonPermissions             :: forall e. Eff e Unit
-foreign import pushNotificationIOS_checkPermissions               :: forall e event action. (event -> action) -> Eff e Unit
-foreign import pushNotificationIOS_getInitialNotification         :: forall e. Eff e Unit
-foreign import pushNotificationIOS_getMessage                     :: forall e. Eff e Unit
-foreign import pushNotificationIOS_getSound                       :: forall e. Eff e Unit
-foreign import pushNotificationIOS_getAlert                       :: forall e. Eff e Unit
-foreign import pushNotificationIOS_getBadgeCount                  :: forall e. Eff e Unit
-foreign import pushNotificationIOS_getData                        :: forall e. Eff e Unit
+foreign import pushNotificationIOS_presentLocalNotification       :: PNLDetails ->  Effect Unit
+foreign import pushNotificationIOS_scheduleLocalNotification      :: SLNDetails -> Effect Unit
+foreign import pushNotificationIOS_cancelAllLocalNotifications    :: Effect Unit
+foreign import pushNotificationIOS_setApplicationIconBadgeNumber  :: Number ->  Effect Unit
+foreign import pushNotificationIOS_getApplicationIconBadgeNumber  :: forall event action. (event -> action) -> Effect Unit
+foreign import pushNotificationIOS_cancelLocalNotifications       :: forall userInfo. userInfo -> Effect Unit
+foreign import pushNotificationIOS_getScheduledLocalNotifications :: forall event action. (event -> action) ->  Effect Unit
+foreign import pushNotificationIOS_addEventListener               :: forall type' handler. type' -> handler -> Effect Unit
+foreign import pushNotificationIOS_removeEventListener            :: forall type' handler. type' -> handler -> Effect Unit
+foreign import pushNotificationIOS_requestPermissions             :: forall permissions. permissions -> Effect Unit
+foreign import pushNotificationIOS_abandonPermissions             :: Effect Unit
+foreign import pushNotificationIOS_checkPermissions               :: forall event action. (event -> action) -> Effect Unit
+foreign import pushNotificationIOS_getInitialNotification         :: Effect Unit
+foreign import pushNotificationIOS_getMessage                     :: Effect Unit
+foreign import pushNotificationIOS_getSound                       :: Effect Unit
+foreign import pushNotificationIOS_getAlert                       :: Effect Unit
+foreign import pushNotificationIOS_getBadgeCount                  :: Effect Unit
+foreign import pushNotificationIOS_getData                        :: Effect Unit
 
 
 --Settings
-foreign import settings_get        :: forall e key. key -> Eff e Unit
-foreign import settings_set        :: forall e settings. settings -> Eff e Unit
-foreign import settings_watchKeys  :: forall e keys event action . keys -> (event -> action) -> Eff e Unit
-foreign import settings_clearWatch :: forall e watchId. watchId -> Eff e Unit
+foreign import settings_get        :: forall key. key -> Effect Unit
+foreign import settings_set        :: forall settings. settings -> Effect Unit
+foreign import settings_watchKeys  :: forall keys event action . keys -> (event -> action) -> Effect Unit
+foreign import settings_clearWatch :: forall watchId. watchId -> Effect Unit
 
 
 -- StyleSheet
-foreign import styleSheet_create :: forall e obj. obj -> Eff e Unit
+foreign import styleSheet_create :: forall obj. obj -> Effect Unit
 
 
 -- Systrace
-foreign import systrace_setEnabled            :: forall e. Boolean -> Eff e Unit
-foreign import systrace_beginEvent            :: forall e args. String -> args -> Eff e Unit
-foreign import systrace_endEvent              :: forall e. Eff e Unit
-foreign import systrace_beginAsyncEvent       :: forall e. String -> Eff e Unit
-foreign import systrace_endAsyncEvent         :: forall e cookie. String -> cookie -> Eff e Unit
-foreign import systrace_counterEvent          :: forall e value. String -> value -> Eff e Unit
-foreign import systrace_attachToRelayProfiler :: forall e relayProfiler. relayProfiler -> Eff e Unit
-foreign import systrace_swizzleJSON           :: forall e. Eff e Unit
-foreign import systrace_measureMethods        :: forall e object objectName methodNames. object -> objectName -> methodNames -> Eff e Unit
-foreign import systrace_measure               :: forall e objName fnName func. objName -> fnName -> func -> Eff e Unit
+foreign import systrace_setEnabled            :: Boolean -> Effect Unit
+foreign import systrace_beginEvent            :: forall args. String -> args -> Effect Unit
+foreign import systrace_endEvent              :: Effect Unit
+foreign import systrace_beginAsyncEvent       :: String -> Effect Unit
+foreign import systrace_endAsyncEvent         :: forall cookie. String -> cookie -> Effect Unit
+foreign import systrace_counterEvent          :: forall value. String -> value -> Effect Unit
+foreign import systrace_attachToRelayProfiler :: forall relayProfiler. relayProfiler -> Effect Unit
+foreign import systrace_swizzleJSON           :: Effect Unit
+foreign import systrace_measureMethods        :: forall object objectName methodNames. object -> objectName -> methodNames -> Effect Unit
+foreign import systrace_measure               :: forall objName fnName func. objName -> fnName -> func -> Effect Unit
 
 
 -- TimePickerAndroid
-foreign import timePickerAndroid_open            :: forall e options. options -> Eff e Unit
-foreign import timePickerAndroid_timeSetAction   :: forall e. Eff e Unit
-foreign import timePickerAndroid_dismissedAction :: forall e. Eff e Unit
+foreign import timePickerAndroid_open            :: forall options. options -> Effect Unit
+foreign import timePickerAndroid_timeSetAction   :: Effect Unit
+foreign import timePickerAndroid_dismissedAction :: Effect Unit
 
 
 -- ToastAndroid
 data Duration = SHORT | LONG
 data Gravity = TOP | BOTTOM | CENTER
 
-foreign import toastAndroid_show            :: forall e. String -> Duration -> Eff e Unit
-foreign import toastAndroid_showWithGravity :: forall e. String -> Duration -> Gravity -> Eff e Unit
+foreign import toastAndroid_show            :: String -> Duration -> Effect Unit
+foreign import toastAndroid_showWithGravity :: String -> Duration -> Gravity -> Effect Unit
 
 
 -- Vibration
-foreign import vibration_vibrate :: forall e. Array Int  -> Boolean -> Eff e  Unit
-foreign import vibration_cancel  :: forall e. Eff e Unit
+foreign import vibration_vibrate :: Array Int  -> Boolean -> Effect  Unit
+foreign import vibration_cancel  :: Effect Unit

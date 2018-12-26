@@ -2,19 +2,17 @@ module RNX.AsyncStorage where
 
 import Prelude
 
-import Control.Monad.Aff (Aff)
-import Control.Monad.Eff (Eff)
-import Control.Promise (Promise, toAffE)
+import Effect (Effect)
 
-foreign import _getItem :: forall e. String -> Eff e (Promise String)
-foreign import _setItem :: forall e. String -> String -> Eff e (Promise Unit)
-foreign import _removeItem :: forall e. String -> Eff e (Promise Unit)
+foreign import _getItem :: String -> Effect String
+foreign import _setItem :: String -> String -> Effect Unit
+foreign import _removeItem :: String -> Effect Unit
 
-getItem :: forall e. String ->  Aff e String
-getItem key =  toAffE $ _getItem key
+getItem :: String -> Effect String
+getItem key =  _getItem key
 
-setItem :: forall e. String -> String -> Aff e Unit
-setItem key value = toAffE $ _setItem key value
+setItem :: String -> String -> Effect Unit
+setItem key value = _setItem key value
 
-removeItem :: forall e. String ->  Aff e Unit
-removeItem  key = toAffE $ _removeItem key
+removeItem :: String ->  Effect Unit
+removeItem  key = _removeItem key
